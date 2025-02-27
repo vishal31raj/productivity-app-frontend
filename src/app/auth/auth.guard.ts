@@ -15,7 +15,6 @@ export class AuthGuard {
   canActivate(): boolean | Promise<boolean> | Observable<boolean | UrlTree> {
     return this.authService.user.pipe(
       map((user) => {
-        console.log(user);
         const isAuth = !!user;
         if (isAuth) {
           return true;

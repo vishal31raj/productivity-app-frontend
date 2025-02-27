@@ -1,0 +1,25 @@
+<ion-menu contentId="app-sidebar">
+  <ion-content class="ion-padding sidebar-content">
+    <ion-list>
+      <ion-menu-toggle *ngFor="let item of sidebarNavItems">
+        <ion-item mode="md" lines="none" button>
+          <ion-icon name="{{ item.iconName }}" slot="start"></ion-icon>
+          <ion-label>{{ item.label }}</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <hr />
+
+      <ion-menu-toggle>
+        <ion-item mode="md" lines="none" button (click)="onLogout()">
+          <ion-icon name="log-out" slot="start"></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+
+    <div class="version-text">
+      <div>Version: Beta</div>
+    </div>
+  </ion-content>
+</ion-menu>

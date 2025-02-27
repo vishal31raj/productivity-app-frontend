@@ -16,6 +16,7 @@ export class ToastService {
       ...this.toastOptions,
       message: message,
       cssClass: 'success-toast',
+      icon: 'checkmark-circle-outline',
     });
 
     await toast.present();
@@ -26,6 +27,7 @@ export class ToastService {
       ...this.toastOptions,
       message: message,
       cssClass: 'error-toast',
+      icon: 'close-circle-outline',
     });
 
     await toast.present();

@@ -7,34 +7,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  IonContent,
-  IonButton,
-  IonSpinner,
-  IonText,
-  IonInput,
-} from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
+import { SharedModule } from 'src/app/shared.module';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [
-    IonText,
-    IonSpinner,
-    IonButton,
-    IonContent,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonText,
-    IonSpinner,
-    IonInput,
-  ],
+  imports: [SharedModule],
 })
 export class LoginPage implements OnInit {
   isApiRunning: boolean = false;

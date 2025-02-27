@@ -12,19 +12,31 @@ import {
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { AuthInterceptorService } from './app/auth/auth-interceptor.service';
+import { BaseUrlInterceptor } from './app/services/interceptors/baseurl.interceptor';
+import { addIcons } from 'ionicons';
+import * as allIcons from 'ionicons/icons';
 
 bootstrapApplication(AppComponent, {
   providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideIonicAngular(),
+    provideRouter(routes, withPreloading(PreloadAllModules)),
+
+    provideHttpClient(withInterceptorsFromDi()),
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true,
     },
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
-    provideRouter(routes, withPreloading(PreloadAllModules)),
-    provideHttpClient(),
+    { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }
   ],
 });
+
+addIcons(allIcons);
