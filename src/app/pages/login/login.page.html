@@ -1,0 +1,68 @@
+<ion-content [fullscreen]="true">
+  <div class="main-container">
+    <div class="container">
+      <div class="app-card mb-5">
+        <p class="header ion-text-center">Login</p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onLoginConfirm()">
+          <div class="mb-3">
+            <ion-input
+              mode="md"
+              type="number"
+              fill="outline"
+              label="Mobile Number"
+              label-placement="floating"
+              placeholder="eg: 999xxxxxxx"
+              formControlName="phoneNumber"
+            ></ion-input>
+            <div
+              *ngIf="phoneNumber?.invalid && phoneNumber?.touched"
+              class="text-danger"
+            >
+              <small *ngIf="phoneNumber?.errors?.['required']">
+                Mobile number is required.
+              </small>
+              <small *ngIf="phoneNumber?.errors?.['pattern']">
+                Enter a valid phone number.
+              </small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <ion-input
+              mode="md"
+              type="password"
+              fill="outline"
+              label="Password"
+              label-placement="floating"
+              placeholder="Password"
+              formControlName="password"
+            >
+            </ion-input>
+            <div
+              *ngIf="password?.invalid && password?.touched"
+              class="text-danger"
+            >
+              <small *ngIf="password?.errors?.['required']">
+                Password is required.
+              </small>
+            </div>
+          </div>
+
+          <ion-button
+            mode="ios"
+            type="submit"
+            expand="block"
+            [disabled]="loginForm.invalid || isApiRunning"
+          >
+            <ion-text *ngIf="!isApiRunning">Login</ion-text>
+            <ion-spinner name="dots" *ngIf="isApiRunning"></ion-spinner>
+          </ion-button>
+        </form>
+      </div>
+      <ion-button mode="ios" expand="block" fill="outline">
+        Regsiter your business with us
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

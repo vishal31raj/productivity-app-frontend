@@ -34,4 +34,24 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+.app-card {
+  border: 1px solid silver;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+// Toast styles
+ion-toast {
+  --border-radius: 8px;
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+}
+ion-toast.success-toast {
+  --background: #eff5ef;
+  --color: #006600;
+}
+ion-toast.error-toast {
+  --background: #fef9f9;
+  --color: #e50000;
+}
