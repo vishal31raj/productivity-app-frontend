@@ -1,13 +1,12 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>footer</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">footer</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<ion-tabs>
+  <ion-tab-bar mode="md" slot="bottom">
+    <ion-tab-button
+      *ngFor="let item of footerNavItems"
+      tab="{{ item.name }}"
+      [routerLink]="item.routerLink"
+    >
+      <ion-icon name="{{ item.iconName }}"></ion-icon>
+      {{ item.label }}
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

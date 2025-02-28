@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/shared.module';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
+  selector: 'app-staffs',
+  templateUrl: './staffs.page.html',
+  styleUrls: ['./staffs.page.scss'],
   standalone: true,
   imports: [SharedModule],
 })
-export class DashboardPage implements OnInit {
+export class StaffsPage implements OnInit {
   constructor() {}
 
   ngOnInit() {}

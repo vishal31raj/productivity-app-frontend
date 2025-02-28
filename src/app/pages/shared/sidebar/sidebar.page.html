@@ -1,15 +1,24 @@
 <ion-menu contentId="app-sidebar">
   <ion-content class="ion-padding sidebar-content">
+    <div class="info-section" *ngIf="userDetails">
+      <p class="name">{{ userDetails.userName }}</p>
+      <p class="ion-no-margin">
+        <span class="role">{{ getUserRole(userDetails.userRoleId) }}</span>,
+        <span class="enterprise">{{ userDetails.enterpriseName }}</span>
+      </p>
+    </div>
+
+    <hr />
+
     <ion-list>
       <ion-menu-toggle *ngFor="let item of sidebarNavItems">
-        <ion-item mode="md" lines="none" button>
+        <ion-item mode="md" lines="none" button [routerLink]="item.routerLink">
           <ion-icon name="{{ item.iconName }}" slot="start"></ion-icon>
           <ion-label>{{ item.label }}</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
       <hr />
-
       <ion-menu-toggle>
         <ion-item mode="md" lines="none" button (click)="onLogout()">
           <ion-icon name="log-out" slot="start"></ion-icon>

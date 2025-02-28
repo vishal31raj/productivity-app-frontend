@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FooterNavigation } from 'src/app/constants/app-navigation';
 import { SharedModule } from 'src/app/shared.module';
 
 @Component({
@@ -6,13 +7,12 @@ import { SharedModule } from 'src/app/shared.module';
   templateUrl: './footer.page.html',
   styleUrls: ['./footer.page.scss'],
   standalone: true,
-  imports: [SharedModule]
+  imports: [SharedModule],
 })
 export class FooterPage implements OnInit {
+  footerNavItems = FooterNavigation;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

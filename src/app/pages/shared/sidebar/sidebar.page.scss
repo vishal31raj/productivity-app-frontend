@@ -2,6 +2,23 @@
   position: relative;
   height: 100%;
 
+  .info-section {
+    .name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #4c4c4c;
+      margin: 0;
+    }
+    .role {
+      font-size: 14px;
+      color: gray;
+    }
+    .enterprise {
+      font-size: 14px;
+      color: #4c4c4c;
+    }
+  }
+
   .version-text {
     position: absolute;
     bottom: 0;

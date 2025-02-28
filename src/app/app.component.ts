@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { SidebarPage } from './pages/shared/sidebar/sidebar.page';
 import { SharedModule } from './shared.module';
+import { FooterPage } from './pages/shared/footer/footer.page';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [SidebarPage, SharedModule],
+  imports: [SidebarPage, FooterPage, SharedModule],
   standalone: true
 })
 export class AppComponent {

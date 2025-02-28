@@ -10,12 +10,11 @@
     <ion-buttons slot="end">
       <ion-button
         *ngIf="type === 'primary'"
+        [routerLink]="APP_ROUTES.Notifications"
       >
         <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
       </ion-button>
-      <ion-button
-        *ngIf="type === 'primary'"
-      >
+      <ion-button *ngIf="type === 'primary'" [routerLink]="APP_ROUTES.Profile">
         <div class="img-div">
           <img [src]="userDetails.profileImgUrl ?? DUMMY_IMG_URL" class="img" />
         </div>
