@@ -1,0 +1,48 @@
+<div class="ion-padding" *ngIf="staffDetails">
+  <p class="info-item">
+    <ion-icon name="mail-open-outline"></ion-icon>{{ staffDetails.email }}
+  </p>
+  <p class="info-item">
+    <ion-icon name="call-outline"></ion-icon>{{ staffDetails.phoneNumber }}
+  </p>
+  <p class="info-item">
+    <ion-icon name="male-female-outline"></ion-icon>{{ staffDetails.gender }}
+  </p>
+  <p class="info-item">
+    <ion-icon name="calendar-clear-outline"></ion-icon
+    >{{ staffDetails.dateOfBirth }}
+  </p>
+
+  <hr />
+
+  <p class="label">Documents:</p>
+
+  <div *ngIf="staffDetails.documents.length <= 0">
+    <app-empty-list message="No douments found!"></app-empty-list>
+  </div>
+
+  <ion-list class="my-3" lines="full" *ngIf="staffDetails.documents.length > 0">
+    <ion-item *ngFor="let doc of staffDetails.documents">
+      <ion-label>
+        <h2>{{ doc.name }}</h2>
+        <p>{{ doc.description }}</p>
+      </ion-label>
+      <ion-button slot="end" mode="ios" (click)="onOpenDoc(doc.imgUrl)">
+        View
+      </ion-button>
+      <ion-button slot="end" mode="ios" color="danger" fill="clear" (click)="onRemoveDocument(doc._id)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-button
+    mode="ios"
+    expand="block"
+    fill="clear"
+    color="medium"
+    (click)="openAddDocumentModal()"
+  >
+    + Add Document
+  </ion-button>
+</div>

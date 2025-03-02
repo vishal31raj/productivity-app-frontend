@@ -1,0 +1,13 @@
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    ion-icon {
+        font-size: 18px;
+    }
+}
+
+.label {
+    font-weight: 600;
+}

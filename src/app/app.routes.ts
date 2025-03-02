@@ -48,6 +48,13 @@ export const routes: Routes = [
             (m) => m.CreateNewStaffPage
           ),
       },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('./pages/staffs/staff-details/staff-details.page').then(
+            (m) => m.StaffDetailsPage
+          ),
+      },
     ],
   },
   {
@@ -87,21 +94,29 @@ export const routes: Routes = [
   {
     path: 'community',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./pages/community/community.page').then( m => m.CommunityPage)
+    loadComponent: () =>
+      import('./pages/community/community.page').then((m) => m.CommunityPage),
   },
   {
     path: 'profile',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
+    loadComponent: () =>
+      import('./pages/profile/profile.page').then((m) => m.ProfilePage),
   },
   {
     path: 'help-n-support',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./pages/help-n-support/help-n-support.page').then( m => m.HelpNSupportPage)
+    loadComponent: () =>
+      import('./pages/help-n-support/help-n-support.page').then(
+        (m) => m.HelpNSupportPage
+      ),
   },
   {
     path: 'notifications',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./pages/notifications/notifications.page').then( m => m.NotificationsPage)
+    loadComponent: () =>
+      import('./pages/notifications/notifications.page').then(
+        (m) => m.NotificationsPage
+      ),
   },
 ];

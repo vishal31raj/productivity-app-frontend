@@ -1,0 +1,28 @@
+.img-col {
+  width: 75px;
+  position: relative;
+
+  .remove-img-btn {
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 50%;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    background-color: white;
+
+    ion-icon {
+      font-size: 22px;
+      color: gray;
+    }
+  }
+}
+
+.img-div {
+  height: 75px !important;
+  width: 75px !important;
+  overflow: hidden;
+}

@@ -1,3 +1,139 @@
 <app-header title="Create New Staff" type="secondary"></app-header>
 
-<ion-content [fullscreen]="true"> Create New Staff </ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form [formGroup]="createNewStaffForm" (ngSubmit)="onCreateStaff()">
+    <div class="mb-3">
+      <ion-input
+        type="text"
+        fill="outline"
+        label="Name*"
+        label-placement="floating"
+        placeholder="Type here..."
+        formControlName="name"
+      ></ion-input>
+      <div *ngIf="name?.invalid && name?.touched" class="text-danger">
+        <small *ngIf="name?.errors?.['required']"> Name is required. </small>
+        <small *ngIf="name?.errors?.['minlength']">
+          Name should be minimum 5 characters.
+        </small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <ion-radio-group formControlName="gender">
+        <div class="row">
+          <div class="col-6">
+            <ion-radio
+              mode="md"
+              labelPlacement="end"
+              justify="start"
+              value="Male"
+            >
+              Male
+            </ion-radio>
+          </div>
+          <div class="col-6">
+            <ion-radio
+              mode="md"
+              labelPlacement="end"
+              justify="start"
+              value="Female"
+            >
+              Female
+            </ion-radio>
+          </div>
+        </div>
+      </ion-radio-group>
+    </div>
+
+    <div class="mb-3">
+      <ion-input
+        type="email"
+        fill="outline"
+        label="Email*"
+        label-placement="floating"
+        placeholder="Type here..."
+        formControlName="email"
+      ></ion-input>
+      <div *ngIf="email?.invalid && email?.touched" class="text-danger">
+        <small *ngIf="email?.errors?.['required']"> Email is required. </small>
+        <small *ngIf="email?.errors?.['email']"> Enter a valid email. </small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <ion-input
+        type="number"
+        fill="outline"
+        label="Contact number*"
+        label-placement="floating"
+        placeholder="Type here..."
+        formControlName="phoneNumber"
+      ></ion-input>
+      <div
+        *ngIf="phoneNumber?.invalid && phoneNumber?.touched"
+        class="text-danger"
+      >
+        <small *ngIf="phoneNumber?.errors?.['required']">
+          Mobile number is required.
+        </small>
+        <small *ngIf="phoneNumber?.errors?.['pattern']">
+          Mobile number should be 10 digits
+        </small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <ion-input
+        type="date"
+        fill="outline"
+        label="Date of birth*"
+        label-placement="floating"
+        placeholder="Type here..."
+        formControlName="dateOfBirth"
+      ></ion-input>
+      <div
+        *ngIf="dateOfBirth?.invalid && dateOfBirth?.touched"
+        class="text-danger"
+      >
+        <small *ngIf="dateOfBirth?.errors?.['required']">
+          Date of birth is required.
+        </small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <ion-input
+        type="text"
+        fill="outline"
+        label="Password*"
+        label-placement="floating"
+        placeholder="Type here..."
+        formControlName="password"
+      ></ion-input>
+      <div *ngIf="password?.invalid && password?.touched" class="text-danger">
+        <small *ngIf="password?.errors?.['required']">
+          Name is required.
+        </small>
+        <small *ngIf="password?.errors?.['minlength']">
+          Password should be minimum 5 characters.
+        </small>
+      </div>
+    </div>
+
+    <ion-button
+      mode="ios"
+      type="submit"
+      expand="block"
+      class="my-5"
+      [disabled]="createNewStaffForm.invalid || isApiRunning"
+    >
+      <span *ngIf="isApiRunning === false">Create</span>
+      <ion-spinner
+        name="dots"
+        color="light"
+        *ngIf="isApiRunning === true"
+      ></ion-spinner>
+    </ion-button>
+  </form>
+</ion-content>

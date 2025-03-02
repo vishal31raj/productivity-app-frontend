@@ -1,0 +1,13 @@
+.d-flex {
+    display: flex;
+    align-items: center;
+
+    .name {
+        font-weight: 600;
+        color: #4c4c4c;
+    }
+
+    .status {
+        margin-left: auto;
+    }
+}

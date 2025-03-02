@@ -1,0 +1,50 @@
+<app-header title="Staff Details" type="secondary"></app-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div *ngIf="isLoading === true">
+    <app-loader></app-loader>
+  </div>
+
+  <div *ngIf="isLoading === false && staffDetails">
+    <div class="d-flex">
+      <div>
+        <app-avatar-image
+          [imgUrl]="staffDetails.profileImgUrl"
+        ></app-avatar-image>
+      </div>
+      <p class="name mb-0 ms-3">{{ staffDetails.name }}</p>
+      <div class="status">
+        <span
+          class="status-chip"
+          [ngClass]="staffDetails.isActive ? 'green' : 'red'"
+        >
+          {{ staffDetails.isActive ? 'Active' : 'Inactive' }}
+        </span>
+      </div>
+    </div>
+
+    <hr />
+
+    <ion-segment value="details" (ionChange)="onSwitchTabEvent($event)">
+      <ion-segment-button value="details">
+        <ion-label>Details</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="tasks">
+        <ion-label>Tasks</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- Details -->
+    <div *ngIf="selectedTab === 'details'">
+      <app-details
+        [staffDetails]="staffDetails"
+        (updateStaffDetails)="ionViewWillEnter()"
+      ></app-details>
+    </div>
+
+    <!-- Tasks -->
+    <div *ngIf="selectedTab === 'tasks'">
+      <app-tasks></app-tasks>
+    </div>
+  </div>
+</ion-content>

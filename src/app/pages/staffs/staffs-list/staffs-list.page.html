@@ -1,3 +1,49 @@
 <app-header title="Staffs" type="primary"></app-header>
 
-<ion-content [fullscreen]="true"> Staffs List </ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-searchbar
+    mode="md"
+    placeholder="Search by name"
+    (ionInput)="onSearchInput($event)"
+  ></ion-searchbar>
+
+  <div *ngIf="isLoading === true">
+    <app-loader></app-loader>
+  </div>
+
+  <div *ngIf="isLoading === false">
+    <div *ngIf="staffsList.length === 0">
+      <app-empty-list [message]="'No staffs found!'"></app-empty-list>
+    </div>
+
+    <ion-list class="my-3" lines="full" *ngIf="staffsList.length > 0">
+      <ion-item
+        *ngFor="let staff of staffsList"
+        button
+        [routerLink]="'/staffs/' + staff._id"
+      >
+        <div class="py-2" style="display: flex; align-items: center">
+          <app-avatar-image
+            [imgUrl]="staff.profileImgUrl"
+            class="me-3"
+          ></app-avatar-image>
+          <div style="width: calc(100% - 40px)">
+            <p class="m-0" style="font-size: 15px; font-weight: 600">
+              {{ staff.name }}
+            </p>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button [routerLink]="APP_ROUTES.CreateNewStaff">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

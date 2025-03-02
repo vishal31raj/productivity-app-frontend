@@ -1,0 +1,73 @@
+<app-header
+  title="Upload Image"
+  type="tertiary"
+  (closeBtnClickEvent)="onCloseModal()"
+></app-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="uploadImageForm" (ngSubmit)="onConfirmImageUpload()">
+    <div class="mb-3">
+      <ion-input
+        type="text"
+        fill="outline"
+        label="Image Name*"
+        label-placement="floating"
+        placeholder="Type here..."
+        formControlName="name"
+      ></ion-input>
+      <div *ngIf="name?.invalid && name?.touched" class="text-danger">
+        <small *ngIf="name?.errors?.['required']"> Name is required. </small>
+        <small *ngIf="name?.errors?.['minlength']">
+          Name should be minimum 5 characters.
+        </small>
+      </div>
+    </div>
+
+    <app-image-picker
+      (imgPickedEvent)="onPickImage($event)"
+      *ngIf="!selectedFile.file"
+    ></app-image-picker>
+    <div class="img-col" *ngIf="selectedFile.file">
+      <div class="img-div">
+        <img [src]="selectedFile.fileUrl" alt="" />
+      </div>
+      <div class="remove-img-btn" (click)="onRemoveProfileImg()">
+        <ion-icon name="close-outline"></ion-icon>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <ion-textarea
+        label="Description"
+        class="ion-margin-bottom"
+        label-placement="floating"
+        fill="outline"
+        [autoGrow]="true"
+        rows="4"
+        mode="md"
+        placeholder="Enter some description"
+        formControlName="description"
+      ></ion-textarea>
+
+      <div
+        *ngIf="description?.invalid && description?.touched"
+        class="text-danger"
+      >
+        <small *ngIf="description?.errors?.['minlength']">
+          Name should be minimum 5 characters.
+        </small>
+      </div>
+    </div>
+
+    <div class="my-5">
+      <ion-button
+        mode="ios"
+        type="submit"
+        expand="block"
+        [disabled]="uploadImageForm.invalid || !selectedFile.file"
+      >
+        Confirm
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

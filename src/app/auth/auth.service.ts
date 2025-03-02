@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { API_ROUTES } from '../constants/api-routes';
 import { ToastService } from '../services/toast.service';
 import { User } from '../models/user.model';
@@ -54,7 +53,7 @@ export class AuthService {
       userData.profileImgUrl,
       userData.enterpriseId,
       userData.enterpriseName,
-      userData.enterprisePlanId,
+      userData.currentPlan,
       userData._token,
       new Date(userData._tokenExpirationDate)
     );
@@ -95,7 +94,7 @@ export class AuthService {
     profileImgUrl: string,
     enterpriseId: string,
     enterpriseName: string,
-    enterprisePlanId: string,
+    currentPlan: any,
     token: string,
     tokenExpirationDate: Date
   ) {
@@ -109,7 +108,7 @@ export class AuthService {
         : 'https://ionicframework.com/docs/img/demos/avatar.svg',
       enterpriseId,
       enterpriseName,
-      enterprisePlanId,
+      currentPlan,
       token,
       tokenExpirationDate
     );

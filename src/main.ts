@@ -21,6 +21,7 @@ import { AuthInterceptorService } from './app/auth/auth-interceptor.service';
 import { BaseUrlInterceptor } from './app/services/interceptors/baseurl.interceptor';
 import { addIcons } from 'ionicons';
 import * as allIcons from 'ionicons/icons';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -40,3 +41,4 @@ bootstrapApplication(AppComponent, {
 });
 
 addIcons(allIcons);
+defineCustomElements(window);

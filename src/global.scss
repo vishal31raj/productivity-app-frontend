@@ -42,6 +42,22 @@
   padding: 16px;
 }
 
+// chips
+.status-chip {
+  border-radius: 4px;
+  font-size: 13px;
+  padding: 4px;
+
+  &.green {
+    color: #00b200;
+    background-color: #e5ffe5;
+  }
+  &.red {
+    color: #ff1919;
+    background-color: #ffe5e5;
+  }
+}
+
 // Toast styles
 ion-toast {
   --border-radius: 8px;

@@ -7,7 +7,7 @@ export class User {
     public profileImgUrl: string,
     public enterpriseId: string,
     public enterpriseName: string,
-    public enterprisePlanId: string,
+    public currentPlan: any,
     private _token: string,
     private _tokenExpirationDate: Date
   ) {}
