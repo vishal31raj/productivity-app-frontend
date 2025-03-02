@@ -21,7 +21,6 @@ export class SidebarPage implements OnInit {
   ngOnInit() {
     this._authService.user.subscribe((user: any) => {
       this.userDetails = user;
-      console.log(this.userDetails);
     });
   }
 

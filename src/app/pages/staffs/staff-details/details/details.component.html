@@ -30,7 +30,13 @@
       <ion-button slot="end" mode="ios" (click)="onOpenDoc(doc.imgUrl)">
         View
       </ion-button>
-      <ion-button slot="end" mode="ios" color="danger" fill="clear" (click)="onRemoveDocument(doc._id)">
+      <ion-button
+        slot="end"
+        mode="ios"
+        color="danger"
+        fill="clear"
+        (click)="onRemoveDocument(doc._id)"
+      >
         <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
       </ion-button>
     </ion-item>
@@ -41,8 +47,22 @@
     expand="block"
     fill="clear"
     color="medium"
+    size="small"
     (click)="openAddDocumentModal()"
   >
     + Add Document
+  </ion-button>
+
+  <hr />
+
+  <ion-button
+    class="mt-5"
+    mode="ios"
+    expand="block"
+    fill="outline"
+    [color]="staffDetails.isActive ? 'danger' : 'primary'"
+    (click)="onChangeStatus()"
+  >
+    Mark as {{ staffDetails.isActive ? "Inactive" : "Active" }}
   </ion-button>
 </div>

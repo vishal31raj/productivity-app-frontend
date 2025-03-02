@@ -26,7 +26,7 @@
         button
         [routerLink]="'/staffs/' + staff._id"
       >
-        <div class="py-2" style="display: flex; align-items: center">
+        <div class="py-2 d-flex">
           <app-avatar-image
             [imgUrl]="staff.profileImgUrl"
             class="me-3"
@@ -36,6 +36,13 @@
               {{ staff.name }}
             </p>
           </div>
+          <span
+            slot="end"
+            class="status-chip"
+            [ngClass]="staff.isActive ? 'green' : 'red'"
+          >
+            {{ staff.isActive ? 'Active' : 'Inactive' }}
+          </span>
         </div>
       </ion-item>
     </ion-list>

@@ -91,4 +91,32 @@ export class DetailsComponent implements OnInit {
         },
       });
   }
+
+  async onChangeStatus() {
+    const isConfirmed = await this.alertService.presentAlert(
+      'Change status?',
+      'Are you sure you want to change the status of ' +
+        this.staffDetails.name +
+        '?'
+    );
+    if (isConfirmed) {
+      this.changeStatusOfStaff();
+    }
+  }
+
+  changeStatusOfStaff() {
+    this.staffsService
+      .changeActiveStatus(this.staffDetails._id, !this.staffDetails.isActive)
+      .subscribe({
+        next: (res: any) => {
+          if (res.success === true) {
+            this.toastService.showSuccessToast(res.message);
+            this.updateStaffDetails.emit();
+          }
+        },
+        error: (err: any) => {
+          this.toastService.showErrorToast(err.error.message);
+        },
+      });
+  }
 }

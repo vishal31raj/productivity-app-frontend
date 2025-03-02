@@ -36,7 +36,6 @@ export class StaffDetailsPage implements OnInit {
       next: (res: any) => {
         if (res.success === true) {
           this.staffDetails = res.data;
-          console.log(this.staffDetails);
           this.isLoading = false;
         }
       },
