@@ -119,4 +119,37 @@ export const routes: Routes = [
         (m) => m.NotificationsPage
       ),
   },
+  {
+    path: 'checklists',
+    loadComponent: () =>
+      import('./pages/checklist/checklist.page').then((m) => m.ChecklistPage),
+    children: [
+      {
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full',
+      },
+      {
+        path: 'list',
+        loadComponent: () =>
+          import('./pages/checklist/checklists-list/checklists-list.page').then(
+            (m) => m.ChecklistsListPage
+          ),
+      },
+      {
+        path: 'create-new-checklist',
+        loadComponent: () =>
+          import(
+            './pages/checklist/create-new-checklist/create-new-checklist.page'
+          ).then((m) => m.CreateNewChecklistPage),
+      },
+      {
+        path: 'checklist-details',
+        loadComponent: () =>
+          import(
+            './pages/checklist/checklist-details/checklist-details.page'
+          ).then((m) => m.ChecklistDetailsPage),
+      },
+    ],
+  },
 ];

@@ -1,0 +1,40 @@
+<app-header title="Checklists" type="primary"></app-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-searchbar
+    mode="md"
+    placeholder="Search by name"
+    (ionInput)="onSearchInput($event)"
+  ></ion-searchbar>
+
+  <div *ngIf="isLoading === true">
+    <app-loader></app-loader>
+  </div>
+
+  <div *ngIf="isLoading === false">
+    <div *ngIf="checklists?.length === 0">
+      <app-empty-list [message]="'No checklists found!'"></app-empty-list>
+    </div>
+
+    <div class="my-4" lines="full" *ngIf="checklists?.length > 0">
+      <div
+        class="app-card ion-margin-bottom"
+        *ngFor="let item of checklists"
+        button
+      >
+        <p class="title m-0">{{item.title }}</p>
+        <div class="d-flex">
+          <p class="info m-0">{{ item.attachmentCount }} Attachment(s)</p>
+          <p class="info m-0">{{ item.tasksCount }} Task(s)</p>
+          <p class="date">
+            {{ item.createdAt | date: 'hh:mm a, dd MMM yyyy' }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -14,10 +14,10 @@ export const FooterNavigation = [
     routerLink: AppRoutingConstants.StaffList,
   },
   {
-    name: 'tasks',
+    name: 'checklists',
     iconName: 'calendar',
-    label: 'Tasks',
-    routerLink: AppRoutingConstants.TasksList,
+    label: 'Checklists',
+    routerLink: AppRoutingConstants.ChecklistsList,
   },
   {
     name: 'community',
