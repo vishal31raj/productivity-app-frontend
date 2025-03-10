@@ -1,0 +1,88 @@
+.title {
+  font-weight: 700;
+  text-decoration: underline;
+  font-size: 18px;
+}
+
+.dates {
+  font-size: 13px;
+  margin: 0;
+  color: #4c4c4c;
+}
+
+.description {
+  margin-top: 16px;
+
+  .desc-text {
+    color: #2d2d2d;
+  }
+}
+
+.header {
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: #4c4c4c;
+}
+
+.img-col {
+  //   width: 100%;
+  height: 100px;
+  position: relative;
+
+  .date-div {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #ececec;
+    border: 1px solid silver;
+    border-radius: 0 0 8px 8px;
+    padding: 4px;
+    overflow: hidden;
+    font-size: 10px;
+  }
+
+  .remove-img-btn {
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 50%;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    background-color: white;
+
+    ion-icon {
+      font-size: 18px;
+      color: red;
+    }
+  }
+}
+
+.tasks-item {
+  border-radius: 8px;
+  border: 1px solid silver;
+
+  .title {
+    font-weight: 600;
+    text-decoration: none;
+    color: #2d2d2d;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  ion-row {
+    font-size: 13px;
+
+    ion-col {
+        padding: 0;
+    }
+
+    .assignedTo {
+        font-size: 14px;
+        font-weight: 600;
+        text-align: end;
+    }
+  }
+}

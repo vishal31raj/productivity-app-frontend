@@ -7,8 +7,6 @@ import { HeaderPage } from './pages/shared/header/header.page';
 import { LoaderComponent } from './components/loader/loader.component';
 import { EmptyListComponent } from './components/empty-list/empty-list.component';
 import { AvatarImageComponent } from './components/avatar-image/avatar-image.component';
-import { ImageUploadComponent } from './components/image-upload/image-upload.component';
-import { ImagePickerComponent } from './components/image-picker/image-picker.component';
 
 @NgModule({
   imports: [
@@ -21,6 +19,7 @@ import { ImagePickerComponent } from './components/image-picker/image-picker.com
     LoaderComponent,
     EmptyListComponent,
     AvatarImageComponent,
+    // ImagePickerComponent,
   ],
   exports: [
     CommonModule,
@@ -32,6 +31,7 @@ import { ImagePickerComponent } from './components/image-picker/image-picker.com
     LoaderComponent,
     EmptyListComponent,
     AvatarImageComponent,
+    // ImagePickerComponent,
   ],
 })
 export class SharedModule {}

@@ -1,5 +1,90 @@
-<app-header title="Checklist Details" type="primary"></app-header>
+<app-header title="Checklist Details" type="secondary"></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  checklist-details
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="isLoading === true">
+    <app-loader></app-loader>
+  </div>
+
+  <div *ngIf="isLoading === false && checklistDetails">
+    <p class="title">{{ checklistDetails.title }}</p>
+
+    <p class="dates">
+      Last updated at: 
+      {{ checklistDetails.updatedAt | date: 'hh:mm a, dd MMM yyyy' }}
+    </p>
+    <p class="dates">
+      Created at: 
+      {{ checklistDetails.createdAt | date: 'hh:mm a, dd MMM yyyy' }}
+    </p>    
+
+    <hr>
+
+    <div class="description">
+      <p class="header">Description:</p>
+      <p class="desc-text">{{ checklistDetails.description }}</p>
+    </div>
+
+    <hr>
+
+    <div class="attachments">
+      <p class="header">Attachments ({{ checklistDetails.attachments.length }}) :</p>
+
+      <ion-row class="ion-margin-top" *ngIf="checklistDetails.attachments.length > 0">
+        <ion-col size="4" *ngFor="let item of checklistDetails.attachments">
+          <div class="img-col">
+            <div class="img-div" (click)="onOpenImage(item.imgUrl)">
+              <img [src]="item.imgUrl" alt="" />
+            </div>
+            <div class="remove-img-btn" (click)="onRemoveAttachment(item._id)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </div>
+            <div class="date-div" *ngIf="item.createdAt">
+              {{ item.createdAt | date: 'hh:mm a, dd MMM yyyy' }}
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+  
+      <div class="ion-margin-vertical">
+        <app-image-picker
+          [buttonName]="'Add Attachment'"
+          (imgPickedEvent)="onPickImage($event)"
+        ></app-image-picker>
+      </div>
+
+    </div>
+    
+    <hr>
+
+    <div class="tasks">
+      <p class="header">Tasks ({{ checklistDetails.tasks.length }}) :</p>
+
+      <div class="ion-margin-vertical" *ngIf="checklistDetails.tasks.length > 0">
+        <div class="tasks-item ion-margin-bottom ion-padding" *ngFor="let task of checklistDetails.tasks">
+          <p class="title">{{ task.title }}</p>
+          <ion-row>
+            <ion-col size="3" class="priority">
+              {{ getTaskPriority(task.priorityId) | titlecase }}
+            </ion-col>
+            <ion-col size="4" class="status">
+              {{ getTaskStatus(task.statusId) | titlecase }}
+            </ion-col>            
+            <ion-col size="5" class="assignedTo" *ngIf="task.assignedTo">
+              {{ task.assignedTo.name }}
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+
+      <ion-button class="ion-margin-vertical" expand="block" fill="outline" color="medium">
+        + Add New Task
+      </ion-button>
+
+    </div>
+
+  </div>
 </ion-content>

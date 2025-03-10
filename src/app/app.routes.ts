@@ -144,7 +144,7 @@ export const routes: Routes = [
           ).then((m) => m.CreateNewChecklistPage),
       },
       {
-        path: 'checklist-details',
+        path: 'checklist-details/:checklistId',
         loadComponent: () =>
           import(
             './pages/checklist/checklist-details/checklist-details.page'

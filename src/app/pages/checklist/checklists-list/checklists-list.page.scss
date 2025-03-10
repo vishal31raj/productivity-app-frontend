@@ -1,7 +1,7 @@
 .title {
   font-weight: 700;
   text-decoration: underline;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .d-flex {
@@ -9,6 +9,12 @@
   align-items: center;
   gap: 16px;
   font-size: 14px;
+
+  ion-icon {
+    font-size: 16px;
+    color: gray;
+    margin-left: auto;
+  }
 
   .info {
     color: #4c4c4c;

@@ -13,8 +13,8 @@ export class ChecklistService {
     return this.http.get(API_ROUTES.GetAllChecklists, filters);
   }
 
-  createNewChecklist(reqBody: any) {
-    return this.http.post(API_ROUTES.CreateNewCheckList, reqBody);
+  createNewChecklist(formData: FormData) {
+    return this.http.post(API_ROUTES.CreateNewCheckList, formData);
   }
 
   GetChecklistDetailsById(checklistId: string) {
@@ -30,15 +30,15 @@ export class ChecklistService {
     );
   }
 
-  AddAttachmentToChecklistById(checklistId: string, reqBody) {
+  AddAttachmentToChecklistById(checklistId: string, formData: FormData) {
     return this.http.post(
       API_ROUTES.AddAttachmentToChecklistById + '/' + checklistId,
-      reqBody
+      formData
     );
   }
 
   RemoveAttachmentFromChecklistById(checklistId: string, reqBody) {
-    return this.http.put(
+    return this.http.post(
       API_ROUTES.RemoveAttachmentFromChecklistById + '/' + checklistId,
       reqBody
     );

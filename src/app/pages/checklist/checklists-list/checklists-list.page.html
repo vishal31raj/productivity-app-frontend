@@ -20,13 +20,17 @@
       <app-empty-list [message]="'No checklists found!'"></app-empty-list>
     </div>
 
-    <div class="my-4" lines="full" *ngIf="checklists?.length > 0">
+    <div class="my-4" *ngIf="checklists?.length > 0">
       <div
         class="app-card ion-margin-bottom"
         *ngFor="let item of checklists"
         button
+        [routerLink]="APP_ROUTES.ChecklistDetails + '/' + item._id"
       >
-        <p class="title m-0">{{item.title }}</p>
+        <div class="d-flex">
+          <p class="title m-0">{{item.title }}</p>
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </div>
         <div class="d-flex">
           <p class="info m-0">{{ item.attachmentCount }} Attachment(s)</p>
           <p class="info m-0">{{ item.tasksCount }} Task(s)</p>
@@ -37,4 +41,10 @@
       </div>
     </div>
   </div>
+
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button [routerLink]="APP_ROUTES.CreateNewChecklist">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

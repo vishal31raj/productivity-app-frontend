@@ -1,4 +1,4 @@
-<ion-tabs>
+<ion-tabs *ngIf="userLoggedIn">
   <ion-tab-bar mode="md" slot="bottom">
     <ion-tab-button
       *ngFor="let item of footerNavItems"

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
 import { FooterNavigation } from 'src/app/constants/app-navigation';
 import { SharedModule } from 'src/app/shared.module';
 
@@ -10,9 +11,18 @@ import { SharedModule } from 'src/app/shared.module';
   imports: [SharedModule],
 })
 export class FooterPage implements OnInit {
+  userLoggedIn: boolean;
   footerNavItems = FooterNavigation;
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.checkAuthentication();
+  }
+
+  checkAuthentication() {
+    this.authService.user.subscribe((user: any) => {
+      this.userLoggedIn = !!user;
+    });
+  }
 }

@@ -42,6 +42,18 @@
   padding: 16px;
 }
 
+.img-div {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  background-color: #ececec;
+  border: 1px solid silver;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 // chips
 .status-chip {
   border-radius: 4px;
