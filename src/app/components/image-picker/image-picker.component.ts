@@ -13,6 +13,8 @@ import { SharedModule } from 'src/app/shared.module';
 })
 export class ImagePickerComponent implements OnInit {
   @Input() buttonName: string = 'Select Image';
+  @Input() disabled: boolean = false;
+
   @Output() imgPickedEvent = new EventEmitter();
 
   cameraOptions = {

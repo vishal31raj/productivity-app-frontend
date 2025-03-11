@@ -10,30 +10,103 @@
   </div>
 
   <div *ngIf="isLoading === false && checklistDetails">
-    <p class="title">{{ checklistDetails.title }}</p>
+    <p class="title" *ngIf="!editTitle">
+      {{ checklistDetails.title }}
+      <span class="ms-2 edit-btn" (click)="onClickEdit('title')">
+        <ion-icon name="create-outline"></ion-icon>
+      </span>
+    </p>
+
+    <div class="ion-margin-bottom" *ngIf="editTitle">
+      <ion-textarea
+        label="Title"
+        label-placement="floating"
+        fill="outline"
+        [autoGrow]="true"
+        rows="3"
+        mode="md"
+        placeholder="Give your task a title..."
+        [(ngModel)]="newTitle"
+      ></ion-textarea>
+
+      <div class="update-div">
+        <ion-button
+          mode="ios"
+          fill="outline"
+          size="small"
+          color="medium"
+          (click)="onCancelEdit('title')"
+        >
+          Cancel
+        </ion-button>
+        <ion-button mode="ios" size="small" (click)="onConfirmEdit('title')">
+          Update
+        </ion-button>
+      </div>
+    </div>
 
     <p class="dates">
-      Last updated at: 
-      {{ checklistDetails.updatedAt | date: 'hh:mm a, dd MMM yyyy' }}
+      Last updated at: {{ checklistDetails.updatedAt | date: 'hh:mm a' }}
     </p>
     <p class="dates">
-      Created at: 
-      {{ checklistDetails.createdAt | date: 'hh:mm a, dd MMM yyyy' }}
-    </p>    
+      Created at: {{ checklistDetails.createdAt | date: 'hh:mm a, dd MMM yyyy'
+      }}
+    </p>
 
-    <hr>
+    <hr />
 
     <div class="description">
       <p class="header">Description:</p>
-      <p class="desc-text">{{ checklistDetails.description }}</p>
+      <p class="desc-text" *ngIf="!editDescription">
+        {{ checklistDetails.description }}
+        <span class="ms-2 edit-btn" (click)="onClickEdit('description')">
+          <ion-icon name="create-outline"></ion-icon>
+        </span>
+      </p>
+
+      <div class="ion-margin-vertical" *ngIf="editDescription">
+        <ion-textarea
+          label="Description"
+          label-placement="floating"
+          fill="outline"
+          [autoGrow]="true"
+          rows="5"
+          mode="md"
+          placeholder="Enter some description..."
+          [(ngModel)]="newDescription"
+        ></ion-textarea>
+        <div class="update-div">
+          <ion-button
+            mode="ios"
+            fill="outline"
+            size="small"
+            color="medium"
+            (click)="onCancelEdit('description')"
+          >
+            Cancel
+          </ion-button>
+          <ion-button
+            mode="ios"
+            size="small"
+            (click)="onConfirmEdit('description')"
+          >
+            Update
+          </ion-button>
+        </div>
+      </div>
     </div>
 
-    <hr>
+    <hr />
 
     <div class="attachments">
-      <p class="header">Attachments ({{ checklistDetails.attachments.length }}) :</p>
+      <p class="header">
+        Attachments ({{ checklistDetails.attachments.length }}) :
+      </p>
 
-      <ion-row class="ion-margin-top" *ngIf="checklistDetails.attachments.length > 0">
+      <ion-row
+        class="ion-margin-top"
+        *ngIf="checklistDetails.attachments.length > 0"
+      >
         <ion-col size="4" *ngFor="let item of checklistDetails.attachments">
           <div class="img-col">
             <div class="img-div" (click)="onOpenImage(item.imgUrl)">
@@ -48,31 +121,42 @@
           </div>
         </ion-col>
       </ion-row>
-  
+
       <div class="ion-margin-vertical">
         <app-image-picker
           [buttonName]="'Add Attachment'"
           (imgPickedEvent)="onPickImage($event)"
+          [disabled]="editTitle || editDescription"
         ></app-image-picker>
       </div>
-
     </div>
-    
-    <hr>
+
+    <hr />
 
     <div class="tasks">
       <p class="header">Tasks ({{ checklistDetails.tasks.length }}) :</p>
 
-      <div class="ion-margin-vertical" *ngIf="checklistDetails.tasks.length > 0">
-        <div class="tasks-item ion-margin-bottom ion-padding" *ngFor="let task of checklistDetails.tasks">
+      <div
+        class="ion-margin-vertical"
+        *ngIf="checklistDetails.tasks.length > 0"
+      >
+        <div
+          class="tasks-item ion-margin-bottom ion-padding"
+          *ngFor="let task of checklistDetails.tasks"
+        >
           <p class="title">{{ task.title }}</p>
           <ion-row>
-            <ion-col size="3" class="priority">
-              {{ getTaskPriority(task.priorityId) | titlecase }}
+            <ion-col size="4" class="priority">
+              <app-priority-badge
+                [priorityId]="task.priorityId"
+              ></app-priority-badge>
             </ion-col>
-            <ion-col size="4" class="status">
-              {{ getTaskStatus(task.statusId) | titlecase }}
-            </ion-col>            
+            <ion-col size="3" class="status">
+              <app-status-chip
+                [statusId]="task.statusId"
+                [statusDescArr]="TaskStatusDescEnum"
+              ></app-status-chip>
+            </ion-col>
             <ion-col size="5" class="assignedTo" *ngIf="task.assignedTo">
               {{ task.assignedTo.name }}
             </ion-col>
@@ -80,11 +164,16 @@
         </div>
       </div>
 
-      <ion-button class="ion-margin-vertical" expand="block" fill="outline" color="medium">
+      <ion-button
+        class="ion-margin-vertical"
+        mode="ios"
+        expand="block"
+        fill="outline"
+        color="medium"
+        [disabled]="editTitle || editDescription"
+      >
         + Add New Task
       </ion-button>
-
     </div>
-
   </div>
 </ion-content>

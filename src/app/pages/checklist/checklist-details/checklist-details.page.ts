@@ -6,10 +6,7 @@ import { Router } from '@angular/router';
 import { ImagePickerComponent } from 'src/app/components/image-picker/image-picker.component';
 import { FilesService } from 'src/app/services/files.service';
 import { AlertService } from 'src/app/services/alert.service';
-import {
-  TASK_PRIORITY_ID_ENUM,
-  TASK_STATUS_ID_ENUM,
-} from 'src/app/enums/tasks.enum';
+import { TASK_STATUS_DESC_ENUM } from 'src/app/enums/tasks.enum';
 
 @Component({
   selector: 'app-checklist-details',
@@ -19,8 +16,14 @@ import {
   imports: [SharedModule, ImagePickerComponent],
 })
 export class ChecklistDetailsPage implements OnInit {
+  TaskStatusDescEnum = TASK_STATUS_DESC_ENUM;
   isLoading: boolean = false;
   checklistDetails: any;
+
+  editTitle: boolean = false;
+  editDescription: boolean = false;
+  newTitle: string | undefined;
+  newDescription: string | undefined;
 
   constructor(
     private checklistService: ChecklistService,
@@ -89,6 +92,10 @@ export class ChecklistDetailsPage implements OnInit {
   }
 
   async onRemoveAttachment(attId: string) {
+    if (this.editTitle || this.editDescription) {
+      return;
+    }
+
     const isConfirmed = await this.alertService.presentAlert(
       'Remove attachment?',
       'Are you sure you want to remove this attachment?'
@@ -114,14 +121,71 @@ export class ChecklistDetailsPage implements OnInit {
   }
 
   onOpenImage(imgUrl: string) {
+    if (this.editTitle || this.editDescription) {
+      return;
+    }
+
     this.filesService.openImage(imgUrl);
   }
 
-  getTaskStatus(statusId: number) {
-    return TASK_STATUS_ID_ENUM[statusId];
+  onClickEdit(type: string) {
+    if (this.editTitle || this.editDescription) {
+      return;
+    }
+
+    if (type === 'title') {
+      this.editTitle = true;
+      this.newTitle = this.checklistDetails.title;
+    } else if (type === 'description') {
+      this.editDescription = true;
+      this.newDescription = this.checklistDetails.description;
+    }
   }
 
-  getTaskPriority(priorityId: number) {
-    return TASK_PRIORITY_ID_ENUM[priorityId] + ' Priority';
+  onCancelEdit(type: string) {
+    if (type === 'title') {
+      this.editTitle = false;
+      this.newTitle = undefined;
+    } else if (type === 'description') {
+      this.editDescription = false;
+      this.newDescription = undefined;
+    }
+  }
+
+  onConfirmEdit(type: string) {
+    if (type === 'title') {
+      if (this.newTitle.trim().length < 5) {
+        this.toastService.showErrorToast(
+          'Title should be atleat 5 characters!'
+        );
+      } else {
+        this.updateChecklistDetails({ title: this.newTitle }, type);
+      }
+    } else if (type === 'description') {
+      if (this.newDescription.trim().length < 5) {
+        this.toastService.showErrorToast(
+          'Description should be atleat 5 characters!'
+        );
+      } else {
+        this.updateChecklistDetails({ description: this.newDescription }, type);
+      }
+    }
+  }
+
+  updateChecklistDetails(reqBody: any, type: string) {
+    this.checklistService
+      .EditChecklistDetailsById(this.checklistDetails._id, reqBody)
+      .subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            this.toastService.showSuccessToast(res.message);
+            this.onCancelEdit(type);
+            this.ionViewWillEnter();
+          }
+        },
+        error: (err: any) => {
+          this.toastService.showErrorToast(err.error.message);
+        },
+      });
   }
 }

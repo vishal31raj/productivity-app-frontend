@@ -4,6 +4,7 @@
   expand="block"
   class="mb-3"
   (click)="openCamera()"
+  [disabled]="disabled"
 >
   <ion-icon slot="start" name="camera-outline"></ion-icon> {{ buttonName }}
 </ion-button>

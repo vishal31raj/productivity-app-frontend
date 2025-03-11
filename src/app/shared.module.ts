@@ -7,6 +7,8 @@ import { HeaderPage } from './pages/shared/header/header.page';
 import { LoaderComponent } from './components/loader/loader.component';
 import { EmptyListComponent } from './components/empty-list/empty-list.component';
 import { AvatarImageComponent } from './components/avatar-image/avatar-image.component';
+import { PriorityBadgeComponent } from './components/priority-badge/priority-badge.component';
+import { StatusChipComponent } from './components/status-chip/status-chip.component';
 
 @NgModule({
   imports: [
@@ -19,7 +21,8 @@ import { AvatarImageComponent } from './components/avatar-image/avatar-image.com
     LoaderComponent,
     EmptyListComponent,
     AvatarImageComponent,
-    // ImagePickerComponent,
+    PriorityBadgeComponent,
+    StatusChipComponent
   ],
   exports: [
     CommonModule,
@@ -31,7 +34,8 @@ import { AvatarImageComponent } from './components/avatar-image/avatar-image.com
     LoaderComponent,
     EmptyListComponent,
     AvatarImageComponent,
-    // ImagePickerComponent,
+    PriorityBadgeComponent,
+    StatusChipComponent
   ],
 })
 export class SharedModule {}
