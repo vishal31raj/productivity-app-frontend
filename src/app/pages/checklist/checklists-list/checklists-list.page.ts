@@ -40,7 +40,6 @@ export class ChecklistsListPage implements OnInit {
       next: (res: any) => {
         if (res.success) {
           this.checklists = res.data;
-          console.log(this.checklists);
           this.isLoading = false;
         }
       },

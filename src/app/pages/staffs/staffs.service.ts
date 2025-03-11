@@ -35,4 +35,8 @@ export class StaffsService {
       documentId: docId,
     });
   }
+
+  getTasksAssignedToStaff(staffId: string) {
+    return this.http.get(API_ROUTES.GetTasksAssignedToStaff + '/' + staffId);
+  }
 }

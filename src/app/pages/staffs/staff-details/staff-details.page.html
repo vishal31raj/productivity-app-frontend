@@ -44,7 +44,7 @@
 
     <!-- Tasks -->
     <div *ngIf="selectedTab === 'tasks'">
-      <app-tasks></app-tasks>
+      <app-tasks [staffId]="staffDetails._id"></app-tasks>
     </div>
   </div>
 </ion-content>

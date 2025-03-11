@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
 import { AppRoutingConstants } from 'src/app/constants/app-routing';
 import { Router } from '@angular/router';
 
-interface UploadFile {
+export interface UploadFileInterface {
   file: File | undefined;
   fileUrl: string | undefined;
 }
@@ -26,7 +26,7 @@ export class CreateNewChecklistPage implements OnInit {
   isLoading: boolean = false;
   createNewChecklistForm!: FormGroup;
 
-  selectedFiles: UploadFile[] = [];
+  selectedFiles: UploadFileInterface[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -48,11 +48,10 @@ export class CreateNewChecklistPage implements OnInit {
   }
 
   onPickImage(file: File) {
-    const newFile: UploadFile = { file, fileUrl: undefined };
+    const newFile: UploadFileInterface = { file, fileUrl: undefined };
     this.filesService.convertFileToDataUrl(file).then((dataUrl) => {
       newFile.fileUrl = dataUrl;
       this.selectedFiles.push(newFile);
-      console.log(this.selectedFiles);
     });
   }
 
@@ -88,7 +87,7 @@ export class CreateNewChecklistPage implements OnInit {
         if (res.success) {
           this.toastService.showSuccessToast(res.message);
           this.isLoading = false;
-          // this.location.back();
+          this.createNewChecklistForm.reset();
           this.router.navigate([
             this.APP_ROUTES.ChecklistDetails + '/' + res.data,
           ]);

@@ -7,16 +7,19 @@ import { ImagePickerComponent } from 'src/app/components/image-picker/image-pick
 import { FilesService } from 'src/app/services/files.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { TASK_STATUS_DESC_ENUM } from 'src/app/enums/tasks.enum';
+import { AppRoutingConstants } from 'src/app/constants/app-routing';
+import { TaskCardComponent } from 'src/app/components/task-card/task-card.component';
 
 @Component({
   selector: 'app-checklist-details',
   templateUrl: './checklist-details.page.html',
   styleUrls: ['./checklist-details.page.scss'],
   standalone: true,
-  imports: [SharedModule, ImagePickerComponent],
+  imports: [SharedModule, ImagePickerComponent, TaskCardComponent],
 })
 export class ChecklistDetailsPage implements OnInit {
-  TaskStatusDescEnum = TASK_STATUS_DESC_ENUM;
+  APP_ROUTES = AppRoutingConstants;
+
   isLoading: boolean = false;
   checklistDetails: any;
 
@@ -52,9 +55,6 @@ export class ChecklistDetailsPage implements OnInit {
               item.imgUrl = this.filesService.formatImageUrl(item.imgUrl);
             });
           }
-
-          console.log(this.checklistDetails);
-
           this.isLoading = false;
         }
       },
@@ -187,5 +187,12 @@ export class ChecklistDetailsPage implements OnInit {
           this.toastService.showErrorToast(err.error.message);
         },
       });
+  }
+
+  onTaskItemClick(taskId: string) {
+    if (this.editTitle || this.editDescription) {
+      return;
+    }
+    this.router.navigate([this.APP_ROUTES.TaskDetails + '/' + taskId]);
   }
 }

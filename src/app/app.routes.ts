@@ -69,7 +69,7 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'task-details',
+        path: 'task-details/:id',
         loadComponent: () =>
           import('./pages/tasks/task-details/task-details.page').then(
             (m) => m.TaskDetailsPage
@@ -83,7 +83,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'create-new-task',
+        path: 'create-new-task/:checklistId',
         loadComponent: () =>
           import('./pages/tasks/create-new-task/create-new-task.page').then(
             (m) => m.CreateNewTaskPage

@@ -1,3 +1,13 @@
-<div class="ion-padding">
-  Tasks
+<div class="ion-padding-vertical">
+  <div *ngIf="tasksList?.length <= 0">
+    <app-empty-list [message]="'No tasks found!'"></app-empty-list>
+  </div>
+
+  <div *ngIf="tasksList?.length > 0">
+    <app-task-card
+      [taskDetails]="task"
+      *ngFor="let task of tasksList"
+      (click)="onTaskItemClick(task._id)"
+    ></app-task-card>
+  </div>
 </div>

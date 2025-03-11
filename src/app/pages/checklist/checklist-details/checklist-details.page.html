@@ -46,7 +46,7 @@
     </div>
 
     <p class="dates">
-      Last updated at: {{ checklistDetails.updatedAt | date: 'hh:mm a' }}
+      Last updated at: {{ checklistDetails.updatedAt | date: 'hh:mm a, dd MMM yyyy' }}
     </p>
     <p class="dates">
       Created at: {{ checklistDetails.createdAt | date: 'hh:mm a, dd MMM yyyy'
@@ -140,28 +140,11 @@
         class="ion-margin-vertical"
         *ngIf="checklistDetails.tasks.length > 0"
       >
-        <div
-          class="tasks-item ion-margin-bottom ion-padding"
+        <app-task-card
+          [taskDetails]="task"
           *ngFor="let task of checklistDetails.tasks"
-        >
-          <p class="title">{{ task.title }}</p>
-          <ion-row>
-            <ion-col size="4" class="priority">
-              <app-priority-badge
-                [priorityId]="task.priorityId"
-              ></app-priority-badge>
-            </ion-col>
-            <ion-col size="3" class="status">
-              <app-status-chip
-                [statusId]="task.statusId"
-                [statusDescArr]="TaskStatusDescEnum"
-              ></app-status-chip>
-            </ion-col>
-            <ion-col size="5" class="assignedTo" *ngIf="task.assignedTo">
-              {{ task.assignedTo.name }}
-            </ion-col>
-          </ion-row>
-        </div>
+          (click)="onTaskItemClick(task._id)"
+        ></app-task-card>
       </div>
 
       <ion-button
@@ -171,6 +154,7 @@
         fill="outline"
         color="medium"
         [disabled]="editTitle || editDescription"
+        [routerLink]="APP_ROUTES.CreateNewTask + '/' + checklistDetails._id"
       >
         + Add New Task
       </ion-button>

@@ -1,3 +1,79 @@
 <app-header title="Create New Task" type="secondary"></app-header>
 
-<ion-content [fullscreen]="true"> Create new task </ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form
+    [formGroup]="createNewTaskForm"
+    (ngSubmit)="onConfirmCreateTask()"
+  >
+    <ion-textarea
+      label="Title"
+      class="ion-margin-bottom"
+      label-placement="floating"
+      fill="outline"
+      [autoGrow]="true"
+      rows="3"
+      mode="md"
+      placeholder="Give your task a title..."
+      formControlName="title"
+    ></ion-textarea>
+
+    <div *ngIf="title?.invalid && title?.touched" class="text-danger">
+      <small *ngIf="title?.errors?.['minlength']">
+        Title should be minimum 5 characters.
+      </small>
+      <small *ngIf="title?.errors?.['required']"> Title is required. </small>
+    </div>
+
+    <ion-textarea
+      label="Description"
+      class="ion-margin-bottom"
+      label-placement="floating"
+      fill="outline"
+      [autoGrow]="true"
+      rows="5"
+      mode="md"
+      placeholder="Enter some description..."
+      formControlName="description"
+    ></ion-textarea>
+
+    <div
+      *ngIf="description?.invalid && description?.touched"
+      class="text-danger"
+    >
+      <small *ngIf="description?.errors?.['minlength']">
+        Description should be minimum 5 characters.
+      </small>
+    </div>
+
+    <ion-row *ngIf="selectedFiles.length > 0">
+      <ion-col size="4" *ngFor="let item of selectedFiles">
+        <div class="img-col">
+          <div class="img-div">
+            <img [src]="item.fileUrl" alt="" />
+          </div>
+          <div class="remove-img-btn" (click)="onRemoveImg(item.file.lastModified)">
+            <ion-icon name="close-outline"></ion-icon>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <div class="ion-margin-bottom">
+      <app-image-picker
+        [buttonName]="'Add Image'"
+        (imgPickedEvent)="onPickImage($event)"
+      ></app-image-picker>
+    </div>
+
+    <div class="my-5">
+      <ion-button
+        mode="ios"
+        type="submit"
+        expand="block"
+        [disabled]="createNewTaskForm.invalid || isLoading"
+      >
+        Create
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
