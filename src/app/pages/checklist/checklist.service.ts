@@ -10,7 +10,7 @@ export class ChecklistService {
   constructor(private http: HttpClient) {}
 
   getAllCheckLists(filters: any) {
-    return this.http.get(API_ROUTES.GetAllChecklists, filters);
+    return this.http.post(API_ROUTES.GetAllChecklists, filters);
   }
 
   createNewChecklist(formData: FormData) {
@@ -42,5 +42,9 @@ export class ChecklistService {
       API_ROUTES.RemoveAttachmentFromChecklistById + '/' + checklistId,
       reqBody
     );
+  }
+
+  DeleteChecklistById(checklistId: string) {
+    return this.http.delete(API_ROUTES.DeleteCheckListById + '/' + checklistId);
   }
 }

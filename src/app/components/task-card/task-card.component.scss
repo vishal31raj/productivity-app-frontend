@@ -16,6 +16,11 @@
       padding: 0;
     }
 
+    .priority {
+      display: flex;
+      align-items: center;
+    }
+
     .assignedTo {
       font-size: 14px;
       font-weight: 600;
