@@ -12,6 +12,7 @@ import {
 } from 'src/app/enums/tasks.enum';
 import { AlertController } from '@ionic/angular';
 import { StaffsService } from '../../staffs/staffs.service';
+import { RelativeTimePipe } from 'src/app/pipes/relative-time.pipe';
 
 interface AppSelectInput {
   type: 'radio' | 'checkbox' | 'text';
@@ -36,7 +37,7 @@ interface AppSelectAlert {
   templateUrl: './task-details.page.html',
   styleUrls: ['./task-details.page.scss'],
   standalone: true,
-  imports: [SharedModule, ImagePickerComponent],
+  imports: [SharedModule, ImagePickerComponent, RelativeTimePipe],
 })
 export class TaskDetailsPage implements OnInit {
   TaskStatusDescEnum = TASK_STATUS_DESC_ENUM;
@@ -76,6 +77,15 @@ export class TaskDetailsPage implements OnInit {
           if (this.taskDetails.attachments.length > 0) {
             this.taskDetails.attachments.forEach((item: any) => {
               item.imgUrl = this.filesService.formatImageUrl(item.imgUrl);
+            });
+          }
+          if (this.taskDetails.comments.length > 0) {
+            this.taskDetails.comments.forEach((comment: any) => {
+              if (comment.attachments.length) {
+                comment.attachments.forEach((item: any) => {
+                  item.imgUrl = this.filesService.formatImageUrl(item.imgUrl);
+                });
+              }
             });
           }
 

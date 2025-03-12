@@ -28,7 +28,6 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-
     provideHttpClient(withInterceptorsFromDi()),
 
     {
@@ -36,7 +35,7 @@ bootstrapApplication(AppComponent, {
       useClass: AuthInterceptorService,
       multi: true,
     },
-    { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
   ],
 });
 

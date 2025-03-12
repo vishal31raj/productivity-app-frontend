@@ -10,13 +10,13 @@
   </div>
 
   <div *ngIf="isLoading === false && taskDetails">
+    <!-- Title -->
     <p class="title" *ngIf="!editTitle">
       {{ taskDetails.title }}
       <span class="ms-2 edit-btn" (click)="onClickEdit('title')">
         <ion-icon name="create-outline"></ion-icon>
       </span>
     </p>
-
     <div class="ion-margin-bottom" *ngIf="editTitle">
       <ion-textarea
         label="Title"
@@ -55,6 +55,7 @@
 
     <hr />
 
+    <!-- TaskInfo -->
     <ion-row>
       <ion-col size="3" class="priority" (click)="openSelectAlert('priority')">
         <app-priority-badge
@@ -69,20 +70,22 @@
         ></app-status-chip>
         <ion-icon name="chevron-down-outline"></ion-icon>
       </ion-col>
-      <ion-col size="5" class="assignedTo"  (click)="openSelectAlert('staff')">
+      <ion-col size="5" class="assignedTo" (click)="openSelectAlert('staff')">
         <app-avatar-image
           [imgUrl]="taskDetails.assignedTo.profileImgUrl"
           [height]="'25px'"
           [width]="'25px'"
           *ngIf="taskDetails.assignedTo"
         ></app-avatar-image>
-        {{ taskDetails.assignedTo ? taskDetails.assignedTo.name : 'Not assigned' }}
+        {{ taskDetails.assignedTo ? taskDetails.assignedTo.name : 'Not assigned'
+        }}
         <ion-icon name="chevron-down-outline"></ion-icon>
       </ion-col>
     </ion-row>
 
     <hr />
 
+    <!-- Description -->
     <div class="description">
       <p class="header">Description:</p>
       <p class="desc-text" *ngIf="!editDescription">
@@ -126,6 +129,7 @@
 
     <hr />
 
+    <!-- Attachments -->
     <div class="attachments">
       <p class="header">Attachments ({{ taskDetails.attachments.length }}) :</p>
 
@@ -160,5 +164,53 @@
     <hr />
 
     <!-- Comments -->
+    <div class="comments">
+      <p class="header">Comments ({{ taskDetails.comments.length }}) :</p>
+
+      <div class="add-new-comment ion-margin-top">
+        <div>
+          Add comment...
+        </div>
+        <div class="icons">
+          <ion-icon name="camera-outline"></ion-icon>
+        </div>
+      </div>
+
+      <div class="ion-margin-vertical" *ngIf="taskDetails.comments.length">
+        <div
+          class="comment-card ion-margin-bottom"
+          *ngFor="let comment of taskDetails.comments"
+        >
+          <div class="commentedBy">
+            <app-avatar-image
+              [imgUrl]="comment.commentedBy.profileImgUrl"
+              [height]="'25px'"
+              [width]="'25px'"
+            ></app-avatar-image>
+            {{ comment.commentedBy.name }}
+            <p class="date m-0">{{ comment.updatedAt | relativeTime }}</p>
+
+            <div class="action" *ngIf="comment.actionAllowed">
+              <ion-button size="small" fill="clear" color="medium">
+                <ion-icon
+                  slot="icon-only"
+                  name="ellipsis-horizontal"
+                ></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+          <p class="comment-text">{{ comment.comment }}</p>
+          <ion-row *ngIf="comment.attachments.length">
+            <ion-col size="3" *ngFor="let item of comment.attachments">
+              <div class="comment-img">
+                <div class="img-div" (click)="onOpenImage(item.imgUrl)">
+                  <img [src]="item.imgUrl" alt="" />
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </div>
   </div>
 </ion-content>
