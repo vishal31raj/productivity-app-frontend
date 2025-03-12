@@ -6,7 +6,30 @@ import { ToastService } from 'src/app/services/toast.service';
 import { ImagePickerComponent } from 'src/app/components/image-picker/image-picker.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { FilesService } from 'src/app/services/files.service';
-import { TASK_STATUS_DESC_ENUM } from 'src/app/enums/tasks.enum';
+import {
+  TASK_PRIORITY_DESC_ENUM,
+  TASK_STATUS_DESC_ENUM,
+} from 'src/app/enums/tasks.enum';
+import { AlertController } from '@ionic/angular';
+import { StaffsService } from '../../staffs/staffs.service';
+
+interface AppSelectInput {
+  type: 'radio' | 'checkbox' | 'text';
+  label: string;
+  value: string | number;
+}
+
+interface AppSelectButton {
+  text: string;
+  role?: string;
+  handler?: (value?: any) => void;
+}
+
+interface AppSelectAlert {
+  header: string;
+  inputs: AppSelectInput[];
+  buttons: AppSelectButton[];
+}
 
 @Component({
   selector: 'app-task-details',
@@ -31,7 +54,9 @@ export class TaskDetailsPage implements OnInit {
     private tasksService: TasksService,
     private toastService: ToastService,
     private alertService: AlertService,
-    private filesService: FilesService
+    private filesService: FilesService,
+    private alertController: AlertController,
+    private staffsService: StaffsService
   ) {}
 
   ngOnInit() {}
@@ -159,7 +184,7 @@ export class TaskDetailsPage implements OnInit {
           'Title should be atleat 5 characters!'
         );
       } else {
-        this.updateChecklistDetails({ title: this.newTitle }, type);
+        this.updateTaskDetails({ title: this.newTitle }, type);
       }
     } else if (type === 'description') {
       if (this.newDescription.trim().length < 5) {
@@ -167,17 +192,125 @@ export class TaskDetailsPage implements OnInit {
           'Description should be atleat 5 characters!'
         );
       } else {
-        this.updateChecklistDetails({ description: this.newDescription }, type);
+        this.updateTaskDetails({ description: this.newDescription }, type);
       }
     }
   }
 
-  updateChecklistDetails(reqBody: any, type: string) {
+  updateTaskDetails(reqBody: any, type: string | null) {
     this.tasksService.editTaskDetails(this.taskDetails._id, reqBody).subscribe({
       next: (res: any) => {
         if (res.success) {
           this.toastService.showSuccessToast(res.message);
-          this.onCancelEdit(type);
+          if (type) {
+            this.onCancelEdit(type);
+          }
+          this.ionViewWillEnter();
+        }
+      },
+      error: (err: any) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
+
+  async openSelectAlert(type: string) {
+    let selectAlertBody: AppSelectAlert = {
+      header: undefined,
+      inputs: undefined,
+      buttons: undefined,
+    };
+
+    if (type === 'priority') {
+      selectAlertBody = {
+        header: 'Change Task Priority',
+        inputs: TASK_PRIORITY_DESC_ENUM.map((item: any) => ({
+          type: 'radio',
+          label: item.name,
+          value: item.id,
+        })),
+        buttons: [
+          { text: 'Cancel', role: 'cancel' },
+          {
+            text: 'Confirm',
+            handler: (data) => {
+              if (data) {
+                this.updateTaskDetails({ priorityId: data }, null);
+              }
+            },
+          },
+        ],
+      };
+    } else if (type === 'status') {
+      selectAlertBody = {
+        header: 'Change Task Status',
+        inputs: TASK_STATUS_DESC_ENUM.map((item: any) => ({
+          type: 'radio',
+          label: item.name,
+          value: item.id,
+        })),
+        buttons: [
+          { text: 'Cancel', role: 'cancel' },
+          {
+            text: 'Confirm',
+            handler: (data) => {
+              if (data) {
+                this.updateTaskDetails({ statusId: data }, null);
+              }
+            },
+          },
+        ],
+      };
+    } else if (type === 'staff') {
+      const activeStaffsList = await this.getAllActiveStaffs();
+
+      selectAlertBody = {
+        header: 'Change Assigned Staff',
+        inputs: activeStaffsList.map((item: any) => ({
+          type: 'radio',
+          label: item.name,
+          value: item._id,
+        })),
+        buttons: [
+          { text: 'Cancel', role: 'cancel' },
+          {
+            text: 'Confirm',
+            handler: (data) => {
+              if (data) {
+                this.assignTaskToStaff(data);
+              }
+            },
+          },
+        ],
+      };
+    }
+
+    const alert = await this.alertController.create(selectAlertBody);
+
+    await alert.present();
+
+    await alert.onDidDismiss();
+    document.body.focus();
+  }
+
+  getAllActiveStaffs(): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      this.staffsService.getAllStaffs({ isActive: true }).subscribe({
+        next: (res: any) => resolve(res.success ? res.data : []),
+        error: () => resolve([]),
+      });
+    });
+  }
+
+  assignTaskToStaff(staffId: string) {
+    const reqBody = {
+      taskId: this.taskDetails._id,
+      staffId: staffId,
+    };
+    this.tasksService.assignTaskToStaff(reqBody).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.toastService.showSuccessToast(res.message);
           this.ionViewWillEnter();
         }
       },

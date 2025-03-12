@@ -1,12 +1,12 @@
 <div class="tasks-item ion-margin-bottom ion-padding">
   <p class="title">{{ taskDetails.title }}</p>
   <ion-row>
-    <ion-col size="4" class="priority">
+    <ion-col size="3" class="priority">
       <app-priority-badge
         [priorityId]="taskDetails.priorityId"
       ></app-priority-badge>
     </ion-col>
-    <ion-col size="3" class="status">
+    <ion-col size="4" class="status">
       <app-status-chip
         [statusId]="taskDetails.statusId"
         [statusDescArr]="TaskStatusDescEnum"

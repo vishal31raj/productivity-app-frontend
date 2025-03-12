@@ -8,7 +8,7 @@ export const TASK_STATUS_ID_ENUM = {
   IN_ANALYSIS: 5,
   RE_OPEN: 6,
   DONE: 7,
-  REJECTED: 8
+  REJECTED: 8,
 };
 
 export const TASK_STATUS_DESC_ENUM: StatusChipInterface[] = [
@@ -52,11 +52,28 @@ export const TASK_STATUS_DESC_ENUM: StatusChipInterface[] = [
     name: 'Rejected',
     cssClass: 'red',
   },
-
 ];
 
 export const TASK_PRIORITY_ID_ENUM = {
-  1: 'LOW',
-  2: 'MEDIUM',
-  3: 'HIGH',
+  LOW: 1,
+  MEDIUM: 2,
+  HIGH: 3,
 };
+
+export const TASK_PRIORITY_DESC_ENUM = [
+  {
+    id: TASK_PRIORITY_ID_ENUM.LOW,
+    name: 'Low',
+    cssClass: 'low',
+  },
+  {
+    id: TASK_PRIORITY_ID_ENUM.MEDIUM,
+    name: 'Medium',
+    cssClass: 'medium',
+  },
+  {
+    id: TASK_PRIORITY_ID_ENUM.HIGH,
+    name: 'High',
+    cssClass: 'high',
+  },
+];

@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TASK_PRIORITY_ID_ENUM } from 'src/app/enums/tasks.enum';
+import {
+  TASK_PRIORITY_DESC_ENUM,
+  TASK_PRIORITY_ID_ENUM,
+} from 'src/app/enums/tasks.enum';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
@@ -17,11 +20,9 @@ export class PriorityBadgeComponent implements OnInit {
 
   ngOnInit() {}
 
-  getTaskPriority() {
-    return TASK_PRIORITY_ID_ENUM[this.priorityId] + ' Priority';
-  }
-
-  getPriorityClass(): string {
-    return this.priorityId === 1 ? 'low' : this.priorityId === 2 ? 'medium' : 'high';
+  getPriorityClass() {
+    return TASK_PRIORITY_DESC_ENUM.find(
+      (item: any) => item.id === this.priorityId
+    );
   }
 }

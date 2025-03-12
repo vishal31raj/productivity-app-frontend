@@ -1,4 +1,4 @@
-<p class="tag" [ngClass]="getPriorityClass()">
+<p class="tag" [ngClass]="getPriorityClass().cssClass">
   <ion-icon name="arrow-up-circle-outline"></ion-icon>
-  {{ getTaskPriority() | titlecase }}
+  {{ getPriorityClass().name }}
 </p>

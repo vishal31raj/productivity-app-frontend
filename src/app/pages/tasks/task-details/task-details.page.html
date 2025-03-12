@@ -56,24 +56,28 @@
     <hr />
 
     <ion-row>
-      <ion-col size="4" class="priority">
+      <ion-col size="3" class="priority" (click)="openSelectAlert('priority')">
         <app-priority-badge
           [priorityId]="taskDetails.priorityId"
         ></app-priority-badge>
+        <ion-icon name="chevron-down-outline"></ion-icon>
       </ion-col>
-      <ion-col size="3" class="status">
+      <ion-col size="4" class="status" (click)="openSelectAlert('status')">
         <app-status-chip
           [statusId]="taskDetails.statusId"
           [statusDescArr]="TaskStatusDescEnum"
         ></app-status-chip>
+        <ion-icon name="chevron-down-outline"></ion-icon>
       </ion-col>
-      <ion-col size="5" class="assignedTo" *ngIf="taskDetails.assignedTo">
+      <ion-col size="5" class="assignedTo"  (click)="openSelectAlert('staff')">
         <app-avatar-image
           [imgUrl]="taskDetails.assignedTo.profileImgUrl"
           [height]="'25px'"
           [width]="'25px'"
+          *ngIf="taskDetails.assignedTo"
         ></app-avatar-image>
-        {{ taskDetails.assignedTo.name }}
+        {{ taskDetails.assignedTo ? taskDetails.assignedTo.name : 'Not assigned' }}
+        <ion-icon name="chevron-down-outline"></ion-icon>
       </ion-col>
     </ion-row>
 
