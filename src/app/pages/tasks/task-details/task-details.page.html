@@ -68,6 +68,11 @@
         ></app-status-chip>
       </ion-col>
       <ion-col size="5" class="assignedTo" *ngIf="taskDetails.assignedTo">
+        <app-avatar-image
+          [imgUrl]="taskDetails.assignedTo.profileImgUrl"
+          [height]="'25px'"
+          [width]="'25px'"
+        ></app-avatar-image>
         {{ taskDetails.assignedTo.name }}
       </ion-col>
     </ion-row>

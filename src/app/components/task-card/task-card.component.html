@@ -1,10 +1,10 @@
-<div
-  class="tasks-item ion-margin-bottom ion-padding"
->
+<div class="tasks-item ion-margin-bottom ion-padding">
   <p class="title">{{ taskDetails.title }}</p>
   <ion-row>
     <ion-col size="4" class="priority">
-      <app-priority-badge [priorityId]="taskDetails.priorityId"></app-priority-badge>
+      <app-priority-badge
+        [priorityId]="taskDetails.priorityId"
+      ></app-priority-badge>
     </ion-col>
     <ion-col size="3" class="status">
       <app-status-chip
@@ -13,6 +13,11 @@
       ></app-status-chip>
     </ion-col>
     <ion-col size="5" class="assignedTo" *ngIf="taskDetails.assignedTo">
+      <app-avatar-image
+        [imgUrl]="taskDetails.assignedTo.profileImgUrl"
+        [height]="'25px'"
+        [width]="'25px'"
+      ></app-avatar-image>
       {{ taskDetails.assignedTo.name }}
     </ion-col>
   </ion-row>
