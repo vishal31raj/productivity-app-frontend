@@ -36,7 +36,6 @@ export class TasksComponent implements OnInit {
       next: (res: any) => {
         if (res.success === true) {
           this.tasksList = res.data;
-          console.log(this.tasksList);
         }
       },
       error: (err: any) => {

@@ -19,6 +19,12 @@
           <img [src]="userDetails.profileImgUrl ?? DUMMY_IMG_URL" class="img" />
         </div>
       </ion-button>
+      <ion-button
+        *ngIf="type === 'secondary' && showDelete"
+        (click)="onDeleteBtnClick()"
+      >
+        <ion-icon slot="icon-only" color="danger" name="trash-outline"></ion-icon>
+      </ion-button>
       <ion-button *ngIf="type === 'tertiary'" (click)="onCloseBtnClick()">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
       </ion-button>

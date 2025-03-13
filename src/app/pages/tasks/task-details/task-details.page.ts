@@ -14,6 +14,7 @@ import { AlertController } from '@ionic/angular';
 import { StaffsService } from '../../staffs/staffs.service';
 import { RelativeTimePipe } from 'src/app/pipes/relative-time.pipe';
 import { CommentSectionComponent } from 'src/app/components/comment-section/comment-section.component';
+import { Location } from '@angular/common';
 
 interface AppSelectInput {
   type: 'radio' | 'checkbox' | 'text';
@@ -58,7 +59,8 @@ export class TaskDetailsPage implements OnInit {
     private alertService: AlertService,
     private filesService: FilesService,
     private alertController: AlertController,
-    private staffsService: StaffsService
+    private staffsService: StaffsService,
+    private location: Location
   ) {}
 
   ngOnInit() {}
@@ -89,8 +91,6 @@ export class TaskDetailsPage implements OnInit {
               }
             });
           }
-
-          // console.log('taskDetails', this.taskDetails);
           this.isLoading = false;
         }
       },
@@ -331,8 +331,26 @@ export class TaskDetailsPage implements OnInit {
     });
   }
 
-  onAddEditComment(event: any) {
-    this.addNewComment(event);
+  onAddEditComment(reqBody: any) {
+    if (reqBody.commentId) {
+      this.editComment(reqBody);
+    } else {
+      this.addNewComment(reqBody);
+    }
+  }
+
+  editComment(reqBody: any) {
+    this.tasksService.editCommentOnTaskById(reqBody).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.toastService.showSuccessToast(res.message);
+          this.ionViewWillEnter();
+        }
+      },
+      error: (err: any) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
   }
 
   addNewComment(reqBody: any) {
@@ -371,5 +389,39 @@ export class TaskDetailsPage implements OnInit {
         this.toastService.showErrorToast(err.error.message);
       },
     });
+  }
+
+  onRemoveAttachmentFromComment(reqBody: any) {
+    this.tasksService.RemoveAttachmentFromComment(reqBody).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.toastService.showSuccessToast(res.message);
+          this.ionViewWillEnter();
+        }
+      },
+      error: (err: any) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
+
+  async onDeleteTask() {
+    const isConfirmed = await this.alertService.presentAlert(
+      'Delete Task?',
+      'Deleting task would delete all its attachements and comments. Are you sure you want to performthis action?'
+    );
+    if (isConfirmed) {
+      this.tasksService.deleteTaskById(this.taskDetails._id).subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            this.toastService.showSuccessToast(res.message);
+            this.location.back();
+          }
+        },
+        error: (err: any) => {
+          this.toastService.showErrorToast(err.error.message);
+        },
+      });
+    }
   }
 }

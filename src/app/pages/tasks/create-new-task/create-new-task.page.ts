@@ -47,7 +47,6 @@ export class CreateNewTaskPage implements OnInit {
     this.filesService.convertFileToDataUrl(file).then((dataUrl) => {
       newFile.fileUrl = dataUrl;
       this.selectedFiles.push(newFile);
-      console.log(this.selectedFiles);
     });
   }
 

@@ -19,7 +19,11 @@ export class HeaderPage implements OnInit {
 
   @Input() type: string | undefined;
   @Input() title: string | undefined;
+  @Input() showDelete: boolean = false;
+
   @Output() closeBtnClickEvent: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
+  @Output() deleteBtnClickEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
   constructor(
@@ -39,5 +43,9 @@ export class HeaderPage implements OnInit {
 
   onCloseBtnClick() {
     this.closeBtnClickEvent?.emit(false);
+  }
+
+  onDeleteBtnClick() {
+    this.deleteBtnClickEvent.emit();
   }
 }

@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 export interface UploadFileInterface {
   file: File | undefined;
   fileUrl: string | undefined;
+
+  _id?: string;
+  imgUrl?: string;
 }
 
 @Component({

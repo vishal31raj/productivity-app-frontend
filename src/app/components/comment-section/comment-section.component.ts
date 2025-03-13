@@ -16,6 +16,8 @@ export class CommentSectionComponent implements OnInit {
   @Input() comments: any[];
   @Output() addEditCommentEvent: EventEmitter<any> = new EventEmitter();
   @Output() deleteCommentEvent: EventEmitter<any> = new EventEmitter();
+  @Output() removeAttachmentFromCommentEvent: EventEmitter<any> =
+    new EventEmitter();
 
   isActionSheetOpen: boolean = false;
   public actionSheetButtons = [
@@ -23,6 +25,9 @@ export class CommentSectionComponent implements OnInit {
       text: 'Edit',
       data: {
         action: 'edit',
+      },
+      handler: () => {
+        this.onAddEditComponent();
       },
     },
     {
@@ -44,10 +49,6 @@ export class CommentSectionComponent implements OnInit {
     private modalController: ModalController
   ) {}
 
-  ngOnChanges() {
-    console.log('comments', this.comments);
-  }
-
   ngOnInit() {}
 
   onOpenImage(imgUrl: string) {
@@ -59,19 +60,26 @@ export class CommentSectionComponent implements OnInit {
     this.isActionSheetOpen = true;
   }
 
-  async onAddEditComponent(comment: any) {
+  async onAddEditComponent() {
     const modal = await this.modalController.create({
       component: AddEditCommentComponent,
       initialBreakpoint: 0.75,
       breakpoints: [0, 0.75, 1],
       componentProps: {
-        comment: comment,
+        comment: this.selectedComment,
         onCloseModal: async (event: any) => {
           await modal.dismiss();
+          this.selectedComment = undefined;
         },
         getAddEditCommentReqBody: async (reqBody) => {
           this.addEditCommentEvent.emit(reqBody);
           await modal.dismiss();
+          this.selectedComment = undefined;
+        },
+        removeAttachmentFromComment: async (reqBody) => {
+          this.removeAttachmentFromCommentEvent.emit(reqBody);
+          await modal.dismiss();
+          this.selectedComment = undefined;
         },
       },
     });

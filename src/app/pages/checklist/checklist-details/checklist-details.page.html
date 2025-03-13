@@ -1,4 +1,9 @@
-<app-header title="Checklist Details" type="secondary"></app-header>
+<app-header
+  title="Checklist Details"
+  type="secondary"
+  [showDelete]="true"
+  (deleteBtnClickEvent)="onDeleteChecklist()"
+></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
@@ -46,7 +51,8 @@
     </div>
 
     <p class="dates">
-      Last updated at: {{ checklistDetails.updatedAt | date: 'hh:mm a, dd MMM yyyy' }}
+      Last updated at: {{ checklistDetails.updatedAt | date: 'hh:mm a, dd MMM
+      yyyy' }}
     </p>
     <p class="dates">
       Created at: {{ checklistDetails.createdAt | date: 'hh:mm a, dd MMM yyyy'
