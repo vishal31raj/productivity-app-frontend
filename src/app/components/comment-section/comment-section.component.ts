@@ -15,6 +15,29 @@ import { AddEditCommentComponent } from './add-edit-comment/add-edit-comment.com
 export class CommentSectionComponent implements OnInit {
   @Input() comments: any[];
   @Output() addEditCommentEvent: EventEmitter<any> = new EventEmitter();
+  @Output() deleteCommentEvent: EventEmitter<any> = new EventEmitter();
+
+  isActionSheetOpen: boolean = false;
+  public actionSheetButtons = [
+    {
+      text: 'Edit',
+      data: {
+        action: 'edit',
+      },
+    },
+    {
+      text: 'Delete',
+      role: 'destructive',
+      data: {
+        action: 'delete',
+      },
+      handler: () => {
+        this.deleteCommentEvent.emit(this.selectedComment._id);
+      },
+    },
+  ];
+
+  selectedComment: any;
 
   constructor(
     private filesService: FilesService,
@@ -29,6 +52,11 @@ export class CommentSectionComponent implements OnInit {
 
   onOpenImage(imgUrl: string) {
     this.filesService.openImage(imgUrl);
+  }
+
+  openActionSheet(comment: any) {
+    this.selectedComment = comment;
+    this.isActionSheetOpen = true;
   }
 
   async onAddEditComponent(comment: any) {

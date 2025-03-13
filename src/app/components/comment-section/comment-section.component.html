@@ -1,6 +1,9 @@
 <div class="comments">
   <p class="header">Comments ({{ comments.length }}) :</p>
-  <div class="add-new-comment ion-margin-top" (click)="onAddEditComponent(null)">
+  <div
+    class="add-new-comment ion-margin-top"
+    (click)="onAddEditComponent(null)"
+  >
     <div>Add comment...</div>
     <div class="icons">
       <ion-icon name="camera-outline"></ion-icon>
@@ -22,7 +25,7 @@
         <p class="date m-0">{{ comment.updatedAt | relativeTime }}</p>
 
         <div class="action" *ngIf="comment.actionAllowed">
-          <ion-button size="small" fill="clear" color="medium">
+          <ion-button size="small" fill="clear" color="medium" (click)="openActionSheet(comment)">
             <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
           </ion-button>
         </div>
@@ -40,3 +43,9 @@
     </div>
   </div>
 </div>
+
+<ion-action-sheet
+  [isOpen]="isActionSheetOpen"
+  [buttons]="actionSheetButtons"
+  (didDismiss)="isActionSheetOpen = false"
+></ion-action-sheet>

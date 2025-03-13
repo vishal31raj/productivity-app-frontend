@@ -358,4 +358,18 @@ export class TaskDetailsPage implements OnInit {
       },
     });
   }
+
+  onDeleteComment(commentId: string) {
+    this.tasksService.DeleteCommentById(commentId).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.toastService.showSuccessToast(res.message);
+          this.ionViewWillEnter();
+        }
+      },
+      error: (err: any) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
 }

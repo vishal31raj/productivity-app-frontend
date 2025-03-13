@@ -167,6 +167,7 @@
     <app-comment-section
       [comments]="taskDetails.comments"
       (addEditCommentEvent)="onAddEditComment($event)"
+      (deleteCommentEvent)="onDeleteComment($event)"
     ></app-comment-section>
   </div>
 </ion-content>
