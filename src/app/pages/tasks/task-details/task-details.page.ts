@@ -13,6 +13,7 @@ import {
 import { AlertController } from '@ionic/angular';
 import { StaffsService } from '../../staffs/staffs.service';
 import { RelativeTimePipe } from 'src/app/pipes/relative-time.pipe';
+import { CommentSectionComponent } from 'src/app/components/comment-section/comment-section.component';
 
 interface AppSelectInput {
   type: 'radio' | 'checkbox' | 'text';
@@ -37,7 +38,7 @@ interface AppSelectAlert {
   templateUrl: './task-details.page.html',
   styleUrls: ['./task-details.page.scss'],
   standalone: true,
-  imports: [SharedModule, ImagePickerComponent, RelativeTimePipe],
+  imports: [SharedModule, ImagePickerComponent, CommentSectionComponent],
 })
 export class TaskDetailsPage implements OnInit {
   TaskStatusDescEnum = TASK_STATUS_DESC_ENUM;
@@ -89,7 +90,7 @@ export class TaskDetailsPage implements OnInit {
             });
           }
 
-          console.log('taskDetails', this.taskDetails);
+          // console.log('taskDetails', this.taskDetails);
           this.isLoading = false;
         }
       },
@@ -318,6 +319,34 @@ export class TaskDetailsPage implements OnInit {
       staffId: staffId,
     };
     this.tasksService.assignTaskToStaff(reqBody).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.toastService.showSuccessToast(res.message);
+          this.ionViewWillEnter();
+        }
+      },
+      error: (err: any) => {
+        this.toastService.showErrorToast(err.error.message);
+      },
+    });
+  }
+
+  onAddEditComment(event: any) {
+    this.addNewComment(event);
+  }
+
+  addNewComment(reqBody: any) {
+    const formData = new FormData();
+    formData.append('taskId', this.taskDetails._id);
+    formData.append('comment', reqBody.comment);
+
+    if (reqBody.files.length) {
+      reqBody.files.forEach((item: any) => {
+        formData.append('images', item.file);
+      });
+    }
+
+    this.tasksService.addNewCommentOnTask(formData).subscribe({
       next: (res: any) => {
         if (res.success) {
           this.toastService.showSuccessToast(res.message);

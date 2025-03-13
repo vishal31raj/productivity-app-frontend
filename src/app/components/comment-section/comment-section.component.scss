@@ -1,0 +1,55 @@
+.header {
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: #4c4c4c;
+}
+
+.comment-card {
+  border-bottom: 1px solid silver;
+
+  .commentedBy {
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+
+    .date {
+      color: gray;
+      font-weight: normal;
+      font-size: 13px;
+    }
+
+    .action {
+      margin-left: auto;
+    }
+  }
+
+  .comment-text {
+    margin: 8px 0;
+    font-size: 15px;
+    color: #2d2d2d;
+  }
+}
+
+.comment-img {
+  height: 75px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.add-new-comment {
+  border: 1px solid silver;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  color: gray;
+  border-radius: 8px;
+
+  ion-icon {
+    font-size: 22px;
+    color: #0054e9;
+  }
+}
