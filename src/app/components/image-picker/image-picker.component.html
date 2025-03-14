@@ -2,9 +2,9 @@
   mode="ios"
   fill="outline"
   expand="block"
-  class="mb-3"
   (click)="openCamera()"
   [disabled]="disabled"
 >
-  <ion-icon slot="start" name="camera-outline"></ion-icon> {{ buttonName }}
+  <ion-icon [slot]="buttonName ? 'start' : 'icon-only'" name="camera-outline"></ion-icon> 
+  <span *ngIf="buttonName">{{ buttonName }}</span>
 </ion-button>

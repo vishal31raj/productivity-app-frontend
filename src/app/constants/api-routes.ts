@@ -1,10 +1,7 @@
 export const API_ROUTES = {
   // Auth
   UserLogin: '/auth/user-login',
-  ResetPassword: '/auth/resetPassword',
   ForgotPassword: '/auth/forgotPassword',
-  GetProfileDetails: '/auth/getUserProfileDetails',
-  ChangeProfileImg: '/auth/changeProfileImg',
 
   // Staffs
   CreateStaff: '/user/createStaff',
@@ -13,6 +10,10 @@ export const API_ROUTES = {
   ChangeStaffActiveStatus: '/user/changeStaffActiveStatus',
   AddDocumentToUser: '/user/addDocumentToUserById',
   RemoveDocumentFromUser: '/user/removeDocumentFromUserById',
+  DeleteStaffById: '/user/deleteStaffById',
+  ResetPassword: '/user/resetPassword',
+  GetProfileDetails: '/user/getProfileDetails',
+  ChangeProfileImg: '/user/changeProfileImgUrl',
 
   // Checklists
   CreateNewCheckList: '/tasks/createNewChecklist',

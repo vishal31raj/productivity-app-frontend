@@ -10,7 +10,7 @@
   </p>
   <p class="info-item">
     <ion-icon name="calendar-clear-outline"></ion-icon
-    >{{ staffDetails.dateOfBirth }}
+    >{{ staffDetails.dateOfBirth | date }}
   </p>
 
   <hr />
@@ -51,18 +51,5 @@
     (click)="openAddDocumentModal()"
   >
     + Add Document
-  </ion-button>
-
-  <hr />
-
-  <ion-button
-    class="mt-5"
-    mode="ios"
-    expand="block"
-    fill="outline"
-    [color]="staffDetails.isActive ? 'danger' : 'primary'"
-    (click)="onChangeStatus()"
-  >
-    Mark as {{ staffDetails.isActive ? "Inactive" : "Active" }}
   </ion-button>
 </div>

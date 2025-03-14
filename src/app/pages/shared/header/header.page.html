@@ -15,9 +15,12 @@
         <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
       </ion-button>
       <ion-button *ngIf="type === 'primary'" [routerLink]="APP_ROUTES.Profile">
-        <div class="img-div">
-          <img [src]="userDetails.profileImgUrl ?? DUMMY_IMG_URL" class="img" />
-        </div>
+        <app-avatar-image
+          [imgUrl]="userDetails.profileImgUrl"
+          [height]="'30px'"
+          [width]="'30px'"
+          class="img-div"
+        ></app-avatar-image>
       </ion-button>
       <ion-button
         *ngIf="type === 'secondary' && showDelete"

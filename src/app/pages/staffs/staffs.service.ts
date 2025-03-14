@@ -39,4 +39,8 @@ export class StaffsService {
   getTasksAssignedToStaff(staffId: string) {
     return this.http.get(API_ROUTES.GetTasksAssignedToStaff + '/' + staffId);
   }
+
+  deleteStaffById(staffId: string) {
+    return this.http.delete(API_ROUTES.DeleteStaffById + '/' + staffId);
+  }
 }

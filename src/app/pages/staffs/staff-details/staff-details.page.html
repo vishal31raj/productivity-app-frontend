@@ -10,16 +10,30 @@
       <div>
         <app-avatar-image
           [imgUrl]="staffDetails.profileImgUrl"
+          [height]="'50px'"
+          [width]="'50px'"
         ></app-avatar-image>
       </div>
-      <p class="name mb-0 ms-3">{{ staffDetails.name }}</p>
-      <div class="status">
-        <span
-          class="status-chip"
-          [ngClass]="staffDetails.isActive ? 'green' : 'red'"
+      <div class="ms-3">
+        <p class="name mb-0">{{ staffDetails.name }}</p>
+        <div class="status">
+          <span
+            class="status-chip"
+            [ngClass]="staffDetails.isActive ? 'green' : 'red'"
+          >
+            {{ staffDetails.isActive ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
+      </div>
+      <div class="action">
+        <ion-button
+          size="small"
+          fill="clear"
+          color="medium"
+          (click)="isActionSheetOpen = true"
         >
-          {{ staffDetails.isActive ? 'Active' : 'Inactive' }}
-        </span>
+          <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+        </ion-button>
       </div>
     </div>
 
@@ -48,3 +62,9 @@
     </div>
   </div>
 </ion-content>
+
+<ion-action-sheet
+  [isOpen]="isActionSheetOpen"
+  [buttons]="actionSheetButtons"
+  (didDismiss)="isActionSheetOpen = false"
+></ion-action-sheet>

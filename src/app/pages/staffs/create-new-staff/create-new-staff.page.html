@@ -5,6 +5,7 @@
     <div class="mb-3">
       <ion-input
         type="text"
+        mode="md"
         fill="outline"
         label="Name*"
         label-placement="floating"
@@ -20,15 +21,10 @@
     </div>
 
     <div class="mb-3">
-      <ion-radio-group formControlName="gender">
+      <ion-radio-group formControlName="gender" mode="md">
         <div class="row">
           <div class="col-6">
-            <ion-radio
-              mode="md"
-              labelPlacement="end"
-              justify="start"
-              value="Male"
-            >
+            <ion-radio labelPlacement="end" justify="start" value="Male">
               Male
             </ion-radio>
           </div>
@@ -51,6 +47,7 @@
         type="email"
         fill="outline"
         label="Email*"
+        mode="md"
         label-placement="floating"
         placeholder="Type here..."
         formControlName="email"
@@ -65,6 +62,7 @@
       <ion-input
         type="number"
         fill="outline"
+        mode="md"
         label="Contact number*"
         label-placement="floating"
         placeholder="Type here..."
@@ -86,6 +84,7 @@
     <div class="mb-3">
       <ion-input
         type="date"
+        mode="md"
         fill="outline"
         label="Date of birth*"
         label-placement="floating"
@@ -106,6 +105,7 @@
       <ion-input
         type="text"
         fill="outline"
+        mode="md"
         label="Password*"
         label-placement="floating"
         placeholder="Type here..."

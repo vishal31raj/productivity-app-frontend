@@ -4,6 +4,8 @@ import { ToastService } from 'src/app/services/toast.service';
 import { SharedModule } from 'src/app/shared.module';
 import { StaffsService } from '../staffs.service';
 import { Location } from '@angular/common';
+import { AppRoutingConstants } from 'src/app/constants/app-routing';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-new-staff',
@@ -13,6 +15,7 @@ import { Location } from '@angular/common';
   imports: [SharedModule],
 })
 export class CreateNewStaffPage implements OnInit {
+  APP_ROUTES = AppRoutingConstants;
   createNewStaffForm!: FormGroup;
 
   isApiRunning: boolean = false;
@@ -21,7 +24,7 @@ export class CreateNewStaffPage implements OnInit {
     private toastService: ToastService,
     private fb: FormBuilder,
     private staffsService: StaffsService,
-    private location: Location
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -54,7 +57,10 @@ export class CreateNewStaffPage implements OnInit {
             if (res.success === true) {
               this.toastService.showSuccessToast(res.message);
               this.isApiRunning = false;
-              this.location.back();
+              // this.location.back();
+              this.router.navigate([
+                this.APP_ROUTES.StaffDetails + '/' + res.data,
+              ]);
             }
           },
           error: (err: any) => {

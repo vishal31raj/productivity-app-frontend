@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { AppRoutingConstants } from 'src/app/constants/app-routing';
 import { AuthService } from 'src/app/auth/auth.service';
 import { SharedModule } from 'src/app/shared.module';
+import { FilesService } from 'src/app/services/files.service';
 
 @Component({
   selector: 'app-header',
@@ -28,12 +29,21 @@ export class HeaderPage implements OnInit {
 
   constructor(
     private navCntrl: NavController,
+    private filesService: FilesService,
     private _authService: AuthService
   ) {}
 
   ngOnInit() {
     this._authService.user.subscribe((user: any) => {
       this.userDetails = user;
+      if (
+        this.userDetails.profileImgUrl &&
+        !this.userDetails.profileImgUrl.includes('http')
+      ) {
+        this.userDetails.profileImgUrl = this.filesService.formatImageUrl(
+          this.userDetails.profileImgUrl
+        );
+      }
     });
   }
 

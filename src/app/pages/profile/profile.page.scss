@@ -1,0 +1,54 @@
+.d-flex {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .name {
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+.profile-img {
+  position: relative;
+
+  .change-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+.header {
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: #4c4c4c;
+}
+
+.img-col {
+  height: 100px;
+  position: relative;
+
+  .date-div {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #ececec;
+    border: 1px solid silver;
+    border-radius: 0 0 8px 8px;
+    padding: 4px;
+    overflow: hidden;
+    font-size: 10px;
+  }
+}
