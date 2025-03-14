@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
 import { SharedModule } from 'src/app/shared.module';
+import { AppRoutingConstants } from 'src/app/constants/app-routing';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ import { SharedModule } from 'src/app/shared.module';
   imports: [SharedModule],
 })
 export class LoginPage implements OnInit {
+  APP_ROUTES = AppRoutingConstants;
   isApiRunning: boolean = false;
   loginForm!: FormGroup;
 
@@ -52,7 +54,7 @@ export class LoginPage implements OnInit {
           this.toastService.showSuccessToast(res.message);
           this.loginForm.reset();
           this.isApiRunning = false;
-          this.router.navigate(['/dashboard']);
+          this.router.navigate([this.APP_ROUTES.Dashboard]);
         },
         error: (err: any) => {
           this.toastService.showErrorToast(err.error.message);

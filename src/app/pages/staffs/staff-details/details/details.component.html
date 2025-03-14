@@ -15,7 +15,7 @@
 
   <hr />
 
-  <p class="label">Documents:</p>
+  <p class="label">Documents ({{ staffDetails.documents.length }}):</p>
 
   <div *ngIf="staffDetails.documents.length <= 0">
     <app-empty-list message="No douments found!"></app-empty-list>

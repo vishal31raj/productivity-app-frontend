@@ -16,7 +16,7 @@
       </ion-button>
       <ion-button *ngIf="type === 'primary'" [routerLink]="APP_ROUTES.Profile">
         <app-avatar-image
-          [imgUrl]="userDetails.profileImgUrl"
+          [imgUrl]="userDetails?.profileImgUrl"
           [height]="'30px'"
           [width]="'30px'"
           class="img-div"

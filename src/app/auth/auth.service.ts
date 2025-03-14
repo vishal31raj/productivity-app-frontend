@@ -5,11 +5,13 @@ import { Router } from '@angular/router';
 import { API_ROUTES } from '../constants/api-routes';
 import { ToastService } from '../services/toast.service';
 import { User } from '../models/user.model';
+import { AppRoutingConstants } from '../constants/app-routing';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  APP_ROUTES = AppRoutingConstants;
   user = new BehaviorSubject<User | null>(null);
   private _tokenExpirationTimer: any;
 
@@ -70,7 +72,7 @@ export class AuthService {
   logout() {
     this.user.next(null);
     this._toastService.showSuccessToast('Logged out successfully!');
-    this.router.navigate(['/login']);
+    this.router.navigate([this.APP_ROUTES.Login]);
     localStorage.removeItem('userData');
 
     if (this._tokenExpirationTimer) {
