@@ -21,7 +21,7 @@ export const FooterNavigation = [
   },
   {
     name: 'community',
-    iconName: 'newspaper',
+    iconName: 'chatbubble-ellipses',
     label: 'Community',
     routerLink: AppRoutingConstants.Community,
   },
@@ -31,6 +31,6 @@ export const SidebarNavigation = [
   {
     label: 'Help & Support',
     routerLink: AppRoutingConstants.HelpAndSupport,
-    iconName: 'chatbubble-ellipses',
+    iconName: 'help-circle',
   },
 ];
