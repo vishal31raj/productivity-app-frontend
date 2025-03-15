@@ -33,7 +33,7 @@ export class CommunityPage implements OnInit {
 
   filters = {
     pageNumber: 1,
-    pageSize: 25,
+    pageSize: 5,
   };
 
   isLoading: boolean = false;
