@@ -36,7 +36,6 @@ export class CommunityPage implements OnInit {
     pageSize: 10,
   };
 
-  isLoading: boolean = false;
   messages: any[] = [];
   isFetchingMore: boolean = false;
 
@@ -54,6 +53,7 @@ export class CommunityPage implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter() {
+    this.filters.pageNumber = 1;
     this.getAllMessages();
   }
 

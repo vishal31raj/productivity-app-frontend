@@ -13,6 +13,8 @@
       <app-empty-list [message]="'No messages found!'"></app-empty-list>
     </div>
 
+    <app-loader *ngIf="isFetchingMore"></app-loader>
+
     <div *ngIf="messages.length > 0">
       <div class="chat-item ion-margin-bottom" *ngFor="let message of messages">
         <app-avatar-image
@@ -26,16 +28,29 @@
             'my-text': message.myText
         }"
         >
-          <p class="mb-1">
-            <span class="sender-name"
-              >{{ message.myText ? 'You' : message.sender.name }}</span
-            >
+          <div class="d-flex mb-1">
+            <p class="sender-name m-0">
+              {{ message.myText ? 'You' : message.sender.name }}
+            </p>
             •
-            <span class="sender-date"
-              >{{ message.createdAt | relativeTime }}</span
+            <p class="sender-date m-0">{{ message.createdAt | relativeTime }}</p>
+            <ion-button
+              class="menu-btn"
+              size="small"
+              fill="clear"
+              color="medium"
+              *ngIf="message.myText"
             >
-          </p>
-          <div class="chat-box ion-padding" [innerHTML]="message.message"></div>
+              <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+            </ion-button>
+          </div>
+          <div
+            class="chat-box ion-padding"
+            [ngClass]="{ 'important': message.isImportant }"
+          >
+            <div class="imp-text" *ngIf="message.isImportant">IMPORTANT!</div>
+            <div [innerHTML]="message.message"></div>
+          </div>
         </div>
       </div>
     </div>
