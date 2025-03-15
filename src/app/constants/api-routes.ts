@@ -43,4 +43,8 @@ export const API_ROUTES = {
   // Assign
   AssignTaskToStaff: '/tasks/assignTaskToStaff',
   GetTasksAssignedToStaff: '/tasks/getTasksAssignedToStaff',
+
+  // Chats
+  GetAllMessages: '/chats/getAllMessages',
+  SendNewMessage: '/chats/sendNewMessage',
 };

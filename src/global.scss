@@ -36,6 +36,10 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+// Quill
+@import "quill/dist/quill.core.css";
+@import "quill/dist/quill.snow.css";
+
 .app-card {
   border: 1px solid silver;
   border-radius: 16px;
@@ -70,28 +74,28 @@
     background-color: #ffe5e5;
   }
   &.maroon {
-    color: #8C2323;
-    background-color: #FAE4E4;
+    color: #8c2323;
+    background-color: #fae4e4;
   }
   &.gray {
-    color: #585F6C;
-    background-color: #EBECEF;
+    color: #585f6c;
+    background-color: #ebecef;
   }
   &.orange {
-    color: #DE6B00;
-    background-color: #FFF1E4;
+    color: #de6b00;
+    background-color: #fff1e4;
   }
   &.teal {
     color: #0057a0;
     background-color: #e3f1fc;
   }
   &.blue {
-    color: #17558C;
-    background-color: #E3F1FC;
+    color: #17558c;
+    background-color: #e3f1fc;
   }
   &.yellow {
-    color: #7F610A;
-    background-color: #FFF7E0;
+    color: #7f610a;
+    background-color: #fff7e0;
   }
 }
 

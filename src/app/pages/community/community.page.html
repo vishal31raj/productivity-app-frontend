@@ -1,3 +1,72 @@
 <app-header title="Community" type="primary"></app-header>
 
-<ion-content [fullscreen]="true"> Community </ion-content>
+<ion-content [fullscreen]="true" class="ion-padding container">
+  <div
+    class="messages"
+    [ngClass]="{
+    'isEditorOpen': isEditorActive
+  }"
+    #messagesContainer
+  >
+    <div *ngIf="messages.length <= 0">
+      <app-empty-list [message]="'No messages found!'"></app-empty-list>
+    </div>
+
+    <div *ngIf="messages.length > 0">
+      <div class="chat-item ion-margin-bottom" *ngFor="let message of messages">
+        <app-avatar-image
+          [imgUrl]="message.sender.profileImgUrl"
+          [height]="'30px'"
+          [width]="'30px'"
+          *ngIf="!message.myText"
+        ></app-avatar-image>
+        <div
+          [ngClass]="{
+            'my-text': message.myText
+        }"
+        >
+          <p class="mb-1">
+            <span class="sender-name"
+              >{{ message.myText ? 'You' : message.sender.name }}</span
+            >
+            •
+            <span class="sender-date"
+              >{{ message.createdAt | relativeTime }}</span
+            >
+          </p>
+          <div class="chat-box ion-padding" [innerHTML]="message.message"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form class="input-div ion-padding" [formGroup]="newMessageForm">
+    <div class="text-area">
+      <div
+        class="placeholder-div"
+        (click)="activateEditor()"
+        *ngIf="!isEditorActive"
+      >
+        Type a message...
+        <ion-icon name="camera-outline"></ion-icon>
+      </div>
+      <quill-editor
+        formControlName="newMessage"
+        *ngIf="isEditorActive"
+        [modules]="quillConfig.modules"
+        [theme]="quillConfig.theme"
+        [placeholder]="quillConfig.placeholder"
+      ></quill-editor>
+    </div>
+    <div class="send-btn">
+      <ion-button
+        mode="ios"
+        fill="outline"
+        [disabled]="!isEditorActive || newMessageForm.invalid"
+        (click)="onSendMessage()"
+      >
+        <ion-icon slot="icon-only" name="send"></ion-icon>
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

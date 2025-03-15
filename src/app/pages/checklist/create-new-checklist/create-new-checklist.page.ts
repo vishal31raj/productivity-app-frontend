@@ -5,9 +5,9 @@ import { FilesService } from 'src/app/services/files.service';
 import { SharedModule } from 'src/app/shared.module';
 import { ChecklistService } from '../checklist.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { Location } from '@angular/common';
 import { AppRoutingConstants } from 'src/app/constants/app-routing';
 import { Router } from '@angular/router';
+import { QuillModule } from 'ngx-quill';
 
 export interface UploadFileInterface {
   file: File | undefined;
@@ -22,7 +22,7 @@ export interface UploadFileInterface {
   templateUrl: './create-new-checklist.page.html',
   styleUrls: ['./create-new-checklist.page.scss'],
   standalone: true,
-  imports: [SharedModule, ImagePickerComponent],
+  imports: [SharedModule, ImagePickerComponent, QuillModule],
 })
 export class CreateNewChecklistPage implements OnInit {
   APP_ROUTES = AppRoutingConstants;
@@ -65,22 +65,24 @@ export class CreateNewChecklistPage implements OnInit {
   }
 
   onConfirmCreateCheckList() {
-    if (this.createNewChecklistForm.valid) {
-      const formData = new FormData();
-      formData.append('title', this.createNewChecklistForm.value.title);
-      formData.append(
-        'description',
-        this.createNewChecklistForm.value.description
-      );
+    console.log(this.createNewChecklistForm.value)
 
-      if (this.selectedFiles.length) {
-        this.selectedFiles.forEach((item: any) => {
-          formData.append('images', item.file);
-        });
-      }
+    // if (this.createNewChecklistForm.valid) {
+    //   const formData = new FormData();
+    //   formData.append('title', this.createNewChecklistForm.value.title);
+    //   formData.append(
+    //     'description',
+    //     this.createNewChecklistForm.value.description
+    //   );
 
-      this.createCheckList(formData);
-    }
+    //   if (this.selectedFiles.length) {
+    //     this.selectedFiles.forEach((item: any) => {
+    //       formData.append('images', item.file);
+    //     });
+    //   }
+
+    //   this.createCheckList(formData);
+    // }
   }
 
   createCheckList(formData: FormData) {
