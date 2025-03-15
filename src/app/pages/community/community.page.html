@@ -7,6 +7,7 @@
     'isEditorOpen': isEditorActive
   }"
     #messagesContainer
+    (scroll)="onScroll($event)"
   >
     <div *ngIf="messages.length <= 0">
       <app-empty-list [message]="'No messages found!'"></app-empty-list>

@@ -33,11 +33,12 @@ export class CommunityPage implements OnInit {
 
   filters = {
     pageNumber: 1,
-    pageSize: 5,
+    pageSize: 10,
   };
 
   isLoading: boolean = false;
   messages: any[] = [];
+  isFetchingMore: boolean = false;
 
   isEditorActive: boolean = false;
   newMessageForm = new FormGroup({
@@ -56,21 +57,43 @@ export class CommunityPage implements OnInit {
     this.getAllMessages();
   }
 
-  getAllMessages() {
+  getAllMessages(prepend: boolean = false) {
+    if (this.isFetchingMore) return; // Prevent multiple API calls
+    this.isFetchingMore = true;
+
     this.communityService.getAllMessages(this.filters).subscribe({
       next: (res: any) => {
+        // if (res.success) {
+        //   this.messages = res.data;
+        //   if (this.messages.length) {
+        //     this.messages.forEach((item: any) => {
+        //       item.sender.profileImgUrl = this.filesService.formatImageUrl(
+        //         item.sender.profileImgUrl
+        //       );
+        //     });
+        //   }
+        //   console.log(this.messages);
+        //   this.scrollToBottom();
+        // }
         if (res.success) {
-          this.messages = res.data;
-          if (this.messages.length) {
-            this.messages.forEach((item: any) => {
-              item.sender.profileImgUrl = this.filesService.formatImageUrl(
+          let newMessages = res.data.map((item: any) => ({
+            ...item,
+            sender: {
+              ...item.sender,
+              profileImgUrl: this.filesService.formatImageUrl(
                 item.sender.profileImgUrl
-              );
-            });
+              ),
+            },
+          }));
+
+          if (prepend) {
+            this.messages = [...newMessages, ...this.messages]; // Prepend messages
+          } else {
+            this.messages = newMessages; // First-time load
+            this.scrollToBottom();
           }
-          console.log(this.messages);
-          this.scrollToBottom();
         }
+        this.isFetchingMore = false;
       },
       error: (err: any) => {
         this.toastService.showErrorToast(err.error.message);
@@ -87,7 +110,8 @@ export class CommunityPage implements OnInit {
             if (res.success) {
               this.newMessageForm.reset();
               this.isEditorActive = false;
-              this.getAllMessages();
+              this.filters.pageNumber = 1;
+              this.getAllMessages(false);
             }
             console.log(res);
           },
@@ -110,5 +134,14 @@ export class CommunityPage implements OnInit {
           this.messagesContainer.nativeElement.scrollHeight;
       }
     }, 100);
+  }
+
+  /** Detect when user scrolls to the top */
+  onScroll(event: any) {
+    const scrollTop = event.target.scrollTop;
+    if (scrollTop === 0 && !this.isFetchingMore) {
+      this.filters.pageNumber += 1; // Increase page number
+      this.getAllMessages(true); // Fetch older messages and prepend
+    }
   }
 }
