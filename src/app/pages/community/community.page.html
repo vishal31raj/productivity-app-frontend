@@ -33,13 +33,16 @@
               {{ message.myText ? 'You' : message.sender.name }}
             </p>
             •
-            <p class="sender-date m-0">{{ message.createdAt | relativeTime }}</p>
+            <p class="sender-date m-0">
+              {{ message.createdAt | relativeTime }}
+            </p>
             <ion-button
               class="menu-btn"
               size="small"
               fill="clear"
               color="medium"
               *ngIf="message.myText"
+              (click)="isActionSheetOpen = true"
             >
               <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
             </ion-button>
@@ -86,3 +89,10 @@
     </div>
   </form>
 </ion-content>
+
+<ion-action-sheet
+  mode="ios"
+  [isOpen]="isActionSheetOpen"
+  [buttons]="actionSheetButtons"
+  (didDismiss)="isActionSheetOpen = false"
+></ion-action-sheet>

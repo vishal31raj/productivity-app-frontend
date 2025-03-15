@@ -17,15 +17,45 @@ import { FilesService } from 'src/app/services/files.service';
 export class CommunityPage implements OnInit {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
 
+  isActionSheetOpen: boolean = false;
+  public actionSheetButtons = [
+    {
+      text: 'Mark as Important',
+      data: {
+        action: 'mark',
+      },
+      handler: () => {
+        // this.onAddEditComponent();
+      },
+    },
+    {
+      text: 'Edit',
+      data: {
+        action: 'edit',
+      },
+      handler: () => {
+        // this.onAddEditComponent();
+      },
+    },
+    {
+      text: 'Delete',
+      role: 'destructive',
+      data: {
+        action: 'delete',
+      },
+      handler: () => {
+        // this.deleteCommentEvent.emit(this.selectedComment._id);
+      },
+    },
+  ];
+
   quillConfig = {
     theme: 'snow',
     placeholder: 'Write something...',
     modules: {
       toolbar: [
         ['bold', 'italic', 'underline'],
-        // [{ header: [1, 2, false] }],
         [{ list: 'ordered' }, { list: 'bullet' }],
-        // [{ align: [] }],
         ['link', 'image', 'video'],
       ],
     },
@@ -58,23 +88,13 @@ export class CommunityPage implements OnInit {
   }
 
   getAllMessages(prepend: boolean = false) {
-    if (this.isFetchingMore) return; // Prevent multiple API calls
+    if (this.isFetchingMore) {
+      return;
+    }
     this.isFetchingMore = true;
 
     this.communityService.getAllMessages(this.filters).subscribe({
       next: (res: any) => {
-        // if (res.success) {
-        //   this.messages = res.data;
-        //   if (this.messages.length) {
-        //     this.messages.forEach((item: any) => {
-        //       item.sender.profileImgUrl = this.filesService.formatImageUrl(
-        //         item.sender.profileImgUrl
-        //       );
-        //     });
-        //   }
-        //   console.log(this.messages);
-        //   this.scrollToBottom();
-        // }
         if (res.success) {
           let newMessages = res.data.map((item: any) => ({
             ...item,
@@ -87,9 +107,9 @@ export class CommunityPage implements OnInit {
           }));
 
           if (prepend) {
-            this.messages = [...newMessages, ...this.messages]; // Prepend messages
+            this.messages = [...newMessages, ...this.messages];
           } else {
-            this.messages = newMessages; // First-time load
+            this.messages = newMessages;
             this.scrollToBottom();
           }
         }
@@ -136,12 +156,11 @@ export class CommunityPage implements OnInit {
     }, 100);
   }
 
-  /** Detect when user scrolls to the top */
   onScroll(event: any) {
     const scrollTop = event.target.scrollTop;
     if (scrollTop === 0 && !this.isFetchingMore) {
-      this.filters.pageNumber += 1; // Increase page number
-      this.getAllMessages(true); // Fetch older messages and prepend
+      this.filters.pageNumber += 1;
+      this.getAllMessages(true);
     }
   }
 }
