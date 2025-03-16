@@ -4,8 +4,13 @@
       *ngFor="let item of footerNavItems"
       tab="{{ item.name }}"
       [routerLink]="item.routerLink"
+      (click)="item.name === 'community' ? markMessagesAsRead() : null"
     >
       <ion-icon name="{{ item.iconName }}"></ion-icon>
+      <span
+        *ngIf="item.name === 'community' && hasNewMessage"
+        class="notification-dot"
+      ></span>
       {{ item.label }}
     </ion-tab-button>
   </ion-tab-bar>

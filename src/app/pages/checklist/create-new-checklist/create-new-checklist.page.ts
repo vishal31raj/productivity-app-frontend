@@ -65,24 +65,22 @@ export class CreateNewChecklistPage implements OnInit {
   }
 
   onConfirmCreateCheckList() {
-    console.log(this.createNewChecklistForm.value)
+    if (this.createNewChecklistForm.valid) {
+      const formData = new FormData();
+      formData.append('title', this.createNewChecklistForm.value.title);
+      formData.append(
+        'description',
+        this.createNewChecklistForm.value.description
+      );
 
-    // if (this.createNewChecklistForm.valid) {
-    //   const formData = new FormData();
-    //   formData.append('title', this.createNewChecklistForm.value.title);
-    //   formData.append(
-    //     'description',
-    //     this.createNewChecklistForm.value.description
-    //   );
+      if (this.selectedFiles.length) {
+        this.selectedFiles.forEach((item: any) => {
+          formData.append('images', item.file);
+        });
+      }
 
-    //   if (this.selectedFiles.length) {
-    //     this.selectedFiles.forEach((item: any) => {
-    //       formData.append('images', item.file);
-    //     });
-    //   }
-
-    //   this.createCheckList(formData);
-    // }
+      this.createCheckList(formData);
+    }
   }
 
   createCheckList(formData: FormData) {

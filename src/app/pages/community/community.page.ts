@@ -6,6 +6,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
 import { RelativeTimePipe } from 'src/app/pipes/relative-time.pipe';
 import { FilesService } from 'src/app/services/files.service';
+import { Subscription } from 'rxjs';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-community',
@@ -74,13 +76,32 @@ export class CommunityPage implements OnInit {
     newMessage: new FormControl('', Validators.required),
   });
 
+  private messageSub: Subscription;
+
   constructor(
     private communityService: CommunityService,
     private toastService: ToastService,
-    private filesService: FilesService
+    private filesService: FilesService,
+    private socketService: SocketService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.socketConnection();
+  }
+
+  socketConnection() {
+    this.messageSub = this.socketService.message$.subscribe((event: any) => {
+      if (event && event.action === 'newMessage') {
+        if (event.message.sender.profileImgUrl) {
+          event.message.sender.profileImgUrl = this.filesService.formatImageUrl(
+            event.message.sender.profileImgUrl
+          );
+        }
+        this.messages.push(event.message);
+        this.scrollToBottom();
+      }
+    });
+  }
 
   ionViewWillEnter() {
     this.filters.pageNumber = 1;
@@ -133,7 +154,6 @@ export class CommunityPage implements OnInit {
               this.filters.pageNumber = 1;
               this.getAllMessages(false);
             }
-            console.log(res);
           },
           error: (err: any) => {
             this.toastService.showErrorToast(err.error.message);

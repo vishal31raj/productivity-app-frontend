@@ -46,7 +46,6 @@ export class ProfilePage implements OnInit {
           }
 
           this.profileDetails = res.data;
-          console.log(this.profileDetails);
         }
       },
       error: (err: any) => {

@@ -13,7 +13,10 @@
       <app-empty-list [message]="'No messages found!'"></app-empty-list>
     </div>
 
-    <app-loader *ngIf="isFetchingMore"></app-loader>
+    <!-- <app-loader ></app-loader> -->
+    <div class="ion-text-center my-2" *ngIf="isFetchingMore">
+      <ion-spinner name="dots" color="primary"></ion-spinner>
+    </div>
 
     <div *ngIf="messages.length > 0">
       <div class="chat-item ion-margin-bottom" *ngFor="let message of messages">
