@@ -8,6 +8,8 @@ import { RelativeTimePipe } from 'src/app/pipes/relative-time.pipe';
 import { FilesService } from 'src/app/services/files.service';
 import { Subscription } from 'rxjs';
 import { SocketService } from 'src/app/services/socket.service';
+import { QuillConfig } from 'src/app/constants/quill-config';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-community',
@@ -19,49 +21,7 @@ import { SocketService } from 'src/app/services/socket.service';
 export class CommunityPage implements OnInit {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
 
-  isActionSheetOpen: boolean = false;
-  public actionSheetButtons = [
-    {
-      text: 'Mark as Important',
-      data: {
-        action: 'mark',
-      },
-      handler: () => {
-        // this.onAddEditComponent();
-      },
-    },
-    {
-      text: 'Edit',
-      data: {
-        action: 'edit',
-      },
-      handler: () => {
-        // this.onAddEditComponent();
-      },
-    },
-    {
-      text: 'Delete',
-      role: 'destructive',
-      data: {
-        action: 'delete',
-      },
-      handler: () => {
-        // this.deleteCommentEvent.emit(this.selectedComment._id);
-      },
-    },
-  ];
-
-  quillConfig = {
-    theme: 'snow',
-    placeholder: 'Write something...',
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        ['link', 'image', 'video'],
-      ],
-    },
-  };
+  quillConfig = QuillConfig;
 
   filters = {
     pageNumber: 1,
@@ -76,13 +36,18 @@ export class CommunityPage implements OnInit {
     newMessage: new FormControl('', Validators.required),
   });
 
-  private messageSub: Subscription;
+  isActionSheetOpen: boolean = false;
+  selectedChat: any;
+  public actionSheetButtons: any[] = [];
+
+  messageSub: Subscription;
 
   constructor(
     private communityService: CommunityService,
     private toastService: ToastService,
     private filesService: FilesService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -182,5 +147,98 @@ export class CommunityPage implements OnInit {
       this.filters.pageNumber += 1;
       this.getAllMessages(true);
     }
+  }
+
+  onOpenMenuTab(message: any) {
+    this.selectedChat = message;
+
+    this.actionSheetButtons = [
+      {
+        text: this.selectedChat.isImportant ? 'Remove as Important' : 'Mark as Important',
+        data: {
+          action: 'mark',
+        },
+        handler: () => {
+          this.markAsImportant();
+        },
+      },
+      {
+        text: 'Edit',
+        data: {
+          action: 'edit',
+        },
+        handler: () => {
+          // this.onAddEditComponent();
+        },
+      },
+      {
+        text: 'Delete',
+        role: 'destructive',
+        data: {
+          action: 'delete',
+        },
+        handler: () => {
+          this.deleteChatById();
+        },
+      },
+    ];
+
+    this.isActionSheetOpen = true;
+  }
+
+  async deleteChatById() {
+    const isConfirmed = await this.alertService.presentAlert(
+      'Delete your message?',
+      'Are you sure you want to delete this message?'
+    );
+    if (isConfirmed) {
+      this.communityService.deleteMessage(this.selectedChat._id).subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            this.toastService.showSuccessToast(res.message);
+            const index = this.messages.findIndex(
+              (item) => item._id === this.selectedChat._id
+            );
+            if (index !== -1) {
+              this.messages.splice(index, 1);
+              this.messages = [...this.messages];
+            }
+
+            this.selectedChat = undefined;
+          }
+        },
+        error: (err: any) => {
+          this.toastService.showErrorToast(err.error.message);
+        },
+      });
+    }
+  }
+
+  async markAsImportant() {
+    this.communityService
+      .editMessage(this.selectedChat._id, {
+        isImportant: !this.selectedChat.isImportant,
+      })
+      .subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            this.toastService.showSuccessToast(res.message);
+
+            const index = this.messages.findIndex(
+              (msg) => msg._id === this.selectedChat._id
+            );
+
+            if (index !== -1) {
+              this.messages[index].isImportant =
+                !this.messages[index].isImportant;
+            }
+
+            this.selectedChat = undefined;
+          }
+        },
+        error: (err: any) => {
+          this.toastService.showErrorToast(err.error.message);
+        },
+      });
   }
 }

@@ -45,7 +45,7 @@
               fill="clear"
               color="medium"
               *ngIf="message.myText"
-              (click)="isActionSheetOpen = true"
+              (click)="onOpenMenuTab(message)"
             >
               <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
             </ion-button>

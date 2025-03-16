@@ -15,4 +15,12 @@ export class CommunityService {
   sendNewMessage(reqBody: any) {
     return this.http.post(API_ROUTES.SendNewMessage, reqBody);
   }
+
+  editMessage(chatId: string, reqBody: any) {
+    return this.http.put(API_ROUTES.EditMessage + '/' + chatId, reqBody);
+  }
+
+  deleteMessage(chatId: string) {
+    return this.http.delete(API_ROUTES.DeleteMessage + '/' + chatId);
+  }
 }

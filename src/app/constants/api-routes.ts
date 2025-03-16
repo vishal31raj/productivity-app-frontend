@@ -47,4 +47,6 @@ export const API_ROUTES = {
   // Chats
   GetAllMessages: '/chats/getAllMessages',
   SendNewMessage: '/chats/sendNewMessage',
+  EditMessage: '/chats/editMessageById',
+  DeleteMessage: '/chats/deleteChatById',
 };
