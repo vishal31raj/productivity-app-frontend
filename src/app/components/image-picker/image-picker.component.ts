@@ -14,6 +14,7 @@ import { SharedModule } from 'src/app/shared.module';
 export class ImagePickerComponent implements OnInit {
   @Input() buttonName: string | null = 'Select Image';
   @Input() disabled: boolean = false;
+  @Input() profileImg: boolean = false;
 
   @Output() imgPickedEvent = new EventEmitter();
 
@@ -62,5 +63,15 @@ export class ImagePickerComponent implements OnInit {
     }
 
     return new Blob(byteArrays, { type: contentType });
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.imgPickedEvent.emit(file);
+    } else {
+      this._toastService.showErrorToast('No file selected!');
+    }
   }
 }

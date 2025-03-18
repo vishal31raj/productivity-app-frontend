@@ -215,7 +215,8 @@ export class ChecklistDetailsPage implements OnInit {
           next: (res: any) => {
             if (res.success) {
               this.toastService.showSuccessToast(res.message);
-              this.location.back();
+              // this.location.back();
+              this.router.navigate([this.APP_ROUTES.ChecklistsList]);
             }
           },
           error: (err: any) => {

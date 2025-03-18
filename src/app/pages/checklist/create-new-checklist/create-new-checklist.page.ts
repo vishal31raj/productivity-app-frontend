@@ -28,7 +28,7 @@ export interface UploadFileInterface {
 export class CreateNewChecklistPage implements OnInit {
   APP_ROUTES = AppRoutingConstants;
   quillConfig = QuillConfig;
-  
+
   isLoading: boolean = false;
   createNewChecklistForm!: FormGroup;
 
@@ -54,6 +54,7 @@ export class CreateNewChecklistPage implements OnInit {
   }
 
   onPickImage(file: File) {
+    console.log(file);
     const newFile: UploadFileInterface = { file, fileUrl: undefined };
     this.filesService.convertFileToDataUrl(file).then((dataUrl) => {
       newFile.fileUrl = dataUrl;

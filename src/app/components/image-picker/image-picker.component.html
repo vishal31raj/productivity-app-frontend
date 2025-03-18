@@ -1,10 +1,41 @@
 <ion-button
   mode="ios"
-  fill="outline"
-  expand="block"
+  shape="round"
+  color="medium"
   (click)="openCamera()"
-  [disabled]="disabled"
+  *ngIf="profileImg"
 >
-  <ion-icon [slot]="buttonName ? 'start' : 'icon-only'" name="camera-outline"></ion-icon> 
-  <span *ngIf="buttonName">{{ buttonName }}</span>
+  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
 </ion-button>
+
+<ion-row *ngIf="!profileImg">
+  <ion-col size="10">
+    <input
+      type="file"
+      #fileInput
+      (change)="onFileSelected($event)"
+      hidden
+      [disabled]="disabled"
+    />
+    <ion-button
+      mode="ios"
+      fill="outline"
+      expand="block"
+      [disabled]="disabled"
+      (click)="fileInput.click()"
+    >
+      <span *ngIf="buttonName">{{ buttonName }}</span>
+    </ion-button>
+  </ion-col>
+  <ion-col size="2">
+    <ion-button
+      mode="ios"
+      shape="round"
+      size="large"
+      (click)="openCamera()"
+      [disabled]="disabled"
+    >
+      <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+    </ion-button>
+  </ion-col>
+</ion-row>
