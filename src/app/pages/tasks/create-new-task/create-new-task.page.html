@@ -1,10 +1,7 @@
 <app-header title="Create New Task" type="secondary"></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <form
-    [formGroup]="createNewTaskForm"
-    (ngSubmit)="onConfirmCreateTask()"
-  >
+  <form [formGroup]="createNewTaskForm" (ngSubmit)="onConfirmCreateTask()">
     <ion-textarea
       label="Title"
       class="ion-margin-bottom"
@@ -24,7 +21,7 @@
       <small *ngIf="title?.errors?.['required']"> Title is required. </small>
     </div>
 
-    <ion-textarea
+    <!-- <ion-textarea
       label="Description"
       class="ion-margin-bottom"
       label-placement="floating"
@@ -34,7 +31,13 @@
       mode="md"
       placeholder="Enter some description..."
       formControlName="description"
-    ></ion-textarea>
+    ></ion-textarea> -->
+    <quill-editor
+      formControlName="description"
+      [modules]="quillConfig.modules"
+      [theme]="quillConfig.theme"
+      [placeholder]="quillConfig.placeholder"
+    ></quill-editor>
 
     <div
       *ngIf="description?.invalid && description?.touched"
@@ -51,7 +54,10 @@
           <div class="img-div">
             <img [src]="item.fileUrl" alt="" />
           </div>
-          <div class="remove-img-btn" (click)="onRemoveImg(item.file.lastModified)">
+          <div
+            class="remove-img-btn"
+            (click)="onRemoveImg(item.file.lastModified)"
+          >
             <ion-icon name="close-outline"></ion-icon>
           </div>
         </div>
@@ -60,7 +66,7 @@
 
     <div class="ion-margin-bottom">
       <app-image-picker
-        [buttonName]="'Add Image'"
+        [buttonName]="'Add Attachment'"
         (imgPickedEvent)="onPickImage($event)"
       ></app-image-picker>
     </div>

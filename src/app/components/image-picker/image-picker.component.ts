@@ -41,7 +41,7 @@ export class ImagePickerComponent implements OnInit {
       const blob = this.base64ToBlob(base64Data!, 'image/jpeg');
       const file = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
 
-      this.imgPickedEvent.emit(file); // Emitting the file object
+      this.imgPickedEvent.emit(file);
     } catch (err) {
       this._toastService.showErrorToast("Couldn't get an image!");
     }

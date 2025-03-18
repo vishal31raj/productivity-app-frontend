@@ -8,6 +8,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { AppRoutingConstants } from 'src/app/constants/app-routing';
 import { Router } from '@angular/router';
 import { QuillModule } from 'ngx-quill';
+import { QuillConfig } from 'src/app/constants/quill-config';
 
 export interface UploadFileInterface {
   file: File | undefined;
@@ -26,6 +27,8 @@ export interface UploadFileInterface {
 })
 export class CreateNewChecklistPage implements OnInit {
   APP_ROUTES = AppRoutingConstants;
+  quillConfig = QuillConfig;
+  
   isLoading: boolean = false;
   createNewChecklistForm!: FormGroup;
 

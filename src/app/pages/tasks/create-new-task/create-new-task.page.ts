@@ -8,16 +8,20 @@ import { FilesService } from 'src/app/services/files.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
 import { TasksService } from '../tasks.service';
+import { QuillConfig } from 'src/app/constants/quill-config';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-create-new-task',
   templateUrl: './create-new-task.page.html',
   styleUrls: ['./create-new-task.page.scss'],
   standalone: true,
-  imports: [SharedModule, ImagePickerComponent],
+  imports: [SharedModule, ImagePickerComponent, QuillModule],
 })
 export class CreateNewTaskPage implements OnInit {
   APP_ROUTES = AppRoutingConstants;
+  quillConfig = QuillConfig;
+
   isLoading: boolean = false;
   createNewTaskForm!: FormGroup;
 

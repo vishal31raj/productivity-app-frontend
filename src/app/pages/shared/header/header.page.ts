@@ -36,14 +36,6 @@ export class HeaderPage implements OnInit {
   ngOnInit() {
     this._authService.user.subscribe((user: any) => {
       this.userDetails = user;
-      if (
-        this.userDetails && this.userDetails.profileImgUrl &&
-        !this.userDetails.profileImgUrl.includes('http')
-      ) {
-        this.userDetails.profileImgUrl = this.filesService.formatImageUrl(
-          this.userDetails.profileImgUrl
-        );
-      }
     });
   }
 

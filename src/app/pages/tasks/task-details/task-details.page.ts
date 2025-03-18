@@ -15,6 +15,8 @@ import { StaffsService } from '../../staffs/staffs.service';
 import { RelativeTimePipe } from 'src/app/pipes/relative-time.pipe';
 import { CommentSectionComponent } from 'src/app/components/comment-section/comment-section.component';
 import { Location } from '@angular/common';
+import { QuillConfig } from 'src/app/constants/quill-config';
+import { QuillModule } from 'ngx-quill';
 
 interface AppSelectInput {
   type: 'radio' | 'checkbox' | 'text';
@@ -39,10 +41,11 @@ interface AppSelectAlert {
   templateUrl: './task-details.page.html',
   styleUrls: ['./task-details.page.scss'],
   standalone: true,
-  imports: [SharedModule, ImagePickerComponent, CommentSectionComponent],
+  imports: [SharedModule, ImagePickerComponent, CommentSectionComponent, QuillModule],
 })
 export class TaskDetailsPage implements OnInit {
   TaskStatusDescEnum = TASK_STATUS_DESC_ENUM;
+  quillConfig = QuillConfig;
 
   isLoading: boolean = false;
   taskDetails: any;

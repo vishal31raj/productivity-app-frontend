@@ -34,11 +34,6 @@ export class ProfilePage implements OnInit {
     this.profileService.getProfileDetails().subscribe({
       next: (res: any) => {
         if (res.success === true) {
-          if (res.data.profileImgUrl) {
-            res.data.profileImgUrl = this.filesService.formatImageUrl(
-              res.data.profileImgUrl
-            );
-          }
           if (res.data.documents.length) {
             res.data.documents.forEach((doc: any) => {
               doc.imgUrl = this.filesService.formatImageUrl(doc.imgUrl);
@@ -97,7 +92,6 @@ export class ProfilePage implements OnInit {
       componentProps: {
         changePassword: async (reqBody) => {
           this.changeUserPassword(reqBody, modal);
-          // await modal.dismiss();
         },
       },
     });

@@ -1,4 +1,9 @@
-<app-header title="Task Details" type="secondary" [showDelete]="true" (deleteBtnClickEvent)="onDeleteTask()"></app-header>
+<app-header
+  title="Task Details"
+  type="secondary"
+  [showDelete]="true"
+  (deleteBtnClickEvent)="onDeleteTask()"
+></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
@@ -87,16 +92,20 @@
 
     <!-- Description -->
     <div class="description">
-      <p class="header">Description:</p>
-      <p class="desc-text" *ngIf="!editDescription">
-        {{ taskDetails.description }}
+      <p class="header">
+        Description:
         <span class="ms-2 edit-btn" (click)="onClickEdit('description')">
           <ion-icon name="create-outline"></ion-icon>
         </span>
       </p>
+      <div
+        class="desc-text"
+        [innerHTML]="taskDetails.description"
+        *ngIf="!editDescription"
+      ></div>
 
       <div class="ion-margin-vertical" *ngIf="editDescription">
-        <ion-textarea
+        <!-- <ion-textarea
           label="Description"
           label-placement="floating"
           fill="outline"
@@ -105,7 +114,13 @@
           mode="md"
           placeholder="Enter some description..."
           [(ngModel)]="newDescription"
-        ></ion-textarea>
+        ></ion-textarea> -->
+        <quill-editor
+          [(ngModel)]="newDescription"
+          [modules]="quillConfig.modules"
+          [theme]="quillConfig.theme"
+          [placeholder]="quillConfig.placeholder"
+        ></quill-editor>
         <div class="update-div">
           <ion-button
             mode="ios"

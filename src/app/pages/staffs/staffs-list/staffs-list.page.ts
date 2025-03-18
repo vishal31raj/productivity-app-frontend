@@ -41,16 +41,6 @@ export class StaffsListPage implements OnInit {
     this.staffsService.getAllStaffs(this.filters).subscribe({
       next: (res: any) => {
         if (res.success === true) {
-          if (res.data.length) {
-            res.data.forEach((item: any) => {
-              if (item.profileImgUrl) {
-                item.profileImgUrl = this.filesService.formatImageUrl(
-                  item.profileImgUrl
-                );
-              }
-            });
-          }
-
           this.staffsList = res.data;
           this.isLoading = false;
         }

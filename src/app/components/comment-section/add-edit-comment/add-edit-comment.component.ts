@@ -11,15 +11,19 @@ import { SharedModule } from 'src/app/shared.module';
 import { ImagePickerComponent } from '../../image-picker/image-picker.component';
 import { UploadFileInterface } from 'src/app/pages/checklist/create-new-checklist/create-new-checklist.page';
 import { FilesService } from 'src/app/services/files.service';
+import { QuillConfig } from 'src/app/constants/quill-config';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-add-edit-comment',
   templateUrl: './add-edit-comment.component.html',
   styleUrls: ['./add-edit-comment.component.scss'],
   standalone: true,
-  imports: [SharedModule, ImagePickerComponent],
+  imports: [SharedModule, ImagePickerComponent, QuillModule],
 })
 export class AddEditCommentComponent implements OnInit {
+  quillConfig = QuillConfig;
+
   @Input() comment: any;
   addEditCommentForm!: FormGroup;
   selectedFiles: UploadFileInterface[] = [];

@@ -5,7 +5,6 @@
 }
 
 .comment-card {
-  border-bottom: 1px solid silver;
 
   .commentedBy {
     font-size: 15px;
@@ -24,6 +23,13 @@
     .action {
       margin-left: auto;
     }
+  }
+
+  .comment-box {
+    margin-top: 8px;
+    border: 1px solid silver;
+    border-radius: 8px;
+    padding: 8px 16px;
   }
 
   .comment-text {

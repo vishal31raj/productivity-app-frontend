@@ -40,6 +40,10 @@
 @import "quill/dist/quill.core.css";
 @import "quill/dist/quill.snow.css";
 
+quill-editor {
+  width: 100%;
+}
+
 .app-card {
   border: 1px solid silver;
   border-radius: 16px;

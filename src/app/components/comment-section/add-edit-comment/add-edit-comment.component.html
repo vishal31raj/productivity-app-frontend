@@ -7,7 +7,7 @@
 <ion-content class="ion-padding">
   <form [formGroup]="addEditCommentForm" (ngSubmit)="onConfirmAddEditComment()">
     <div class="my-3">
-      <ion-textarea
+      <!-- <ion-textarea
         label="Enter here..."
         class="ion-margin-bottom"
         label-placement="floating"
@@ -17,7 +17,13 @@
         mode="md"
         placeholder="Add your comment..."
         formControlName="comment"
-      ></ion-textarea>
+      ></ion-textarea> -->
+      <quill-editor
+        formControlName="comment"
+        [modules]="quillConfig.modules"
+        [theme]="quillConfig.theme"
+        [placeholder]="quillConfig.placeholder"
+      ></quill-editor>
 
       <div
         *ngIf="commentControl?.invalid && commentControl?.touched"
@@ -47,7 +53,7 @@
 
     <div class="ion-margin-bottom" *ngIf="!comment">
       <app-image-picker
-        [buttonName]="'Add Image'"
+        [buttonName]="'Add Attachment'"
         (imgPickedEvent)="onPickImage($event)"
       ></app-image-picker>
     </div>

@@ -10,16 +10,19 @@ import { TASK_STATUS_DESC_ENUM } from 'src/app/enums/tasks.enum';
 import { AppRoutingConstants } from 'src/app/constants/app-routing';
 import { TaskCardComponent } from 'src/app/components/task-card/task-card.component';
 import { Location } from '@angular/common';
+import { QuillConfig } from 'src/app/constants/quill-config';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-checklist-details',
   templateUrl: './checklist-details.page.html',
   styleUrls: ['./checklist-details.page.scss'],
   standalone: true,
-  imports: [SharedModule, ImagePickerComponent, TaskCardComponent],
+  imports: [SharedModule, ImagePickerComponent, TaskCardComponent, QuillModule],
 })
 export class ChecklistDetailsPage implements OnInit {
   APP_ROUTES = AppRoutingConstants;
+  quillConfig = QuillConfig;
 
   isLoading: boolean = false;
   checklistDetails: any;
@@ -204,17 +207,19 @@ export class ChecklistDetailsPage implements OnInit {
       'Deleting checklist would delete all its tasks, attachements and comments. Are you sure you want to performthis action?'
     );
     if (isConfirmed) {
-      this.checklistService.DeleteChecklistById(this.checklistDetails._id).subscribe({
-        next: (res: any) => {
-          if (res.success) {
-            this.toastService.showSuccessToast(res.message);
-            this.location.back();
-          }
-        },
-        error: (err: any) => {
-          this.toastService.showErrorToast(err.error.message);
-        },
-      });
+      this.checklistService
+        .DeleteChecklistById(this.checklistDetails._id)
+        .subscribe({
+          next: (res: any) => {
+            if (res.success) {
+              this.toastService.showSuccessToast(res.message);
+              this.location.back();
+            }
+          },
+          error: (err: any) => {
+            this.toastService.showErrorToast(err.error.message);
+          },
+        });
     }
   }
 }

@@ -47,13 +47,6 @@ export class StaffDetailsPage implements OnInit {
       next: (res: any) => {
         if (res.success === true) {
           this.staffDetails = res.data;
-
-          if (this.staffDetails.profileImgUrl) {
-            this.staffDetails.profileImgUrl = this.filesService.formatImageUrl(
-              this.staffDetails.profileImgUrl
-            );
-          }
-
           this.initializeActionSheetButtons();
           this.isLoading = false;
         }

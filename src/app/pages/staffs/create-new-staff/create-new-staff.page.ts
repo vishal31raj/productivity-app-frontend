@@ -57,7 +57,6 @@ export class CreateNewStaffPage implements OnInit {
             if (res.success === true) {
               this.toastService.showSuccessToast(res.message);
               this.isApiRunning = false;
-              // this.location.back();
               this.router.navigate([
                 this.APP_ROUTES.StaffDetails + '/' + res.data,
               ]);

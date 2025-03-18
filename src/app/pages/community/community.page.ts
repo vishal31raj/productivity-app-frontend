@@ -57,11 +57,6 @@ export class CommunityPage implements OnInit {
   socketConnection() {
     this.messageSub = this.socketService.message$.subscribe((event: any) => {
       if (event && event.action === 'newMessage') {
-        if (event.message.sender.profileImgUrl) {
-          event.message.sender.profileImgUrl = this.filesService.formatImageUrl(
-            event.message.sender.profileImgUrl
-          );
-        }
         this.messages.push(event.message);
         this.scrollToBottom();
       }
@@ -86,9 +81,6 @@ export class CommunityPage implements OnInit {
             ...item,
             sender: {
               ...item.sender,
-              profileImgUrl: this.filesService.formatImageUrl(
-                item.sender.profileImgUrl
-              ),
             },
           }));
 
@@ -154,21 +146,14 @@ export class CommunityPage implements OnInit {
 
     this.actionSheetButtons = [
       {
-        text: this.selectedChat.isImportant ? 'Remove as Important' : 'Mark as Important',
+        text: this.selectedChat.isImportant
+          ? 'Remove as Important'
+          : 'Mark as Important',
         data: {
           action: 'mark',
         },
         handler: () => {
           this.markAsImportant();
-        },
-      },
-      {
-        text: 'Edit',
-        data: {
-          action: 'edit',
-        },
-        handler: () => {
-          // this.onAddEditComponent();
         },
       },
       {

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { FilesService } from 'src/app/services/files.service';
 
 @Component({
   selector: 'app-avatar-image',
@@ -13,7 +14,13 @@ export class AvatarImageComponent implements OnInit {
   @Input() width = '40px';
   @Input() height = '40px';
 
-  constructor() {}
+  constructor(private filesService: FilesService) {}
+
+  ngOnChanges() {
+    if (this.imgUrl) {
+      this.imgUrl = this.filesService.formatImageUrl(this.imgUrl);
+    }
+  }
 
   ngOnInit() {}
 }

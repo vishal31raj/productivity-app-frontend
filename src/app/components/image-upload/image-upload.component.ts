@@ -18,7 +18,6 @@ interface UploadFile {
   imports: [SharedModule, ImagePickerComponent],
 })
 export class ImageUploadComponent implements OnInit {
-  // @Output() selectedImageFormData: EventEmitter<FormData> = new EventEmitter();
 
   uploadImageForm!: FormGroup;
 
