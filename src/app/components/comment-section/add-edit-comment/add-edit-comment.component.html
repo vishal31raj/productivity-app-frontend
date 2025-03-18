@@ -7,17 +7,6 @@
 <ion-content class="ion-padding">
   <form [formGroup]="addEditCommentForm" (ngSubmit)="onConfirmAddEditComment()">
     <div class="my-3">
-      <!-- <ion-textarea
-        label="Enter here..."
-        class="ion-margin-bottom"
-        label-placement="floating"
-        fill="outline"
-        [autoGrow]="true"
-        rows="4"
-        mode="md"
-        placeholder="Add your comment..."
-        formControlName="comment"
-      ></ion-textarea> -->
       <quill-editor
         formControlName="comment"
         [modules]="quillConfig.modules"

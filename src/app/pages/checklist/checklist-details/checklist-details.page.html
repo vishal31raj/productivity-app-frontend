@@ -57,119 +57,121 @@
 
     <hr />
 
-    <div class="description">
-      <p class="header">
-        Description:
-        <span class="ms-2 edit-btn" (click)="onClickEdit('description')">
-          <ion-icon name="create-outline"></ion-icon>
-        </span>
-      </p>
-      <div
-        class="desc-text"
-        [innerHTML]="checklistDetails.description"
-        *ngIf="!editDescription"
-      ></div>
+    <ion-segment value="description" (ionChange)="onSwitchTabEvent($event)">
+      <ion-segment-button value="description">
+        <ion-label>Description</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="tasks">
+        <ion-label>Tasks ({{ checklistDetails.tasks.length }})</ion-label>
+      </ion-segment-button>
+    </ion-segment>
 
-      <div class="ion-margin-vertical" *ngIf="editDescription">
-        <!-- <ion-textarea
-          label="Description"
-          label-placement="floating"
-          fill="outline"
-          [autoGrow]="true"
-          rows="5"
-          mode="md"
-          placeholder="Enter some description..."
-          [(ngModel)]="newDescription"
-        ></ion-textarea> -->
-        <quill-editor
-          [(ngModel)]="newDescription"
-          [modules]="quillConfig.modules"
-          [theme]="quillConfig.theme"
-          [placeholder]="quillConfig.placeholder"
-        ></quill-editor>
-        <div class="update-div">
-          <ion-button
-            mode="ios"
-            fill="outline"
-            size="small"
-            color="medium"
-            (click)="onCancelEdit('description')"
-          >
-            Cancel
-          </ion-button>
-          <ion-button
-            mode="ios"
-            size="small"
-            (click)="onConfirmEdit('description')"
-          >
-            Update
-          </ion-button>
+    <div *ngIf="selectedTab === 'description'">
+      <div class="description">
+        <p class="header">
+          Description:
+          <span class="ms-2 edit-btn" (click)="onClickEdit('description')">
+            <ion-icon name="create-outline"></ion-icon>
+          </span>
+        </p>
+        <div
+          class="desc-text"
+          [innerHTML]="checklistDetails.description"
+          *ngIf="!editDescription"
+        ></div>
+
+        <div class="ion-margin-vertical" *ngIf="editDescription">
+          <quill-editor
+            [(ngModel)]="newDescription"
+            [modules]="quillConfig.modules"
+            [theme]="quillConfig.theme"
+            [placeholder]="quillConfig.placeholder"
+          ></quill-editor>
+          <div class="update-div">
+            <ion-button
+              mode="ios"
+              fill="outline"
+              size="small"
+              color="medium"
+              (click)="onCancelEdit('description')"
+            >
+              Cancel
+            </ion-button>
+            <ion-button
+              mode="ios"
+              size="small"
+              (click)="onConfirmEdit('description')"
+            >
+              Update
+            </ion-button>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="attachments">
+        <p class="header">
+          Attachments ({{ checklistDetails.attachments.length }}) :
+        </p>
+
+        <ion-row
+          class="ion-margin-top"
+          *ngIf="checklistDetails.attachments.length > 0"
+        >
+          <ion-col size="4" *ngFor="let item of checklistDetails.attachments">
+            <div class="img-col">
+              <div class="img-div" (click)="onOpenImage(item.imgUrl)">
+                <img [src]="item.imgUrl" alt="" />
+              </div>
+              <div
+                class="remove-img-btn"
+                (click)="onRemoveAttachment(item._id)"
+              >
+                <ion-icon name="trash-outline"></ion-icon>
+              </div>
+              <div class="date-div" *ngIf="item.createdAt">
+                {{ item.createdAt | date: 'hh:mm a, dd MMM yyyy' }}
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <div class="ion-margin-vertical">
+          <app-image-picker
+            [buttonName]="'Add Attachment'"
+            (imgPickedEvent)="onPickImage($event)"
+            [disabled]="editTitle || editDescription"
+          ></app-image-picker>
         </div>
       </div>
     </div>
 
-    <hr />
+    <div *ngIf="selectedTab === 'tasks'">
+      <div class="tasks ion-margin-vertical">
+        <div
+          class="ion-margin-vertical"
+          *ngIf="checklistDetails.tasks.length > 0"
+        >
+          <app-task-card
+            [taskDetails]="task"
+            *ngFor="let task of checklistDetails.tasks"
+            (click)="onTaskItemClick(task._id)"
+          ></app-task-card>
+        </div>
 
-    <div class="attachments">
-      <p class="header">
-        Attachments ({{ checklistDetails.attachments.length }}) :
-      </p>
-
-      <ion-row
-        class="ion-margin-top"
-        *ngIf="checklistDetails.attachments.length > 0"
-      >
-        <ion-col size="4" *ngFor="let item of checklistDetails.attachments">
-          <div class="img-col">
-            <div class="img-div" (click)="onOpenImage(item.imgUrl)">
-              <img [src]="item.imgUrl" alt="" />
-            </div>
-            <div class="remove-img-btn" (click)="onRemoveAttachment(item._id)">
-              <ion-icon name="trash-outline"></ion-icon>
-            </div>
-            <div class="date-div" *ngIf="item.createdAt">
-              {{ item.createdAt | date: 'hh:mm a, dd MMM yyyy' }}
-            </div>
-          </div>
-        </ion-col>
-      </ion-row>
-
-      <div class="ion-margin-vertical">
-        <app-image-picker
-          [buttonName]="'Add Attachment'"
-          (imgPickedEvent)="onPickImage($event)"
+        <ion-button
+          class="ion-margin-vertical"
+          mode="ios"
+          expand="block"
+          fill="outline"
+          color="medium"
           [disabled]="editTitle || editDescription"
-        ></app-image-picker>
+          [routerLink]="APP_ROUTES.CreateNewTask + '/' + checklistDetails._id"
+        >
+          + Add New Task
+        </ion-button>
       </div>
-    </div>
-
-    <hr />
-
-    <div class="tasks">
-      <p class="header">Tasks ({{ checklistDetails.tasks.length }}) :</p>
-
-      <div
-        class="ion-margin-vertical"
-        *ngIf="checklistDetails.tasks.length > 0"
-      >
-        <app-task-card
-          [taskDetails]="task"
-          *ngFor="let task of checklistDetails.tasks"
-          (click)="onTaskItemClick(task._id)"
-        ></app-task-card>
-      </div>
-
-      <ion-button
-        class="ion-margin-vertical"
-        mode="ios"
-        expand="block"
-        fill="outline"
-        color="medium"
-        [disabled]="editTitle || editDescription"
-        [routerLink]="APP_ROUTES.CreateNewTask + '/' + checklistDetails._id"
-      >
-        + Add New Task
-      </ion-button>
     </div>
   </div>
 </ion-content>

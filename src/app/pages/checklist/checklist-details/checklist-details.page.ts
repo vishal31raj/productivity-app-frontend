@@ -27,6 +27,8 @@ export class ChecklistDetailsPage implements OnInit {
   isLoading: boolean = false;
   checklistDetails: any;
 
+  selectedTab: string = 'description';
+
   editTitle: boolean = false;
   editDescription: boolean = false;
   newTitle: string | undefined;
@@ -221,5 +223,9 @@ export class ChecklistDetailsPage implements OnInit {
           },
         });
     }
+  }
+
+  onSwitchTabEvent(event: any) {
+    this.selectedTab = event.target.value;
   }
 }

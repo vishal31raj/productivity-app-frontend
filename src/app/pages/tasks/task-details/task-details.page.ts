@@ -41,11 +41,18 @@ interface AppSelectAlert {
   templateUrl: './task-details.page.html',
   styleUrls: ['./task-details.page.scss'],
   standalone: true,
-  imports: [SharedModule, ImagePickerComponent, CommentSectionComponent, QuillModule],
+  imports: [
+    SharedModule,
+    ImagePickerComponent,
+    CommentSectionComponent,
+    QuillModule,
+  ],
 })
 export class TaskDetailsPage implements OnInit {
   TaskStatusDescEnum = TASK_STATUS_DESC_ENUM;
   quillConfig = QuillConfig;
+
+  selectedTab: string = 'description';
 
   isLoading: boolean = false;
   taskDetails: any;
@@ -426,5 +433,9 @@ export class TaskDetailsPage implements OnInit {
         },
       });
     }
+  }
+
+  onSwitchTabEvent(event: any) {
+    this.selectedTab = event.target.value;
   }
 }

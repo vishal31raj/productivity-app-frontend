@@ -20,18 +20,6 @@
       </small>
       <small *ngIf="title?.errors?.['required']"> Title is required. </small>
     </div>
-
-    <!-- <ion-textarea
-      label="Description"
-      class="ion-margin-bottom"
-      label-placement="floating"
-      fill="outline"
-      [autoGrow]="true"
-      rows="5"
-      mode="md"
-      placeholder="Enter some description..."
-      formControlName="description"
-    ></ion-textarea> -->
     <quill-editor
       formControlName="description"
       [modules]="quillConfig.modules"
