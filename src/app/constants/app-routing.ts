@@ -13,7 +13,7 @@ export const AppRoutingConstants = {
   CreateNewChecklist: '/dashboard/checklists/create-new-checklist',
   ChecklistDetails: '/dashboard/checklists/checklist-details',
 
-  TasksList: '/dashboard/tasks/tasks-list',
+  StaffTasksList: '/dashboard/tasks/tasks-list',
   CreateNewTask: '/dashboard/tasks/create-new-task',
   TaskDetails: '/dashboard/tasks/task-details',
 

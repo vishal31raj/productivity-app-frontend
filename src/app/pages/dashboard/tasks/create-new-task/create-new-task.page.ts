@@ -65,7 +65,7 @@ export class CreateNewTaskPage implements OnInit {
       const formData = new FormData();
       formData.append('title', this.createNewTaskForm.value.title);
       formData.append('description', this.createNewTaskForm.value.description);
-      formData.append('checklistId', this.router.url.split('/')[3]);
+      formData.append('checklistId', this.router.url.split('/')[4]);
 
       if (this.selectedFiles.length) {
         this.selectedFiles.forEach((item: any) => {

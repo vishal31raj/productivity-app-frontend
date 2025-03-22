@@ -12,6 +12,8 @@ import { TaskCardComponent } from 'src/app/components/task-card/task-card.compon
 import { Location } from '@angular/common';
 import { QuillConfig } from 'src/app/constants/quill-config';
 import { QuillModule } from 'ngx-quill';
+import { USER_ROLES_DESC } from 'src/app/enums/user-role.enum';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-checklist-details',
@@ -34,20 +36,33 @@ export class ChecklistDetailsPage implements OnInit {
   newTitle: string | undefined;
   newDescription: string | undefined;
 
+  USER_ROLE_DESC = USER_ROLES_DESC;
+  userRoleId: number;
+
   constructor(
     private checklistService: ChecklistService,
     private toastService: ToastService,
     private router: Router,
     private filesService: FilesService,
     private alertService: AlertService,
-    private location: Location
+    private authService: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.checkUserRole();
+  }
 
   ionViewWillEnter() {
     const checklistId = this.router.url.split('/')[4];
     this.getChecklistDetails(checklistId);
+  }
+
+  checkUserRole() {
+    this.authService.user.subscribe((user: any) => {
+      if (user) {
+        this.userRoleId = user.userRoleId;
+      }
+    });
   }
 
   getChecklistDetails(checklistId: string) {

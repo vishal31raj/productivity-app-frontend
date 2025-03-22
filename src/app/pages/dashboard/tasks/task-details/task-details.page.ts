@@ -9,6 +9,7 @@ import { FilesService } from 'src/app/services/files.service';
 import {
   TASK_PRIORITY_DESC_ENUM,
   TASK_STATUS_DESC_ENUM,
+  TASK_STATUS_ID_ENUM,
 } from 'src/app/enums/tasks.enum';
 import { AlertController } from '@ionic/angular';
 import { StaffsService } from '../../staffs/staffs.service';
@@ -17,6 +18,9 @@ import { CommentSectionComponent } from 'src/app/components/comment-section/comm
 import { Location } from '@angular/common';
 import { QuillConfig } from 'src/app/constants/quill-config';
 import { QuillModule } from 'ngx-quill';
+import { AuthService } from 'src/app/auth/auth.service';
+import { USER_ROLES_DESC, USER_ROLES_ID } from 'src/app/enums/user-role.enum';
+import { AppRoutingConstants } from 'src/app/constants/app-routing';
 
 interface AppSelectInput {
   type: 'radio' | 'checkbox' | 'text';
@@ -49,6 +53,8 @@ interface AppSelectAlert {
   ],
 })
 export class TaskDetailsPage implements OnInit {
+  APP_ROUTES = AppRoutingConstants;
+  TaskStatusIdEnum = TASK_STATUS_ID_ENUM;
   TaskStatusDescEnum = TASK_STATUS_DESC_ENUM;
   quillConfig = QuillConfig;
 
@@ -62,6 +68,15 @@ export class TaskDetailsPage implements OnInit {
   newTitle: string | undefined;
   newDescription: string | undefined;
 
+  USER_ROLE_DESC = USER_ROLES_DESC;
+  userDetails: any;
+
+  selectAlertBody: AppSelectAlert = {
+    header: undefined,
+    inputs: undefined,
+    buttons: undefined,
+  };
+
   constructor(
     private router: Router,
     private tasksService: TasksService,
@@ -70,14 +85,25 @@ export class TaskDetailsPage implements OnInit {
     private filesService: FilesService,
     private alertController: AlertController,
     private staffsService: StaffsService,
-    private location: Location
+    private location: Location,
+    private authService: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.checkUserRole();
+  }
 
   ionViewWillEnter() {
     const taskId = this.router.url.split('/')[4];
     this.getTaskDetails(taskId);
+  }
+
+  checkUserRole() {
+    this.authService.user.subscribe((user: any) => {
+      if (user) {
+        this.userDetails = user;
+      }
+    });
   }
 
   getTaskDetails(taskId: string) {
@@ -236,14 +262,11 @@ export class TaskDetailsPage implements OnInit {
   }
 
   async openSelectAlert(type: string) {
-    let selectAlertBody: AppSelectAlert = {
-      header: undefined,
-      inputs: undefined,
-      buttons: undefined,
-    };
-
-    if (type === 'priority') {
-      selectAlertBody = {
+    if (
+      type === 'priority' &&
+      this.userDetails?.userRoleId === this.USER_ROLE_DESC.OWNER
+    ) {
+      this.selectAlertBody = {
         header: 'Change Task Priority',
         inputs: TASK_PRIORITY_DESC_ENUM.map((item: any) => ({
           type: 'radio',
@@ -263,13 +286,13 @@ export class TaskDetailsPage implements OnInit {
         ],
       };
     } else if (type === 'status') {
-      selectAlertBody = {
+      if (!this.showChangeStatusDropdown()) {
+        return;
+      }
+
+      this.selectAlertBody = {
         header: 'Change Task Status',
-        inputs: TASK_STATUS_DESC_ENUM.map((item: any) => ({
-          type: 'radio',
-          label: item.name,
-          value: item.id,
-        })),
+        inputs: this.getTaskNextStatusesList(),
         buttons: [
           { text: 'Cancel', role: 'cancel' },
           {
@@ -282,10 +305,13 @@ export class TaskDetailsPage implements OnInit {
           },
         ],
       };
-    } else if (type === 'staff') {
+    } else if (
+      type === 'staff' &&
+      this.userDetails?.userRoleId === this.USER_ROLE_DESC.OWNER
+    ) {
       const activeStaffsList = await this.getAllActiveStaffs();
 
-      selectAlertBody = {
+      this.selectAlertBody = {
         header: 'Change Assigned Staff',
         inputs: activeStaffsList.map((item: any) => ({
           type: 'radio',
@@ -306,12 +332,61 @@ export class TaskDetailsPage implements OnInit {
       };
     }
 
-    const alert = await this.alertController.create(selectAlertBody);
+    const alert = await this.alertController.create(this.selectAlertBody);
 
     await alert.present();
 
     await alert.onDidDismiss();
     document.body.focus();
+  }
+
+  getTaskNextStatusesList(): AppSelectInput[] {
+    const statusMap = {
+      [USER_ROLES_DESC.OWNER]: {
+        [TASK_STATUS_ID_ENUM.READY]: [TASK_STATUS_ID_ENUM.IN_ANALYSIS],
+        [TASK_STATUS_ID_ENUM.IN_ANALYSIS]: [
+          TASK_STATUS_ID_ENUM.RE_OPEN,
+          TASK_STATUS_ID_ENUM.DONE,
+          TASK_STATUS_ID_ENUM.REJECTED,
+        ],
+      },
+      [USER_ROLES_DESC.EMPLOYEE]: {
+        [TASK_STATUS_ID_ENUM.ASSIGNED]: [TASK_STATUS_ID_ENUM.IN_PROGRESS],
+        [TASK_STATUS_ID_ENUM.RE_OPEN]: [TASK_STATUS_ID_ENUM.IN_PROGRESS],
+        [TASK_STATUS_ID_ENUM.IN_PROGRESS]: [TASK_STATUS_ID_ENUM.READY],
+      },
+    };
+
+    const allowedStatuses =
+      statusMap[this.userDetails.userRoleId]?.[this.taskDetails.statusId] || [];
+
+    return TASK_STATUS_DESC_ENUM.filter((item: any) =>
+      allowedStatuses.includes(item.id)
+    ).map((item: any) => ({
+      type: 'radio',
+      label: item.name,
+      value: item.id,
+    }));
+  }
+
+  showChangeStatusDropdown(): boolean {
+    const allowedStatuses = {
+      [this.USER_ROLE_DESC.OWNER]: [
+        TASK_STATUS_ID_ENUM.READY,
+        TASK_STATUS_ID_ENUM.IN_ANALYSIS,
+      ],
+      [this.USER_ROLE_DESC.EMPLOYEE]: [
+        TASK_STATUS_ID_ENUM.ASSIGNED,
+        TASK_STATUS_ID_ENUM.IN_PROGRESS,
+        TASK_STATUS_ID_ENUM.RE_OPEN,
+      ],
+    };
+
+    return (
+      allowedStatuses[this.userDetails.userRoleId]?.includes(
+        this.taskDetails.statusId
+      ) || false
+    );
   }
 
   getAllActiveStaffs(): Promise<any[]> {

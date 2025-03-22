@@ -1,5 +1,25 @@
 <app-header title="Tasks" type="primary"></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="isLoading === true">
+    <app-loader></app-loader>
+  </div>
+
+  <div *ngIf="isLoading === false">
+    <div *ngIf="tasksList?.length <= 0">
+      <app-empty-list [message]="'No tasks found!'"></app-empty-list>
+    </div>
+
+    <div *ngIf="tasksList?.length > 0">
+      <app-task-card
+        [taskDetails]="task"
+        *ngFor="let task of tasksList"
+        (click)="onTaskItemClick(task._id)"
+      ></app-task-card>
+    </div>
+  </div>
 </ion-content>

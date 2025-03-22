@@ -34,18 +34,19 @@ export const StaffFooterNavigation = [
     label: 'Analytics',
     routerLink: AppRoutingConstants.Analytics,
   },
+  {
+    name: 'tasks',
+    iconName: 'calendar',
+    label: 'Tasks',
+    routerLink: AppRoutingConstants.StaffTasksList,
+  },
   // {
   //   name: 'staffs',
   //   iconName: 'people',
   //   label: 'Staffs',
   //   routerLink: AppRoutingConstants.StaffList,
   // },
-  // {
-  //   name: 'checklists',
-  //   iconName: 'calendar',
-  //   label: 'Checklists',
-  //   routerLink: AppRoutingConstants.ChecklistsList,
-  // },
+
   {
     name: 'community',
     iconName: 'chatbubble-ellipses',

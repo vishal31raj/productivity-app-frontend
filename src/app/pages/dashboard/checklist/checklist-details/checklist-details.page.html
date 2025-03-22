@@ -1,7 +1,7 @@
 <app-header
   title="Checklist Details"
   type="secondary"
-  [showDelete]="true"
+  [showDelete]="userRoleId === USER_ROLE_DESC.OWNER"
   (deleteBtnClickEvent)="onDeleteChecklist()"
 ></app-header>
 
@@ -17,7 +17,11 @@
   <div *ngIf="isLoading === false && checklistDetails">
     <p class="title" *ngIf="!editTitle">
       {{ checklistDetails.title }}
-      <span class="ms-2 edit-btn" (click)="onClickEdit('title')">
+      <span
+        class="ms-2 edit-btn"
+        (click)="onClickEdit('title')"
+        *ngIf="userRoleId === USER_ROLE_DESC.OWNER"
+      >
         <ion-icon name="create-outline"></ion-icon>
       </span>
     </p>
@@ -70,7 +74,11 @@
       <div class="description">
         <p class="header">
           Description:
-          <span class="ms-2 edit-btn" (click)="onClickEdit('description')">
+          <span
+            class="ms-2 edit-btn"
+            (click)="onClickEdit('description')"
+            *ngIf="userRoleId === USER_ROLE_DESC.OWNER"
+          >
             <ion-icon name="create-outline"></ion-icon>
           </span>
         </p>
@@ -127,6 +135,7 @@
               <div
                 class="remove-img-btn"
                 (click)="onRemoveAttachment(item._id)"
+                *ngIf="userRoleId === USER_ROLE_DESC.OWNER"
               >
                 <ion-icon name="trash-outline"></ion-icon>
               </div>
@@ -137,7 +146,7 @@
           </ion-col>
         </ion-row>
 
-        <div class="ion-margin-vertical">
+        <div class="ion-margin-vertical" *ngIf="userRoleId === USER_ROLE_DESC.OWNER">
           <app-image-picker
             [buttonName]="'Add Attachment'"
             (imgPickedEvent)="onPickImage($event)"
@@ -168,6 +177,7 @@
           color="medium"
           [disabled]="editTitle || editDescription"
           [routerLink]="APP_ROUTES.CreateNewTask + '/' + checklistDetails._id"
+          *ngIf="userRoleId === USER_ROLE_DESC.OWNER"
         >
           + Add New Task
         </ion-button>

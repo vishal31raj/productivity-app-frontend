@@ -1,7 +1,7 @@
 <app-header
   title="Task Details"
   type="secondary"
-  [showDelete]="true"
+  [showDelete]="userDetails.userRoleId=== USER_ROLE_DESC.OWNER"
   (deleteBtnClickEvent)="onDeleteTask()"
 ></app-header>
 
@@ -18,7 +18,11 @@
     <!-- Title -->
     <p class="title" *ngIf="!editTitle">
       {{ taskDetails.title }}
-      <span class="ms-2 edit-btn" (click)="onClickEdit('title')">
+      <span
+        class="ms-2 edit-btn"
+        (click)="onClickEdit('title')"
+        *ngIf="userDetails.userRoleId=== USER_ROLE_DESC.OWNER"
+      >
         <ion-icon name="create-outline"></ion-icon>
       </span>
     </p>
@@ -66,14 +70,20 @@
         <app-priority-badge
           [priorityId]="taskDetails.priorityId"
         ></app-priority-badge>
-        <ion-icon name="chevron-down-outline"></ion-icon>
+        <ion-icon
+          name="chevron-down-outline"
+          *ngIf="userDetails.userRoleId=== USER_ROLE_DESC.OWNER"
+        ></ion-icon>
       </div>
-      <div size="4" class="status">
+      <div size="4" class="status" (click)="openSelectAlert('status')">
         <app-status-chip
           [statusId]="taskDetails.statusId"
           [statusDescArr]="TaskStatusDescEnum"
         ></app-status-chip>
-        <!-- <ion-icon name="chevron-down-outline"></ion-icon> -->
+        <ion-icon
+          name="chevron-down-outline"
+          *ngIf="showChangeStatusDropdown()"
+        ></ion-icon>
       </div>
       <div size="5" class="assignedTo" (click)="openSelectAlert('staff')">
         <app-avatar-image
@@ -84,11 +94,14 @@
         ></app-avatar-image>
         {{ taskDetails.assignedTo ? taskDetails.assignedTo.name : 'Not assigned'
         }}
-        <ion-icon name="chevron-down-outline"></ion-icon>
+        <ion-icon
+          name="chevron-down-outline"
+          *ngIf="userDetails.userRoleId=== USER_ROLE_DESC.OWNER"
+        ></ion-icon>
       </div>
     </div>
 
-    <hr>
+    <hr />
 
     <ion-segment value="description" (ionChange)="onSwitchTabEvent($event)">
       <ion-segment-button value="description">
@@ -104,7 +117,11 @@
       <div class="description">
         <p class="header">
           Description:
-          <span class="ms-2 edit-btn" (click)="onClickEdit('description')">
+          <span
+            class="ms-2 edit-btn"
+            (click)="onClickEdit('description')"
+            *ngIf="userDetails.userRoleId=== USER_ROLE_DESC.OWNER"
+          >
             <ion-icon name="create-outline"></ion-icon>
           </span>
         </p>
@@ -162,6 +179,7 @@
               <div
                 class="remove-img-btn"
                 (click)="onRemoveAttachment(item._id)"
+                *ngIf="userDetails.userRoleId=== USER_ROLE_DESC.OWNER"
               >
                 <ion-icon name="trash-outline"></ion-icon>
               </div>
@@ -172,7 +190,10 @@
           </ion-col>
         </ion-row>
 
-        <div class="ion-margin-vertical">
+        <div
+          class="ion-margin-vertical"
+          *ngIf="userDetails.userRoleId=== USER_ROLE_DESC.OWNER"
+        >
           <app-image-picker
             [buttonName]="'Add Attachment'"
             (imgPickedEvent)="onPickImage($event)"
