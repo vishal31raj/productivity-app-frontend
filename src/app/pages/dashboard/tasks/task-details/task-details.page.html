@@ -68,12 +68,12 @@
         ></app-priority-badge>
         <ion-icon name="chevron-down-outline"></ion-icon>
       </div>
-      <div size="4" class="status" (click)="openSelectAlert('status')">
+      <div size="4" class="status">
         <app-status-chip
           [statusId]="taskDetails.statusId"
           [statusDescArr]="TaskStatusDescEnum"
         ></app-status-chip>
-        <ion-icon name="chevron-down-outline"></ion-icon>
+        <!-- <ion-icon name="chevron-down-outline"></ion-icon> -->
       </div>
       <div size="5" class="assignedTo" (click)="openSelectAlert('staff')">
         <app-avatar-image

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
-import { SharedModule } from 'src/app/shared.module';
 import { StaffsService } from '../staffs.service';
 import { Location } from '@angular/common';
 import { AppRoutingConstants } from 'src/app/constants/app-routing';
 import { Router } from '@angular/router';
+import { SharedModule } from 'src/app/shared.module';
 
 @Component({
   selector: 'app-create-new-staff',

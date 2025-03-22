@@ -37,7 +37,7 @@ export class StaffDetailsPage implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter() {
-    this.staffId = this.router.url.split('/')[2];
+    this.staffId = this.router.url.split('/')[4];
     this.getStaffDetails();
   }
 

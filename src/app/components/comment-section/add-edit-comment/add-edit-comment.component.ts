@@ -9,7 +9,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from 'src/app/shared.module';
 import { ImagePickerComponent } from '../../image-picker/image-picker.component';
-import { UploadFileInterface } from 'src/app/pages/checklist/create-new-checklist/create-new-checklist.page';
+import { UploadFileInterface } from 'src/app/pages/dashboard/checklist/create-new-checklist/create-new-checklist.page';
 import { FilesService } from 'src/app/services/files.service';
 import { QuillConfig } from 'src/app/constants/quill-config';
 import { QuillModule } from 'ngx-quill';

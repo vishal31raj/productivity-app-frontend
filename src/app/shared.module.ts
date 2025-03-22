@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { HeaderPage } from './pages/shared/header/header.page';
+import { HeaderPage } from './pages/dashboard/shared/header/header.page';
 import { LoaderComponent } from './components/loader/loader.component';
 import { EmptyListComponent } from './components/empty-list/empty-list.component';
 import { AvatarImageComponent } from './components/avatar-image/avatar-image.component';

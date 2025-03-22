@@ -1,11 +1,11 @@
 import { AppRoutingConstants } from 'src/app/constants/app-routing';
 
-export const FooterNavigation = [
+export const OwnerFooterNavigation = [
   {
-    name: 'dashboard',
+    name: 'analytics',
     iconName: 'grid',
-    label: 'Dashboard',
-    routerLink: AppRoutingConstants.Dashboard,
+    label: 'Analytics',
+    routerLink: AppRoutingConstants.Analytics,
   },
   {
     name: 'staffs',
@@ -19,6 +19,33 @@ export const FooterNavigation = [
     label: 'Checklists',
     routerLink: AppRoutingConstants.ChecklistsList,
   },
+  {
+    name: 'community',
+    iconName: 'chatbubble-ellipses',
+    label: 'Community',
+    routerLink: AppRoutingConstants.Community,
+  },
+];
+
+export const StaffFooterNavigation = [
+  {
+    name: 'analytics',
+    iconName: 'grid',
+    label: 'Analytics',
+    routerLink: AppRoutingConstants.Analytics,
+  },
+  // {
+  //   name: 'staffs',
+  //   iconName: 'people',
+  //   label: 'Staffs',
+  //   routerLink: AppRoutingConstants.StaffList,
+  // },
+  // {
+  //   name: 'checklists',
+  //   iconName: 'calendar',
+  //   label: 'Checklists',
+  //   routerLink: AppRoutingConstants.ChecklistsList,
+  // },
   {
     name: 'community',
     iconName: 'chatbubble-ellipses',

@@ -76,7 +76,7 @@ export class TaskDetailsPage implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter() {
-    const taskId = this.router.url.split('/')[3];
+    const taskId = this.router.url.split('/')[4];
     this.getTaskDetails(taskId);
   }
 

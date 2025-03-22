@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { SidebarNavigation } from 'src/app/constants/app-navigation';
-import { USER_ROLES } from 'src/app/enums/user-role.enum';
 import { SharedModule } from 'src/app/shared.module';
 
 @Component({
@@ -26,9 +25,5 @@ export class SidebarPage implements OnInit {
 
   onLogout() {
     this._authService.logout();
-  }
-
-  getUserRole(userRoleId: number) {
-    return USER_ROLES[userRoleId as keyof typeof USER_ROLES];
   }
 }

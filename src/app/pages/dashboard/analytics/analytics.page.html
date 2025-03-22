@@ -1,0 +1,10 @@
+<app-header title="Analytics" type="primary"></app-header>
+
+<ion-content class="ion-padding">
+  <app-owner-analytics
+    *ngIf="userRoleId === USER_ROLE_DESC.OWNER"
+  ></app-owner-analytics>
+  <app-staff-analytics
+    *ngIf="userRoleId === USER_ROLE_DESC.EMPLOYEE"
+  ></app-staff-analytics>
+</ion-content>

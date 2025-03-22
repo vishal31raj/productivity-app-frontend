@@ -46,7 +46,7 @@ export class ChecklistDetailsPage implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter() {
-    const checklistId = this.router.url.split('/')[3];
+    const checklistId = this.router.url.split('/')[4];
     this.getChecklistDetails(checklistId);
   }
 

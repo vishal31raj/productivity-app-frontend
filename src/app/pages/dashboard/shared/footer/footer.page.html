@@ -6,7 +6,7 @@
       [routerLink]="item.routerLink"
       (click)="item.name === 'community' ? markMessagesAsRead() : null"
     >
-      <ion-icon name="{{ item.iconName }}"></ion-icon>
+      <ion-icon [name]="item.iconName"></ion-icon>
       <span
         *ngIf="item.name === 'community' && hasNewMessage"
         class="notification-dot"

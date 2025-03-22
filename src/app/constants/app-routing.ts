@@ -1,26 +1,27 @@
 export const AppRoutingConstants = {
   Login: '/login',
   Register: '/register',
-
   Dashboard: '/dashboard',
 
-  StaffList: '/staffs/staffs-list',
-  StaffDetails: '/staffs',
-  CreateNewStaff: '/staffs/create-new-staff',
+  Analytics: '/dashboard/analytics',
 
-  ChecklistsList: '/checklists/list',
-  CreateNewChecklist: '/checklists/create-new-checklist',
-  ChecklistDetails: '/checklists/checklist-details',
+  StaffList: '/dashboard/staffs/staffs-list',
+  StaffDetails: '/dashboard/staffs/details',
+  CreateNewStaff: '/dashboard/staffs/create-new-staff',
 
-  TasksList: '/tasks/tasks-list',
-  CreateNewTask: '/tasks/create-new-task',
-  TaskDetails: '/tasks/task-details',
+  ChecklistsList: '/dashboard/checklists/list',
+  CreateNewChecklist: '/dashboard/checklists/create-new-checklist',
+  ChecklistDetails: '/dashboard/checklists/checklist-details',
 
-  Community: '/community',
+  TasksList: '/dashboard/tasks/tasks-list',
+  CreateNewTask: '/dashboard/tasks/create-new-task',
+  TaskDetails: '/dashboard/tasks/task-details',
 
-  Notifications: '/notifications',
+  Community: '/dashboard/community',
 
-  Profile: '/profile',
+  Notifications: '/dashboard/notifications',
 
-  HelpAndSupport: '/help-n-support',
+  Profile: '/dashboard/profile',
+
+  HelpAndSupport: '/dashboard/help-n-support',
 };

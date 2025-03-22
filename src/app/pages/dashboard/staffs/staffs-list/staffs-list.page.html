@@ -24,7 +24,7 @@
       <ion-item
         *ngFor="let staff of staffsList"
         button
-        [routerLink]="'/staffs/' + staff._id"
+        [routerLink]="APP_ROUTES.StaffDetails + '/' + staff._id"
       >
         <div class="py-2 d-flex">
           <app-avatar-image
