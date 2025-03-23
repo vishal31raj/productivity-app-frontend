@@ -262,83 +262,147 @@ export class TaskDetailsPage implements OnInit {
   }
 
   async openSelectAlert(type: string) {
+    let header = '';
+    let inputs: AppSelectInput[] = [];
+
     if (
       type === 'priority' &&
       this.userDetails?.userRoleId === this.USER_ROLE_DESC.OWNER
     ) {
-      this.selectAlertBody = {
-        header: 'Change Task Priority',
-        inputs: TASK_PRIORITY_DESC_ENUM.map((item: any) => ({
-          type: 'radio',
-          label: item.name,
-          value: item.id,
-        })),
-        buttons: [
-          { text: 'Cancel', role: 'cancel' },
-          {
-            text: 'Confirm',
-            handler: (data) => {
-              if (data) {
-                this.updateTaskDetails({ priorityId: data }, null);
-              }
-            },
-          },
-        ],
-      };
+      if (!this.showOpenAlertDropdown()) return;
+      header = 'Change Task Priority';
+      inputs = TASK_PRIORITY_DESC_ENUM.map((item: any) => ({
+        type: 'radio',
+        label: item.name,
+        value: item.id,
+      }));
     } else if (type === 'status') {
-      if (!this.showChangeStatusDropdown()) {
-        return;
-      }
-
-      this.selectAlertBody = {
-        header: 'Change Task Status',
-        inputs: this.getTaskNextStatusesList(),
-        buttons: [
-          { text: 'Cancel', role: 'cancel' },
-          {
-            text: 'Confirm',
-            handler: (data) => {
-              if (data) {
-                this.updateTaskDetails({ statusId: data }, null);
-              }
-            },
-          },
-        ],
-      };
+      if (!this.showChangeStatusDropdown()) return;
+      header = 'Change Task Status';
+      inputs = this.getTaskNextStatusesList();
     } else if (
       type === 'staff' &&
       this.userDetails?.userRoleId === this.USER_ROLE_DESC.OWNER
     ) {
+      if (!this.showOpenAlertDropdown()) return;
       const activeStaffsList = await this.getAllActiveStaffs();
-
-      this.selectAlertBody = {
-        header: 'Change Assigned Staff',
-        inputs: activeStaffsList.map((item: any) => ({
-          type: 'radio',
-          label: item.name,
-          value: item._id,
-        })),
-        buttons: [
-          { text: 'Cancel', role: 'cancel' },
-          {
-            text: 'Confirm',
-            handler: (data) => {
-              if (data) {
-                this.assignTaskToStaff(data);
-              }
-            },
-          },
-        ],
-      };
+      header = 'Change Assigned Staff';
+      inputs = activeStaffsList.map((item: any) => ({
+        type: 'radio',
+        label: item.name,
+        value: item._id,
+      }));
+    } else {
+      return;
     }
 
+    this.selectAlertBody = {
+      header,
+      inputs,
+      buttons: [
+        { text: 'Cancel', role: 'cancel' },
+        {
+          text: 'Confirm',
+          handler: (data) => {
+            if (!data) return;
+            if (type === 'priority')
+              this.updateTaskDetails({ priorityId: data }, null);
+            else if (type === 'status')
+              this.updateTaskDetails({ statusId: data }, null);
+            else if (type === 'staff') this.assignTaskToStaff(data);
+          },
+        },
+      ],
+    };
+
     const alert = await this.alertController.create(this.selectAlertBody);
-
     await alert.present();
-
     await alert.onDidDismiss();
     document.body.focus();
   }
+
+  // async openSelectAlert(type: string) {
+  //   if (
+  //     type === 'priority' &&
+  //     this.userDetails?.userRoleId === this.USER_ROLE_DESC.OWNER
+  //   ) {
+  //     if (this.showOpenAlertDropdown()) {
+  //       this.selectAlertBody = {
+  //         header: 'Change Task Priority',
+  //         inputs: TASK_PRIORITY_DESC_ENUM.map((item: any) => ({
+  //           type: 'radio',
+  //           label: item.name,
+  //           value: item.id,
+  //         })),
+  //         buttons: [
+  //           { text: 'Cancel', role: 'cancel' },
+  //           {
+  //             text: 'Confirm',
+  //             handler: (data) => {
+  //               if (data) {
+  //                 this.updateTaskDetails({ priorityId: data }, null);
+  //               }
+  //             },
+  //           },
+  //         ],
+  //       };
+  //     }
+  //   } else if (type === 'status') {
+  //     if (!this.showChangeStatusDropdown()) {
+  //       return;
+  //     }
+
+  //     this.selectAlertBody = {
+  //       header: 'Change Task Status',
+  //       inputs: this.getTaskNextStatusesList(),
+  //       buttons: [
+  //         { text: 'Cancel', role: 'cancel' },
+  //         {
+  //           text: 'Confirm',
+  //           handler: (data) => {
+  //             if (data) {
+  //               this.updateTaskDetails({ statusId: data }, null);
+  //             }
+  //           },
+  //         },
+  //       ],
+  //     };
+  //   } else if (
+  //     type === 'staff' &&
+  //     this.userDetails?.userRoleId === this.USER_ROLE_DESC.OWNER
+  //   ) {
+  //     if (this.showOpenAlertDropdown()) {
+  //       const activeStaffsList = await this.getAllActiveStaffs();
+
+  //       this.selectAlertBody = {
+  //         header: 'Change Assigned Staff',
+  //         inputs: activeStaffsList.map((item: any) => ({
+  //           type: 'radio',
+  //           label: item.name,
+  //           value: item._id,
+  //         })),
+  //         buttons: [
+  //           { text: 'Cancel', role: 'cancel' },
+  //           {
+  //             text: 'Confirm',
+  //             handler: (data) => {
+  //               if (data) {
+  //                 this.assignTaskToStaff(data);
+  //               }
+  //             },
+  //           },
+  //         ],
+  //       };
+  //     }
+  //   }
+
+  //   const alert = await this.alertController.create(this.selectAlertBody);
+
+  //   await alert.present();
+
+  //   await alert.onDidDismiss();
+  //   document.body.focus();
+  // }
 
   getTaskNextStatusesList(): AppSelectInput[] {
     const statusMap = {
@@ -387,6 +451,17 @@ export class TaskDetailsPage implements OnInit {
         this.taskDetails.statusId
       ) || false
     );
+  }
+
+  showOpenAlertDropdown() {
+    if (
+      [TASK_STATUS_ID_ENUM.DONE, TASK_STATUS_ID_ENUM.REJECTED].includes(
+        this.taskDetails.statusId
+      )
+    ) {
+      return false;
+    }
+    return true;
   }
 
   getAllActiveStaffs(): Promise<any[]> {
@@ -493,7 +568,7 @@ export class TaskDetailsPage implements OnInit {
   async onDeleteTask() {
     const isConfirmed = await this.alertService.presentAlert(
       'Delete Task?',
-      'Deleting task would delete all its attachements and comments. Are you sure you want to performthis action?'
+      'Deleting task would delete all its attachements and comments. Are you sure you want to perform this action?'
     );
     if (isConfirmed) {
       this.tasksService.deleteTaskById(this.taskDetails._id).subscribe({
