@@ -6,6 +6,7 @@ import { API_ROUTES } from '../constants/api-routes';
 import { ToastService } from '../services/toast.service';
 import { User } from '../models/user.model';
 import { AppRoutingConstants } from '../constants/app-routing';
+import { SocketService } from '../services/socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private _toastService: ToastService
+    private _toastService: ToastService,
+    private socketService: SocketService
   ) {
     this.autoLogin();
   }
@@ -72,6 +74,7 @@ export class AuthService {
   logout() {
     this.user.next(null);
     this._toastService.showSuccessToast('Logged out successfully!');
+    this.socketService.disconnect();
     this.router.navigate([this.APP_ROUTES.Login]);
     localStorage.removeItem('userData');
 

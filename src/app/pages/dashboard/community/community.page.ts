@@ -45,7 +45,6 @@ export class CommunityPage implements OnInit {
   constructor(
     private communityService: CommunityService,
     private toastService: ToastService,
-    private filesService: FilesService,
     private socketService: SocketService,
     private alertService: AlertService
   ) {}
