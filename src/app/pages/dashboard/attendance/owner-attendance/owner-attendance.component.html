@@ -1,3 +1,54 @@
-<p>
-  owner-attendance works!
-</p>
+<div class="calendar-container">
+  <ion-datetime
+    mode="md"
+    presentation="date"
+    (ionChange)="onDateClick($event)"
+    [max]="currentDate"
+  ></ion-datetime>
+</div>
+
+<hr />
+
+<div>
+  <p class="header">Attendance ({{ selectedDate | date }}) :</p>
+  <div *ngIf="isLoading === true">
+    <app-loader></app-loader>
+  </div>
+
+  <div *ngIf="isLoading === false">
+    <div *ngIf="staffsArr?.length === 0">
+      <app-empty-list [message]="'No staffs found!'"></app-empty-list>
+    </div>
+
+    <ion-list class="my-3" lines="full" *ngIf="staffsArr?.length > 0">
+      <ion-item *ngFor="let staff of staffsArr">
+        <div class="py-2 d-flex">
+          <app-avatar-image
+            [imgUrl]="staff.profileImgUrl"
+            class="me-3"
+          ></app-avatar-image>
+          <div style="width: calc(100% - 40px)">
+            <p class="m-0" style="font-size: 15px; font-weight: 600">
+              {{ staff.name }}
+            </p>
+          </div>
+          <ion-checkbox
+            [(ngModel)]="staff.isPresent"
+            (ionChange)="onCheckBoxClick($event)"
+          />
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+</div>
+
+<div *ngIf="showUpdateAttendanceBtn">
+  <ion-button
+    mode="ios"
+    expand="block"
+    [disabled]="isMarkingAttendance"
+    (click)="onUpdateAttendance()"
+  >
+    Update Attendance
+  </ion-button>
+</div>

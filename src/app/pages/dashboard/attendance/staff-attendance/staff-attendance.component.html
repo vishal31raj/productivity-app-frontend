@@ -1,3 +1,12 @@
-<p>
-  staff-attendance works!
-</p>
+<div *ngIf="isLoading === true">
+  <app-loader></app-loader>
+</div>
+
+<div *ngIf="isLoading === false" class="calendar-container">
+  <ion-datetime
+    mode="md"
+    presentation="date"
+    [highlightedDates]="isPresentDates"
+    [max]="currentDate"
+  ></ion-datetime>
+</div>

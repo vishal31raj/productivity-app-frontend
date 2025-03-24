@@ -15,6 +15,11 @@ export const API_ROUTES = {
   GetProfileDetails: '/user/getProfileDetails',
   ChangeProfileImg: '/user/changeProfileImgUrl',
 
+  // Attendance
+  MarkOrUpdateStaffAttendance: '/user/markOrUpdateStaffAttendance',
+  GetAllAttendanceByDate: '/user/getAttendanceByDate',
+  GetStaffAttendanceById: '/user/getStaffAttendance',
+
   // Checklists
   CreateNewCheckList: '/tasks/createNewChecklist',
   GetAllChecklists: '/tasks/getAllChecklists',
