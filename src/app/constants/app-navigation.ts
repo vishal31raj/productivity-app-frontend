@@ -15,7 +15,7 @@ export const OwnerFooterNavigation = [
   },
   {
     name: 'checklists',
-    iconName: 'calendar',
+    iconName: 'document-text',
     label: 'Checklists',
     routerLink: AppRoutingConstants.ChecklistsList,
   },
@@ -36,17 +36,16 @@ export const StaffFooterNavigation = [
   },
   {
     name: 'tasks',
-    iconName: 'calendar',
+    iconName: 'document-text',
     label: 'Tasks',
     routerLink: AppRoutingConstants.StaffTasksList,
   },
-  // {
-  //   name: 'staffs',
-  //   iconName: 'people',
-  //   label: 'Staffs',
-  //   routerLink: AppRoutingConstants.StaffList,
-  // },
-
+  {
+    name: 'attendance',
+    iconName: 'calendar',
+    label: 'Attendance',
+    routerLink: AppRoutingConstants.Attendance,
+  },
   {
     name: 'community',
     iconName: 'chatbubble-ellipses',
@@ -55,7 +54,20 @@ export const StaffFooterNavigation = [
   },
 ];
 
-export const SidebarNavigation = [
+export const OwnerSidebarNavItems = [
+  {
+    iconName: 'calendar',
+    label: 'Attendance',
+    routerLink: AppRoutingConstants.Attendance,
+  },
+  {
+    label: 'Help & Support',
+    routerLink: AppRoutingConstants.HelpAndSupport,
+    iconName: 'help-circle',
+  },
+];
+
+export const StaffSidebarNavItems = [
   {
     label: 'Help & Support',
     routerLink: AppRoutingConstants.HelpAndSupport,

@@ -5,6 +5,8 @@ export const AppRoutingConstants = {
 
   Analytics: '/dashboard/analytics',
 
+  Attendance: '/dashboard/attendance',
+
   StaffList: '/dashboard/staffs/staffs-list',
   StaffDetails: '/dashboard/staffs/details',
   CreateNewStaff: '/dashboard/staffs/create-new-staff',

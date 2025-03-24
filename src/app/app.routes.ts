@@ -106,7 +106,6 @@ export const routes: Routes = [
       },
       {
         path: 'community',
-
         loadComponent: () =>
           import('./pages/dashboard/community/community.page').then(
             (m) => m.CommunityPage
@@ -170,6 +169,13 @@ export const routes: Routes = [
               ).then((m) => m.ChecklistDetailsPage),
           },
         ],
+      },
+      {
+        path: 'attendance',
+        loadComponent: () =>
+          import('./pages/dashboard/attendance/attendance.page').then(
+            (m) => m.AttendancePage
+          ),
       },
     ],
   },

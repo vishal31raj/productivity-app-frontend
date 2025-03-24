@@ -1,0 +1,10 @@
+<app-header title="Attendance" type="primary"></app-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <app-owner-attendance
+    *ngIf="userRoleId === USER_ROLE_DESC.OWNER"
+  ></app-owner-attendance>
+  <app-staff-attendance
+    *ngIf="userRoleId === USER_ROLE_DESC.EMPLOYEE"
+  ></app-staff-attendance>
+</ion-content>
