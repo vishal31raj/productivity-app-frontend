@@ -1,7 +1,11 @@
 <app-header title="Profile" type="primary"></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <div *ngIf="profileDetails">
+  <div *ngIf="isLoading === true">
+    <app-loader></app-loader>
+  </div>
+
+  <div *ngIf="isLoading === false && profileDetails">
     <div class="d-flex">
       <div class="profile-img">
         <app-avatar-image

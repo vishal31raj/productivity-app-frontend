@@ -15,6 +15,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
   imports: [SharedModule, ImagePickerComponent],
 })
 export class ProfilePage implements OnInit {
+  isLoading: boolean = false;
   profileDetails: any;
 
   constructor(
@@ -31,6 +32,7 @@ export class ProfilePage implements OnInit {
   }
 
   getProfileDetails() {
+    this.isLoading = true;
     this.profileService.getProfileDetails().subscribe({
       next: (res: any) => {
         if (res.success === true) {
@@ -41,10 +43,12 @@ export class ProfilePage implements OnInit {
           }
 
           this.profileDetails = res.data;
+          this.isLoading = false;
         }
       },
       error: (err: any) => {
         this.toastService.showErrorToast(err.error.message);
+        this.isLoading = false;
       },
     });
   }
@@ -81,7 +85,7 @@ export class ProfilePage implements OnInit {
       error: (err: any) => {
         this.toastService.showErrorToast(err.error.message);
       },
-    })
+    });
   }
 
   async onChangePasswordBtnClick() {

@@ -1,0 +1,32 @@
+.list-card {
+    border: 1px solid silver;
+    padding: 16px;
+    border-radius: 8px;
+
+    .header {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+        color: #2d2d2d;
+    }
+    .sub-header {
+        margin: 0;
+        font-size: 12px;
+        color: #2d2d2d;
+    }
+    .list-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        
+        .name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d2d2d;
+        }
+        .percentage {
+            margin-left: auto;
+            color: #4c4c4c;
+        }
+    }
+}
