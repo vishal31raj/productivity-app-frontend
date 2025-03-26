@@ -1,5 +1,34 @@
 <app-header title="Notifications" type="primary"></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  notifications
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="isLoading === true">
+    <app-loader></app-loader>
+  </div>
+
+  <div *ngIf="isLoading === false">
+    <div *ngIf="notifications?.length <= 0">
+      <app-empty-list [message]="'No notifications found!'"></app-empty-list>
+    </div>
+
+    <div *ngIf="notifications?.length > 0">
+      <div
+        class="not-item"
+        *ngFor="let notification of notifications"
+        (click)="onNotificationItemClick(notification.taskId)"
+      >
+        <div>
+          <p class="title">{{ notification.title }}</p>
+          <p class="desc">{{ notification.description }}</p>
+          <p class="date">{{ notification.createdAt | relativeTime }}</p>
+        </div>
+        <div *ngIf="notification.taskId">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

@@ -49,7 +49,6 @@ export class TasksListPage implements OnInit {
           next: (res: any) => {
             if (res.success) {
               this.tasksList = res.data;
-              console.log(this.tasksList);
 
               this.isLoading = false;
             }

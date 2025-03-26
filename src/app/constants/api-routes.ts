@@ -15,6 +15,9 @@ export const API_ROUTES = {
   GetProfileDetails: '/user/getProfileDetails',
   ChangeProfileImg: '/user/changeProfileImgUrl',
 
+  // Notifications
+  GetAllNotifications: '/notifications/getAllNotifications',
+
   // Attendance
   MarkOrUpdateStaffAttendance: '/user/markOrUpdateStaffAttendance',
   GetAllAttendanceByDate: '/user/getAttendanceByDate',
