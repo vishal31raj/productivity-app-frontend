@@ -25,6 +25,7 @@
     </div>
 
     <app-image-picker
+      [buttonName]="'Select File'"
       (imgPickedEvent)="onPickImage($event)"
       *ngIf="!selectedFile.file"
     ></app-image-picker>

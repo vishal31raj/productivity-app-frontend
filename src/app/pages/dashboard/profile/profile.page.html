@@ -9,7 +9,7 @@
     <div class="d-flex">
       <div class="profile-img">
         <app-avatar-image
-          [imgUrl]="profileDetails.profileImgUrl"
+          [docUrl]="profileDetails.profileImgUrl"
           [height]="'80px'"
           [width]="'80px'"
         ></app-avatar-image>
@@ -68,8 +68,8 @@
       >
         <ion-col size="4" *ngFor="let item of profileDetails.documents">
           <div class="img-col">
-            <div class="img-div" (click)="onOpenImage(item.imgUrl)">
-              <img [src]="item.imgUrl" alt="" />
+            <div class="img-div" (click)="onOpenImage(item.docUrl)">
+              <img [src]="item.docUrl" alt="" />
             </div>
             <div class="date-div" *ngIf="item.createdAt">{{ item.name }}</div>
           </div>

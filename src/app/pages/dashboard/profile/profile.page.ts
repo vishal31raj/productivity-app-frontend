@@ -38,7 +38,7 @@ export class ProfilePage implements OnInit {
         if (res.success === true) {
           if (res.data.documents.length) {
             res.data.documents.forEach((doc: any) => {
-              doc.imgUrl = this.filesService.formatImageUrl(doc.imgUrl);
+              doc.docUrl = this.filesService.formatImageUrl(doc.docUrl);
             });
           }
 
@@ -56,7 +56,7 @@ export class ProfilePage implements OnInit {
   onPickImage(file: File) {
     if (file) {
       const formData = new FormData();
-      formData.append('images', file);
+      formData.append('file', file);
 
       this.profileService.changeProfileImgUrl(formData).subscribe({
         next: (res: any) => {
@@ -72,8 +72,8 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  onOpenImage(imgUrl: string) {
-    this.filesService.openImage(imgUrl);
+  onOpenImage(docUrl: string) {
+    this.filesService.openImage(docUrl);
   }
 
   changeUserPassword(reqBody: any, modal: any) {

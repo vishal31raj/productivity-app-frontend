@@ -15,7 +15,7 @@ export interface UploadFileInterface {
   fileUrl: string | undefined;
 
   _id?: string;
-  imgUrl?: string;
+  docUrl?: string;
 }
 
 @Component({
@@ -78,7 +78,7 @@ export class CreateNewChecklistPage implements OnInit {
 
       if (this.selectedFiles.length) {
         this.selectedFiles.forEach((item: any) => {
-          formData.append('images', item.file);
+          formData.append('file', item.file);
         });
       }
 

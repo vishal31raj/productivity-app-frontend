@@ -74,7 +74,7 @@ export class ChecklistDetailsPage implements OnInit {
 
           if (this.checklistDetails.attachments.length > 0) {
             this.checklistDetails.attachments.forEach((item: any) => {
-              item.imgUrl = this.filesService.formatImageUrl(item.imgUrl);
+              item.docUrl = this.filesService.formatImageUrl(item.docUrl);
             });
           }
           this.isLoading = false;
@@ -96,7 +96,7 @@ export class ChecklistDetailsPage implements OnInit {
 
   onPickImage(file: File) {
     const formData = new FormData();
-    formData.append('images', file);
+    formData.append('file', file);
 
     this.checklistService
       .AddAttachmentToChecklistById(this.checklistDetails._id, formData)
@@ -142,12 +142,12 @@ export class ChecklistDetailsPage implements OnInit {
     }
   }
 
-  onOpenImage(imgUrl: string) {
+  onOpenImage(docUrl: string) {
     if (this.editTitle || this.editDescription) {
       return;
     }
 
-    this.filesService.openImage(imgUrl);
+    this.filesService.openImage(docUrl);
   }
 
   onClickEdit(type: string) {

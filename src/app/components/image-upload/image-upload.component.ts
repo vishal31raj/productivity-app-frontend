@@ -52,7 +52,7 @@ export class ImageUploadComponent implements OnInit {
 
   onConfirmImageUpload() {
     const formData = new FormData();
-    formData.append('images', this.selectedFile.file);
+    formData.append('file', this.selectedFile.file);
     formData.append('name', this.uploadImageForm.value.name);
     formData.append('description', this.uploadImageForm.value.description);
 

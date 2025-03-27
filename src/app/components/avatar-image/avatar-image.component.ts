@@ -10,15 +10,15 @@ import { FilesService } from 'src/app/services/files.service';
   imports: [CommonModule],
 })
 export class AvatarImageComponent implements OnInit {
-  @Input() imgUrl;
+  @Input() docUrl;
   @Input() width = '40px';
   @Input() height = '40px';
 
   constructor(private filesService: FilesService) {}
 
   ngOnChanges() {
-    if (this.imgUrl) {
-      this.imgUrl = this.filesService.formatImageUrl(this.imgUrl);
+    if (this.docUrl) {
+      this.docUrl = this.filesService.formatImageUrl(this.docUrl);
     }
   }
 

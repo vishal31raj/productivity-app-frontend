@@ -115,14 +115,14 @@ export class TaskDetailsPage implements OnInit {
 
           if (this.taskDetails.attachments.length > 0) {
             this.taskDetails.attachments.forEach((item: any) => {
-              item.imgUrl = this.filesService.formatImageUrl(item.imgUrl);
+              item.docUrl = this.filesService.formatImageUrl(item.docUrl);
             });
           }
           if (this.taskDetails.comments.length > 0) {
             this.taskDetails.comments.forEach((comment: any) => {
               if (comment.attachments.length) {
                 comment.attachments.forEach((item: any) => {
-                  item.imgUrl = this.filesService.formatImageUrl(item.imgUrl);
+                  item.docUrl = this.filesService.formatImageUrl(item.docUrl);
                 });
               }
             });
@@ -146,7 +146,7 @@ export class TaskDetailsPage implements OnInit {
 
   onPickImage(file: File) {
     const formData = new FormData();
-    formData.append('images', file);
+    formData.append('file', file);
 
     this.tasksService
       .AddAttachmentToTask(this.taskDetails._id, formData)
@@ -192,12 +192,12 @@ export class TaskDetailsPage implements OnInit {
     }
   }
 
-  onOpenImage(imgUrl: string) {
+  onOpenImage(docUrl: string) {
     if (this.editTitle || this.editDescription) {
       return;
     }
 
-    this.filesService.openImage(imgUrl);
+    this.filesService.openImage(docUrl);
   }
 
   onClickEdit(type: string) {
@@ -520,7 +520,7 @@ export class TaskDetailsPage implements OnInit {
 
     if (reqBody.files.length) {
       reqBody.files.forEach((item: any) => {
-        formData.append('images', item.file);
+        formData.append('file', item.file);
       });
     }
 

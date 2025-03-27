@@ -51,8 +51,8 @@ export class CommentSectionComponent implements OnInit {
 
   ngOnInit() {}
 
-  onOpenImage(imgUrl: string) {
-    this.filesService.openImage(imgUrl);
+  onOpenImage(docUrl: string) {
+    this.filesService.openImage(docUrl);
   }
 
   openActionSheet(comment: any) {

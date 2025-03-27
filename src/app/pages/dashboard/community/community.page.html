@@ -20,7 +20,7 @@
     <div *ngIf="messages.length > 0">
       <div class="chat-item ion-margin-bottom" *ngFor="let message of messages">
         <app-avatar-image
-          [imgUrl]="message.sender.profileImgUrl"
+          [docUrl]="message.sender.profileImgUrl"
           [height]="'30px'"
           [width]="'30px'"
           *ngIf="!message.myText"

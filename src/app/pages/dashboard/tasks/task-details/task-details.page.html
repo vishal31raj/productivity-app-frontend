@@ -94,7 +94,7 @@
       </div>
       <div size="5" class="assignedTo" (click)="openSelectAlert('staff')">
         <app-avatar-image
-          [imgUrl]="taskDetails.assignedTo.profileImgUrl"
+          [docUrl]="taskDetails.assignedTo.profileImgUrl"
           [height]="'25px'"
           [width]="'25px'"
           *ngIf="taskDetails.assignedTo"
@@ -180,8 +180,8 @@
         >
           <ion-col size="4" *ngFor="let item of taskDetails.attachments">
             <div class="img-col">
-              <div class="img-div" (click)="onOpenImage(item.imgUrl)">
-                <img [src]="item.imgUrl" alt="" />
+              <div class="img-div" (click)="onOpenImage(item.docUrl)">
+                <img [src]="item.docUrl" alt="" />
               </div>
               <div
                 class="remove-img-btn"

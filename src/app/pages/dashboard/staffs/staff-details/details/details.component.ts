@@ -61,8 +61,8 @@ export class DetailsComponent implements OnInit {
       });
   }
 
-  onOpenDoc(imgUrl: string) {
-    let url = BASE_URL + '/' + imgUrl;
+  onOpenDoc(docUrl: string) {
+    let url = BASE_URL + '/' + docUrl;
     window.open(url, '_blank');
   }
 

@@ -129,8 +129,8 @@
         >
           <ion-col size="4" *ngFor="let item of checklistDetails.attachments">
             <div class="img-col">
-              <div class="img-div" (click)="onOpenImage(item.imgUrl)">
-                <img [src]="item.imgUrl" alt="" />
+              <div class="img-div" (click)="onOpenImage(item.docUrl)">
+                <img [src]="item.docUrl" alt="" />
               </div>
               <div
                 class="remove-img-btn"

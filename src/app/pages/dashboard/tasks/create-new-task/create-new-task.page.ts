@@ -69,7 +69,7 @@ export class CreateNewTaskPage implements OnInit {
 
       if (this.selectedFiles.length) {
         this.selectedFiles.forEach((item: any) => {
-          formData.append('images', item.file);
+          formData.append('file', item.file);
         });
       }
 
