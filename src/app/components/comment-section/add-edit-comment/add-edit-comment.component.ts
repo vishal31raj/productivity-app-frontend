@@ -13,6 +13,7 @@ import { UploadFileInterface } from 'src/app/pages/dashboard/checklist/create-ne
 import { FilesService } from 'src/app/services/files.service';
 import { QuillConfig } from 'src/app/constants/quill-config';
 import { QuillModule } from 'ngx-quill';
+import { SelectedFileComponent } from '../../selected-file/selected-file.component';
 
 @Component({
   selector: 'app-add-edit-comment',

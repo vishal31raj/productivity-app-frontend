@@ -4,27 +4,20 @@ import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImagePickerComponent } from '../image-picker/image-picker.component';
 import { FilesService } from 'src/app/services/files.service';
-
-interface UploadFile {
-  file: File | undefined;
-  fileUrl: string | undefined;
-}
+import { SelectedFileComponent } from '../selected-file/selected-file.component';
 
 @Component({
   selector: 'app-image-upload',
   templateUrl: './image-upload.component.html',
   styleUrls: ['./image-upload.component.scss'],
   standalone: true,
-  imports: [SharedModule, ImagePickerComponent],
+  imports: [SharedModule, ImagePickerComponent, SelectedFileComponent],
 })
 export class ImageUploadComponent implements OnInit {
 
   uploadImageForm!: FormGroup;
 
-  selectedFile: UploadFile = {
-    file: undefined,
-    fileUrl: undefined,
-  };
+  selectedFile: File;
 
   constructor(
     private modalCtrl: ModalController,
@@ -44,15 +37,12 @@ export class ImageUploadComponent implements OnInit {
   }
 
   onPickImage(file: File) {
-    this.selectedFile.file = file;
-    this.filesService.convertFileToDataUrl(file).then((dataUrl) => {
-      this.selectedFile.fileUrl = dataUrl;
-    });
+    this.selectedFile = file;
   }
 
   onConfirmImageUpload() {
     const formData = new FormData();
-    formData.append('file', this.selectedFile.file);
+    formData.append('file', this.selectedFile);
     formData.append('name', this.uploadImageForm.value.name);
     formData.append('description', this.uploadImageForm.value.description);
 
@@ -74,9 +64,6 @@ export class ImageUploadComponent implements OnInit {
   }
 
   onRemoveProfileImg() {
-    this.selectedFile = {
-      file: undefined,
-      fileUrl: undefined,
-    };
+    this.selectedFile = undefined;
   }
 }

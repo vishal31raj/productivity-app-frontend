@@ -1,0 +1,47 @@
+.img-col {
+  width: 75px;
+  position: relative;
+
+  .img-div {
+    height: 75px !important;
+    width: 75px !important;
+    overflow: hidden;
+  }
+
+  .remove-img-btn {
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 50%;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    background-color: white;
+
+    ion-icon {
+      font-size: 18px;
+      color: gray;
+    }
+
+    .delete-btn {
+      color: red;
+    }
+  }
+
+  .file-name-div {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #ececec;
+    border: 1px solid silver;
+    border-radius: 0 0 8px 8px;
+    padding: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 10px;
+    margin-bottom: 0;
+  }
+}

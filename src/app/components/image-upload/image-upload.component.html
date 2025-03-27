@@ -1,5 +1,5 @@
 <app-header
-  title="Upload Image"
+  title="Upload Document"
   type="tertiary"
   (closeBtnClickEvent)="onCloseModal()"
 ></app-header>
@@ -11,7 +11,7 @@
         type="text"
         mode="md"
         fill="outline"
-        label="Image Name*"
+        label="Document Name*"
         label-placement="floating"
         placeholder="Type here..."
         formControlName="name"
@@ -27,16 +27,16 @@
     <app-image-picker
       [buttonName]="'Select File'"
       (imgPickedEvent)="onPickImage($event)"
-      *ngIf="!selectedFile.file"
+      *ngIf="!selectedFile"
     ></app-image-picker>
-    <div class="img-col" *ngIf="selectedFile.file">
-      <div class="img-div">
-        <img [src]="selectedFile.fileUrl" alt="" />
-      </div>
-      <div class="remove-img-btn" (click)="onRemoveProfileImg()">
-        <ion-icon name="close-outline"></ion-icon>
-      </div>
-    </div>
+
+    <app-selected-file
+      *ngIf="selectedFile"
+      [selectedFile]="selectedFile"
+      [showRemoveBtn]="true"
+      (removeBtnClick)="onRemoveProfileImg()"
+      [fileFooterText]="selectedFile.name"
+    ></app-selected-file>
 
     <div class="my-3">
       <ion-textarea
@@ -66,7 +66,7 @@
         mode="ios"
         type="submit"
         expand="block"
-        [disabled]="uploadImageForm.invalid || !selectedFile.file"
+        [disabled]="uploadImageForm.invalid || !selectedFile"
       >
         Confirm
       </ion-button>

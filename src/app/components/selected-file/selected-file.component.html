@@ -1,0 +1,22 @@
+<div class="img-col" *ngIf="selectedFile">
+  <div class="img-div">
+    <img [src]="imgUrl" *ngIf="imgUrl" alt="" />
+  </div>
+  <div
+    *ngIf="showRemoveBtn"
+    class="remove-img-btn"
+    (click)="onRemoveBtnClick()"
+  >
+    <ion-icon name="close-outline"></ion-icon>
+  </div>
+  <!-- <div
+    *ngIf="showDeleteBtn"
+    class="remove-img-btn"
+    (click)="onDeleteBtnClick()"
+  >
+    <ion-icon name="trash-outline" class="delete-btn"></ion-icon>
+  </div> -->
+  <p class="file-name-div" *ngIf="fileFooterText">
+    {{ fileFooterText }}
+  </p>
+</div>
