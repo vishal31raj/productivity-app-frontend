@@ -1,29 +1,56 @@
 import { Component, OnInit } from '@angular/core';
 import { AnalyticsCardComponent } from 'src/app/components/analytics-card/analytics-card.component';
+import { BannerComponent } from 'src/app/components/banner/banner.component';
 import { SharedModule } from 'src/app/shared.module';
+import { AnalyticsService } from '../analytics.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-owner-analytics',
   templateUrl: './owner-analytics.component.html',
   styleUrls: ['./owner-analytics.component.scss'],
   standalone: true,
-  imports: [SharedModule, AnalyticsCardComponent],
+  imports: [SharedModule, AnalyticsCardComponent, BannerComponent],
 })
 export class OwnerAnalyticsComponent implements OnInit {
+  isLoading: boolean = false;
+  ownerAnalytics: any;
+
   topPerformersList: any[] = [
     {
       id: 1,
       name: 'Sanket',
-      percentage: '90%'
+      percentage: '90%',
     },
     {
       id: 2,
       name: 'Drishty',
-      percentage: '85%'
+      percentage: '85%',
     },
   ];
 
-  constructor() {}
+  constructor(
+    private analyticsService: AnalyticsService,
+    private toastService: ToastService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getOwnerAnalytics();
+  }
+
+  getOwnerAnalytics() {
+    this.isLoading = true;
+    this.analyticsService.GetOwnerAnalytics().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.ownerAnalytics = res.data;
+          this.isLoading = false;
+        }
+      },
+      error: (err: any) => {
+        this.toastService.showErrorToast(err.error.message);
+        this.isLoading = false;
+      },
+    });
+  }
 }

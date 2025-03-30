@@ -1,117 +1,97 @@
-<ion-row>
-  <ion-col size="6">
-    <app-analytics-card
-      [count]="'55'"
-      [header]="'Pending Tasks'"
-    ></app-analytics-card>
-  </ion-col>
-  <ion-col size="6">
-    <app-analytics-card
-      [count]="'20'"
-      [header]="'In-progress'"
-    ></app-analytics-card>
-  </ion-col>
-  <ion-col size="6">
-    <app-analytics-card
-      [count]="'102'"
-      [header]="'Tasks Completed'"
-      [subHeader]="'This week'"
-    ></app-analytics-card>
-  </ion-col>
+<div *ngIf="isLoading === true">
+  <app-loader></app-loader>
+</div>
 
-  <!-- <ion-col size="6">
-    <app-analytics-card
-      [count]="'85%'"
-      [header]="'Completion Rate'"
-    ></app-analytics-card>
-  </ion-col> -->
+<div *ngIf="isLoading === false && ownerAnalytics">
+  <div class="ion-margin-bottom" *ngIf="ownerAnalytics.bannerDetails">
+    <app-banner [bannerDetails]="ownerAnalytics.bannerDetails"></app-banner>
+  </div>
 
-  <ion-col size="6">
-    <app-analytics-card
-      [count]="'95 min'"
-      [header]="'Task completion'"
-      [subHeader]="'Average time'"
-    ></app-analytics-card>
-  </ion-col>
+  <ion-row>
+    <ion-col size="6">
+      <app-analytics-card
+        [count]="'55'"
+        [header]="'Pending Tasks'"
+      ></app-analytics-card>
+    </ion-col>
+    <ion-col size="6">
+      <app-analytics-card
+        [count]="'20'"
+        [header]="'In-progress'"
+      ></app-analytics-card>
+    </ion-col>
+    <ion-col size="6">
+      <app-analytics-card
+        [count]="'102'"
+        [header]="'Tasks Completed'"
+        [subHeader]="'This week'"
+      ></app-analytics-card>
+    </ion-col>
 
-  <ion-col size="6">
-    <app-analytics-card
-      [count]="'80%'"
-      [header]="'Task Efficiency'"
-    ></app-analytics-card>
-  </ion-col>
+    <ion-col size="6">
+      <app-analytics-card
+        [count]="'95 min'"
+        [header]="'Task completion'"
+        [subHeader]="'Average time'"
+      ></app-analytics-card>
+    </ion-col>
 
-  <ion-col size="6">
-    <app-analytics-card
-      [count]="'85%'"
-      [header]="'Attendance Today'"
-    ></app-analytics-card>
-  </ion-col>
+    <ion-col size="6">
+      <app-analytics-card
+        [count]="'80%'"
+        [header]="'Task Efficiency'"
+      ></app-analytics-card>
+    </ion-col>
 
-  <ion-col size="6">
-    <div class="list-card">
-      <p class="header">Top performers:</p>
-      <p class="sub-header">(This month)</p>
+    <ion-col size="6">
+      <app-analytics-card
+        [count]="'85%'"
+        [header]="'Attendance Today'"
+      ></app-analytics-card>
+    </ion-col>
 
-      <div class="list-item mt-3" *ngFor="let item of topPerformersList">
-        <app-avatar-image
-          [docUrl]="item.profileImgUrl"
-          [height]="'25px'"
-          [width]="'25px'"
-          class="me-2"
-        ></app-avatar-image>
-        <p class="m-0 name">
-          {{ item.name }}
-        </p>
-        <p class="mb-0 percentage">
-          {{ item.percentage }}
-        </p>
+    <ion-col size="6">
+      <div class="list-card">
+        <p class="header">Top performers:</p>
+        <p class="sub-header">(This month)</p>
+
+        <div class="list-item mt-3" *ngFor="let item of topPerformersList">
+          <app-avatar-image
+            [docUrl]="item.profileImgUrl"
+            [height]="'25px'"
+            [width]="'25px'"
+            class="me-2"
+          ></app-avatar-image>
+          <p class="m-0 name">
+            {{ item.name }}
+          </p>
+          <p class="mb-0 percentage">
+            {{ item.percentage }}
+          </p>
+        </div>
       </div>
-    </div>
-  </ion-col>
+    </ion-col>
 
-  <ion-col size="6">
-    <div class="list-card">
-      <p class="header">Workload Ranking:</p>
-      <p class="sub-header">(Today)</p>
+    <ion-col size="6">
+      <div class="list-card">
+        <p class="header">Workload Ranking:</p>
+        <p class="sub-header">(Today)</p>
 
-      <div class="list-item mt-3" *ngFor="let item of topPerformersList">
-        <app-avatar-image
-          [docUrl]="item.profileImgUrl"
-          [height]="'25px'"
-          [width]="'25px'"
-          class="me-2"
-        ></app-avatar-image>
-        <p class="m-0 name">
-          {{ item.name }}
-        </p>
-        <p class="mb-0 percentage">
-          {{ item.percentage }}
-        </p>
+        <div class="list-item mt-3" *ngFor="let item of topPerformersList">
+          <app-avatar-image
+            [docUrl]="item.profileImgUrl"
+            [height]="'25px'"
+            [width]="'25px'"
+            class="me-2"
+          ></app-avatar-image>
+          <p class="m-0 name">
+            {{ item.name }}
+          </p>
+          <p class="mb-0 percentage">
+            {{ item.percentage }}
+          </p>
+        </div>
       </div>
-    </div>
-  </ion-col>
-
-  <!-- <ion-col size="6">
-    <app-analytics-card
-      [count]="'3*'"
-      [header]="'Employee Ranking'"
-    ></app-analytics-card>
-  </ion-col>
-
-  <ion-col size="6">
-    <app-analytics-card
-      [count]="'90%'"
-      [header]="'Attendance'"
-      [subHeader]="'This month'"
-    ></app-analytics-card>
-  </ion-col>
-
-  <ion-col size="6">
-    <app-analytics-card
-      [count]="'85%'"
-      [header]="'Workload'"
-      [subHeader]="'This month'"
-    ></app-analytics-card>
-  </ion-col> -->
-</ion-row>
+    </ion-col>
+  </ion-row>
+</div>
