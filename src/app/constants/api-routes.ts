@@ -60,6 +60,7 @@ export const API_ROUTES = {
 
   // Analytics
   CreateNewBanner: '/analytics/createNewBanner',
+  DeleteBanner: '/analytics/deleteBanner',
   GetOwnerAnalytics: '/analytics/getOwnerAnalytics',
   GetStaffAnalytics: '/analytics/getStaffAnalytics',
 };

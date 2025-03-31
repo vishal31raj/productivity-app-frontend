@@ -9,3 +9,18 @@ export const BANNER_TYPE_DESC_ENUM = {
   EVENT: 2,
   NOTICE: 3,
 };
+
+export const BANNER_TYPE_ARR = [
+  {
+    id: 1,
+    name: 'Announcement',
+  },
+  {
+    id: 2,
+    name: 'Event',
+  },
+  {
+    id: 3,
+    name: 'Notice',
+  },
+];

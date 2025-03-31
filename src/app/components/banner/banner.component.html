@@ -1,22 +1,38 @@
 <div class="banner-container">
   <div class="d-flex">
-    <div class="status-chip green" *ngIf="userRoleId === USER_ROLE_DESC.OWNER">
-      Live in
-      <app-countdown-timer
-        [targetDate]="bannerDetails.startDate"
-      ></app-countdown-timer>
-    </div>
     <div class="status-chip gray">
       {{ BANNER_TYPES[bannerDetails.type] }}
     </div>
+    <div *ngIf="userRoleId === USER_ROLE_DESC.OWNER">
+      <span class="status-chip green" *ngIf="showCountDownTime">
+        Broadcasts in
+        <app-countdown-timer
+          [targetDate]="bannerDetails.startDate"
+        ></app-countdown-timer>
+      </span>
+      <span class="status-chip red" *ngIf="!showCountDownTime">
+        Removes in
+        <app-countdown-timer
+          [targetDate]="bannerDetails.endDate"
+        ></app-countdown-timer>
+      </span>
+    </div>
   </div>
   <div class="ion-padding">
-    <div class="img-div">
-      <img [src]="bannerDetails.imgUrl" alt="" />
-    </div>
     <div
       class="desc-text ion-margin-top"
       [innerHTML]="bannerDetails.description"
     ></div>
+    <div class="action-div" *ngIf="userRoleId === USER_ROLE_DESC.OWNER">
+      <ion-button
+        size="small"
+        mode="ios"
+        fill="outline"
+        color="danger"
+        (click)="onDeleteBanner()"
+      >
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </div>
   </div>
 </div>

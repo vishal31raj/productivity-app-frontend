@@ -4,7 +4,10 @@
 
 <div *ngIf="isLoading === false && ownerAnalytics">
   <div class="ion-margin-bottom" *ngIf="ownerAnalytics.bannerDetails">
-    <app-banner [bannerDetails]="ownerAnalytics.bannerDetails"></app-banner>
+    <app-banner
+      [bannerDetails]="ownerAnalytics.bannerDetails"
+      (deleteBannerBtnClick)="onDeleteBanner()"
+    ></app-banner>
   </div>
 
   <ion-row>

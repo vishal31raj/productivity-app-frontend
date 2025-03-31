@@ -4,6 +4,7 @@ import { BannerComponent } from 'src/app/components/banner/banner.component';
 import { SharedModule } from 'src/app/shared.module';
 import { AnalyticsService } from '../analytics.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-owner-analytics',
@@ -31,7 +32,8 @@ export class OwnerAnalyticsComponent implements OnInit {
 
   constructor(
     private analyticsService: AnalyticsService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -52,5 +54,26 @@ export class OwnerAnalyticsComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  async onDeleteBanner() {
+    const isConfirmed = await this.alertService.presentAlert(
+      'Remove banner?',
+      "Are you sure you want to remove this banner from everyone's wall?"
+    );
+
+    if (isConfirmed) {
+      this.analyticsService.DeleteBanner().subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            this.toastService.showSuccessToast(res.message);
+            this.getOwnerAnalytics();
+          }
+        },
+        error: (err: any) => {
+          this.toastService.showErrorToast(err.error.message);
+        },
+      });
+    }
   }
 }

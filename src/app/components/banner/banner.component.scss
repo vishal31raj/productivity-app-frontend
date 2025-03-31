@@ -8,8 +8,8 @@
     justify-content: space-between;
 
     .status-chip {
-        padding: 4px 8px;
-        font-size: 12px;
+      padding: 4px 8px;
+      font-size: 12px;
     }
   }
 
@@ -20,5 +20,23 @@
   .desc-text {
     font-size: 14px;
     color: #2d2d2d;
+  }
+}
+
+.action-div {
+    display: flex;
+    justify-content: end;
+    gap: 8px;
+}
+
+.edit-btn {
+  border: 1px solid silver;
+  padding: 3px 3px 0 3px;
+  margin-top: 1px;
+  border-radius: 5px;
+  background-color: #ececec;
+
+  ion-icon {
+    font-size: 15px;
   }
 }

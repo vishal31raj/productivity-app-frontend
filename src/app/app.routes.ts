@@ -31,6 +31,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'announcement',
+        loadComponent: () =>
+          import('./pages/dashboard/announcement/announcement.page').then(
+            (m) => m.AnnouncementPage
+          ),
+      },
+      {
         path: 'staffs',
         loadComponent: () =>
           import('./pages/dashboard/staffs/staffs.page').then(

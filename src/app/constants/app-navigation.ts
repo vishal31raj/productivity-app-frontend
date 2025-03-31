@@ -61,6 +61,11 @@ export const OwnerSidebarNavItems = [
     routerLink: AppRoutingConstants.Attendance,
   },
   {
+    iconName: 'megaphone',
+    label: 'Announcement',
+    routerLink: AppRoutingConstants.Announcement,
+  },
+  {
     label: 'Help & Support',
     routerLink: AppRoutingConstants.HelpAndSupport,
     iconName: 'help-circle',

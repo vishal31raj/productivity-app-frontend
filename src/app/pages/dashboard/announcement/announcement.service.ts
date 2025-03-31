@@ -6,18 +6,10 @@ import { API_ROUTES } from 'src/app/constants/api-routes';
 @Injectable({
   providedIn: 'root',
 })
-export class AnalyticsService {
+export class AnnouncementService {
   constructor(private http: HttpClient) {}
 
-  GetOwnerAnalytics() {
-    return this.http.get(API_ROUTES.GetOwnerAnalytics);
-  }
-
-  GetStaffAnalytics() {
-    return this.http.get(API_ROUTES.GetStaffAnalytics);
-  }
-
-  DeleteBanner() {
-    return this.http.delete(API_ROUTES.DeleteBanner);
+  CreateNewBanner(formData: FormData) {
+    return this.http.post(API_ROUTES.CreateNewBanner, formData);
   }
 }
